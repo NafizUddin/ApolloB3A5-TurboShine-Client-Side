@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const CallToAction = () => {
   return (
-    <div className="-mt-28 pt-8 mb-14">
+    <div>
       {/* Extra Banner starts */}
       <div className="my-14">
         <div className="relative h-[320px] md:h-[360px] lg:h-[300px] xl:h-[350px]">
