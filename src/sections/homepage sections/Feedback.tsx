@@ -2,6 +2,10 @@ import { ReactNode } from "react";
 import SectionTitle from "../../components/SectionTitle";
 import { useForm, Controller } from "react-hook-form";
 import ReactStars from "react-stars";
+import useUserDetails from "../../custom Hooks/useUserDetails";
+import toast from "react-hot-toast";
+import { useAddReviewsMutation } from "../../redux/features/reviews/reviews.api";
+import { useNavigate } from "react-router-dom";
 
 interface FeedbackFormValues {
   feedback: string;
@@ -21,8 +25,39 @@ const Feedback = () => {
     },
   });
 
-  const onSubmit = (data: FeedbackFormValues) => {
-    console.log("Feedback Data:", data);
+  const navigate = useNavigate();
+
+  const { loadedUser } = useUserDetails();
+
+  const [addReviews] = useAddReviewsMutation();
+
+  const onSubmit = async (data: FeedbackFormValues) => {
+    if (!loadedUser || loadedUser.length === 0) {
+      navigate("/login");
+      toast.error("Please Login First");
+      return;
+    }
+
+    const reviewData = {
+      feedback: data.feedback,
+      rating: data.rating,
+      email: loadedUser[0].email,
+      image: loadedUser[0].image,
+      name: loadedUser[0].name,
+    };
+
+    await toast.promise(addReviews(reviewData).unwrap(), {
+      loading: "Submitting review...",
+      success: (res) => {
+        if (res.success) {
+          return res.message;
+        } else {
+          throw new Error(res.message);
+        }
+      },
+      error: "Failed to submit review",
+    });
+
     reset();
   };
 
