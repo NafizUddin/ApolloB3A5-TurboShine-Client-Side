@@ -35,16 +35,13 @@ const Feedback = () => {
 
       <div className="flex flex-col lg:flex-row justify-center mt-12">
         <div className="flex-1">
-          <div className="mb-8 lg:mb-0 relative lg:w-full h-[300px] lg:h-[650px] xl:h-[520px] mx-5 md:mx-0">
+          <div className="mb-8 lg:mb-0 relative lg:w-full h-[300px] lg:h-[650px] xl:h-[470px] mx-5 md:mx-0">
             <img
               src="https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?q=80&w=1450&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
               className="absolute inset-0 object-cover w-full h-full"
             />
             <div className="relative bg-gray-900 bg-opacity-70 h-full">
-              <h1
-                className="text-white py-28 md:px-20 md:py-28 lg:py-44 lg:px-7 xl:py-44 xl:px-20 px-2
-                "
-              >
+              <h1 className="text-white py-28 md:px-20 md:py-28 lg:py-44 lg:px-7 xl:py-36 xl:px-20 px-2">
                 <div className="flex flex-col gap-5">
                   <div className="flex gap-3">
                     <span className="flex flex-col gap-1 mt-[6px] items-end">

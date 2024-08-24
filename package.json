@@ -24,6 +24,7 @@
     "react-router-dom": "^6.26.0",
     "react-stars": "^2.2.5",
     "react-type-animation": "^3.2.0",
+    "redux-persist": "^6.0.0",
     "swiper": "^11.1.10"
   },
   "devDependencies": {
