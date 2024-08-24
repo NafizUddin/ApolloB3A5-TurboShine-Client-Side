@@ -1,19 +1,27 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../assets/logo.png";
-import { CgMenuGridO } from "react-icons/cg";
+import { CgMenuGridO, CgProfile } from "react-icons/cg";
 import { logout, selectCurrentUser } from "../../redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { MdOutlineLogout } from "react-icons/md";
 import toast from "react-hot-toast";
+import useUserDetails from "../../custom Hooks/useUserDetails";
+import Loading from "../../components/Loading";
 
 const Navbar = () => {
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
 
+  const { loadedUser, isLoading } = useUserDetails();
+
   const handleLogOut = () => {
     dispatch(logout());
     toast.success("Logged out successfully", { duration: 3000 });
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   const links = (
     <>
@@ -129,14 +137,20 @@ const Navbar = () => {
                         tabIndex={0}
                         className="btn btn-ghost btn-circle avatar"
                       >
-                        <div className="w-10 rounded-full">
-                          <img src="https://cdn-icons-png.flaticon.com/512/8847/8847137.png" />
+                        <div className="w-10 rounded-full object-cover">
+                          <img src={loadedUser[0].image} alt="Avatar" />
                         </div>
                       </label>
                       <ul
                         tabIndex={0}
                         className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content rounded-box w-60 bg-white"
                       >
+                        <li>
+                          <a className="text-lg font-medium hover:bg-[#D60C0C] hover:text-white">
+                            <CgProfile className="text-lg mr-1" />{" "}
+                            {loadedUser[0].name}
+                          </a>
+                        </li>
                         <li>
                           <a
                             onClick={handleLogOut}

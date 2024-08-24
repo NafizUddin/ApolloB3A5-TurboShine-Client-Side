@@ -10,6 +10,10 @@ import { useSignUpMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch } from "../../redux/hooks";
 import { verifyToken } from "../../utils/verifyToken";
 import { setUser, TUser } from "../../redux/features/auth/authSlice";
+import axios from "axios";
+
+const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
+const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
 
 const RegisterPage = () => {
   const { register, handleSubmit, reset, formState } = useForm();
@@ -23,18 +27,33 @@ const RegisterPage = () => {
 
   const [loading, setLoading] = useState(false);
 
-  const handleSignUp: SubmitHandler<FieldValues> = async (data) => {
+  const handleSignUp: SubmitHandler<FieldValues> = async (formData) => {
     setLoading(true);
-    try {
-      const userInfo = { ...data, role: "user" };
 
-      const res = await signUp(userInfo).unwrap();
-      const user = verifyToken(res.token) as TUser;
-      dispatch(setUser({ user: user, token: res.token }));
-      toast.success("Signed Up successfully", { duration: 3000 });
-      setLoading(false);
-      reset();
-      navigate(from);
+    const imageFile = { image: formData?.image[0] };
+
+    try {
+      const res = await axios.post(image_hosting_api, imageFile, {
+        headers: {
+          "content-type": "multipart/form-data",
+        },
+      });
+
+      if (res.data.success) {
+        const userInfo = {
+          ...formData,
+          role: "user",
+          image: res.data.data.display_url,
+        };
+
+        const registerResponse = await signUp(userInfo).unwrap();
+        const user = verifyToken(registerResponse.token) as TUser;
+        dispatch(setUser({ user: user, token: registerResponse.token }));
+        toast.success("Signed Up successfully", { duration: 3000 });
+        setLoading(false);
+        reset();
+        navigate(from);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -45,7 +64,7 @@ const RegisterPage = () => {
       <div className="min-h-screen bg-gray-100 py-6 flex flex-col justify-center sm:py-12">
         <div className="relative py-3 sm:max-w-xl sm:mx-auto">
           <div className="absolute inset-0 bg-gradient-to-r from-red-300 to-red-700 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
-          <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:px-16 sm:py-12 md:w-[450px]">
+          <div className="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:px-16 sm:py-12 md:w-[470px]">
             <div className="max-w-md mx-auto">
               <div className="flex justify-center items-center">
                 <Link to="/">
@@ -165,6 +184,33 @@ const RegisterPage = () => {
                       {errors?.password?.message as ReactNode}
                     </p>
                   </div>
+                </div>
+
+                <div>
+                  <div className="flex flex-col">
+                    <label
+                      htmlFor="name"
+                      className="block md:text-xl text-gray-700 -mt-2"
+                    >
+                      Upload Avatar
+                    </label>
+
+                    <input
+                      id="example1"
+                      type="file"
+                      accept="image/*"
+                      {...register("image", {
+                        required: {
+                          value: true,
+                          message: "User Photo is required",
+                        },
+                      })}
+                      className="mt-2 block text-sm file:mr-4 file:rounded-md file:border-0 file:bg-primary file:py-2 file:px-4 file:text-sm file:font-semibold file:text-white hover:file:border hover:file:border-red-500 hover:file:bg-[white] hover:file:text-primary disabled:pointer-events-none disabled:opacity-60"
+                    />
+                  </div>
+                  <p className="text-sm text-red-600 font-medium ml-28 md:ml-44 mt-2">
+                    {errors?.image?.message as ReactNode}
+                  </p>
                 </div>
 
                 <button
