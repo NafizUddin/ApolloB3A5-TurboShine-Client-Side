@@ -1,0 +1,91 @@
+.btn-custom {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-custom::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: white;
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: 0.4s;
+}
+
+.btn-custom:hover {
+    color: #dc232e;
+    outline: 2px solid #dc232e;
+}
+
+.btn-custom:hover::before {
+    width: 100%;
+}
+
+
+/* 2nd custom button hover */
+
+.btn-custom-two {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.btn-custom-two::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #dc232e;
+    width: 0;
+    height: 100%;
+    z-index: -1;
+    transition: 0.4s;
+}
+
+.btn-custom-two:hover {
+    color: white;
+
+}
+
+.btn-custom-two:hover::before {
+    width: 100%;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Homepage Service Card */
+
+.card {
+    background-color: white;
+    background-image: none;
+    background-size: 100% 0%;
+    /* Initially, the image is not visible */
+    background-position: bottom;
+    /* Start the image position from the bottom */
+    background-repeat: no-repeat;
+    /* Prevent repeating the background image */
+    transition: background-color 0.3s ease, background-size 0.5s ease;
+}
+
+.card:hover {
+    background-color: transparent;
+    /* Make background color transparent on hover */
+    background-image: url('https://png.pngtree.com/thumb_back/fw800/background/20221027/pngtree-seamless-vector-carbon-fiber-texture-image_1443898.jpg');
+    background-size: 100% 100%;
+    /* Fully visible image on hover */
+}
+
+.testimonial {
+    background-image: url('https://themeholy.com/wordpress/malen/wp-content/uploads/2023/09/road_shape_1-1.png');
+    background-position: right;
+    background-repeat: no-repeat;
+}

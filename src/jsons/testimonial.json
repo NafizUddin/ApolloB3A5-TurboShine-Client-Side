@@ -1,0 +1,38 @@
+[
+  {
+    "name": "John Mitchell",
+    "designation": "Project Manager at Speed Motors",
+    "comment": "TurboShine offers top-notch car care services! Their attention to detail and customer service is exceptional. My car has never looked better.",
+    "image": "https://images.unsplash.com/photo-1480429370139-e0132c086e2a?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Sarah Thompson",
+    "designation": "CEO at DriveSafe Solutions",
+    "comment": "I'm thoroughly impressed with the quality of service at TurboShine. From booking to completion, everything was seamless. Highly recommend!",
+    "image": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=1376&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "David Reynolds",
+    "designation": "Operations Manager at AutoPro",
+    "comment": "TurboShine provides outstanding car care. Their team is professional, and the results speak for themselves. My car looks brand new!",
+    "image": "https://images.unsplash.com/flagged/photo-1573603867003-89f5fd7a7576?q=80&w=1492&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Emily Carter",
+    "designation": "Marketing Director at Green Wheels",
+    "comment": "The experience at TurboShine was fantastic! Their services are reliable, and my car has never been this clean. I'll definitely be back.",
+    "image": "https://images.unsplash.com/photo-1627161683077-e34782c24d81?q=80&w=1406&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Michael Lee",
+    "designation": "Fleet Manager at FastTrack Logistics",
+    "comment": "TurboShine exceeded my expectations! The team did an amazing job, and their attention to detail is unparalleled. Highly recommended!",
+    "image": "https://images.unsplash.com/photo-1582015752624-e8b1c75e3711?q=80&w=1528&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  },
+  {
+    "name": "Jessica Adams",
+    "designation": "Product Manager at AutoTech Innovations",
+    "comment": "I had an excellent experience with TurboShine. Their service is top-quality, and they truly care about customer satisfaction. My car looks incredible!",
+    "image": "https://images.unsplash.com/photo-1610387879421-3839d64bcff4?q=80&w=1430&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+  }
+]
