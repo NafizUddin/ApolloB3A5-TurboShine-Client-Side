@@ -21,13 +21,13 @@ const HomeServices = () => {
               src={service.image}
               className="rounded-lg mb-4 relative -top-36 object-cover w-[350px] h-[243px] mx-auto"
             />
-            <h2 className="text-2xl font-bold -mt-32 text-gray-900 group-hover:text-white">
+            <h2 className="text-2xl font-bold -mt-32 text-gray-900 group-hover:text-white pl-7">
               {service.name}
             </h2>
-            <p className="text-gray-500 mb-4 lg:h-14 xl:h-auto group-hover:text-white">
+            <p className="text-gray-500 mb-4 lg:h-14 xl:h-auto group-hover:text-white pl-7 font-semibold">
               {service.short_description}
             </p>
-            <button className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold group-hover:bg-white group-hover:text-primary w-32">
+            <button className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold group-hover:bg-white group-hover:text-primary w-32 ml-7">
               View Service
             </button>
           </div>

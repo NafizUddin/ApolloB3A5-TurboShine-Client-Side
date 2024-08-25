@@ -4,9 +4,14 @@ import { useGetReviewsQuery } from "../../redux/features/reviews/reviews.api";
 import { IFeedback } from "../../types/review.type";
 import ReactStars from "react-stars";
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 
 const ReviewPage = () => {
   const { data, isLoading } = useGetReviewsQuery(undefined);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (isLoading) {
     return <Loading />;
