@@ -2,6 +2,7 @@ import { useGetServicesQuery } from "../../redux/features/services/carService.ap
 import SectionTitle from "../../components/SectionTitle";
 import { TCarService } from "../../types/carService.type";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const HomeServices = () => {
   const { data: serviceData, isLoading } = useGetServicesQuery(undefined);
@@ -35,10 +36,12 @@ const HomeServices = () => {
 
       {serviceData && (
         <div className="flex justify-center items-center gap-2 relative -top-24">
-          <button className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold flex items-center gap-1">
-            <span>View All Services</span>
-            <FaLongArrowAltRight className="mb-1" />
-          </button>
+          <Link to="/services">
+            <button className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold flex items-center gap-1">
+              <span>View All Services</span>
+              <FaLongArrowAltRight className="mb-1" />
+            </button>
+          </Link>
         </div>
       )}
     </div>
