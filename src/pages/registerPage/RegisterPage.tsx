@@ -26,6 +26,14 @@ const RegisterPage = () => {
   const dispatch = useAppDispatch();
 
   const [loading, setLoading] = useState(false);
+  const [fileName, setFileName] = useState<string | null>(null);
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setFileName(file.name);
+    }
+  };
 
   const handleSignUp: SubmitHandler<FieldValues> = async (formData) => {
     setLoading(true);
@@ -195,18 +203,24 @@ const RegisterPage = () => {
                       Upload Avatar
                     </label>
 
-                    <input
-                      id="example1"
-                      type="file"
-                      accept="image/*"
-                      {...register("image", {
-                        required: {
-                          value: true,
-                          message: "User Photo is required",
-                        },
-                      })}
-                      className="mt-2 block text-sm file:mr-4 file:rounded-md file:border-0 file:bg-primary file:py-2 file:px-4 file:text-sm file:font-semibold file:text-white hover:file:border hover:file:border-red-500 hover:file:bg-[white] hover:file:text-primary disabled:pointer-events-none disabled:opacity-60"
-                    />
+                    <div className="flex items-center">
+                      <input
+                        id="example1"
+                        type="file"
+                        accept="image/*"
+                        {...register("image", {
+                          required: {
+                            value: true,
+                            message: "User Photo is required",
+                          },
+                        })}
+                        onChange={handleFileChange}
+                        className="mt-2 w-[120px] text-sm file:rounded-md file:border-0 file:bg-primary file:py-2 file:px-4 file:text-sm file:font-semibold file:text-white hover:file:border hover:file:border-red-500 hover:file:bg-[white] hover:file:text-primary disabled:pointer-events-none disabled:opacity-60"
+                      />
+                      <span className="mt-4 text-black font-semibold">
+                        {fileName ? fileName : "No image chosen"}
+                      </span>
+                    </div>
                   </div>
                   <p className="text-sm text-red-600 font-medium ml-28 md:ml-44 mt-2">
                     {errors?.image?.message as ReactNode}
