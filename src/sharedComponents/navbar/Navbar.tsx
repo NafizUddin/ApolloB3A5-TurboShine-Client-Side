@@ -41,7 +41,7 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/aboutUs"
+          to="/services"
           className={({ isActive, isPending }) =>
             isActive
               ? "bg-primary px-3 py-2 text-white rounded-md"
@@ -50,12 +50,12 @@ const Navbar = () => {
               : ""
           }
         >
-          About Us
+          Services
         </NavLink>
       </li>
       <li>
         <NavLink
-          to="/products"
+          to="/reviews"
           className={({ isActive, isPending }) =>
             isActive
               ? "bg-primary px-3 py-2 text-white rounded-md"
@@ -64,12 +64,12 @@ const Navbar = () => {
               : ""
           }
         >
-          Products
+          Reviews
         </NavLink>
       </li>
       <li>
         <NavLink
-          to="/productManagement"
+          to="/bookings"
           className={({ isActive, isPending }) =>
             isActive
               ? "bg-primary px-3 py-2 text-white rounded-md"
@@ -78,7 +78,7 @@ const Navbar = () => {
               : ""
           }
         >
-          Products Management
+          Bookings
         </NavLink>
       </li>
     </>

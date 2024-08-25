@@ -5,7 +5,7 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const HomeServices = () => {
-  const { data: serviceData, isLoading } = useGetServicesQuery(undefined);
+  const { data: serviceData } = useGetServicesQuery(undefined);
 
   return (
     <div className="mb-28">

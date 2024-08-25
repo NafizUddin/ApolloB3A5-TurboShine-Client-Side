@@ -64,7 +64,7 @@ const Feedback = () => {
   return (
     <div className="-mt-28 pt-8 mb-28">
       <SectionTitle
-        sub="Tell us how we’re doing!"
+        sub="TELL US HOW WE’RE DOING!"
         heading="Customer Feedback"
       />
 

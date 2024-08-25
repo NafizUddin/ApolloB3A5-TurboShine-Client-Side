@@ -4,6 +4,7 @@ import Homepage from "../pages/homepage/Homepage";
 import ErrorPage from "../pages/errorpage/ErrorPage";
 import LoginPage from "../pages/loginPage/LoginPage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
+import ReviewPage from "../pages/reviewPage/ReviewPage";
 
 const MainRoute = createBrowserRouter([
   {
@@ -14,6 +15,10 @@ const MainRoute = createBrowserRouter([
       {
         index: true,
         element: <Homepage />,
+      },
+      {
+        path: "reviews",
+        element: <ReviewPage />,
       },
     ],
   },
