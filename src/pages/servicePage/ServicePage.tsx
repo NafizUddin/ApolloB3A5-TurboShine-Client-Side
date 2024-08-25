@@ -2,21 +2,28 @@ import { useGetServicesQuery } from "../../redux/features/services/carService.ap
 import SectionTitle from "../../components/SectionTitle";
 import { TCarService } from "../../types/carService.type";
 import { motion } from "framer-motion";
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useMemo, useState } from "react";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { MdAvTimer } from "react-icons/md";
 import Slider from "react-slider";
 import { FaSort } from "react-icons/fa";
+import Loading from "../../components/Loading";
 
 const priceRanges = ["0-500", "501-1000", "1001-1500"];
 
-const ServicePage = () => {
-  const { data: serviceData } = useGetServicesQuery(undefined);
+interface QueryObj {
+  searchTerm?: string;
+  minValue?: number;
+  maxValue?: number;
+  priceRanges?: Array<{ start: number; end: number }>;
+  selectedSort?: string;
+}
 
+const ServicePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isResetButtonEnabled, setIsResetButtonEnabled] = useState(false);
-  const [minValue, setMinValue] = useState(10);
-  const [maxValue, setMaxValue] = useState(120);
+  const [minTime, setMinTime] = useState(10);
+  const [maxTime, setMaxTime] = useState(120);
   const [selectedSort, setSelectedSort] = useState("");
 
   const [checkedState, setCheckedState] = useState(
@@ -25,6 +32,26 @@ const ServicePage = () => {
       return acc;
     }, {} as Record<string, boolean>)
   );
+
+  // Memoized query object
+  const queryObj: QueryObj = useMemo(() => {
+    const selectedPriceRanges = priceRanges
+      .filter((range) => checkedState[range])
+      .map((range) => {
+        const [min, max] = range.split("-").map(Number);
+        return { start: min, end: max };
+      });
+
+    return {
+      searchTerm,
+      minTime,
+      maxTime,
+      priceRanges: selectedPriceRanges.length ? selectedPriceRanges : undefined,
+      selectedSort,
+    };
+  }, [searchTerm, minTime, maxTime, checkedState, selectedSort]);
+
+  const { data: serviceData, isLoading } = useGetServicesQuery(queryObj);
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
@@ -55,8 +82,8 @@ const ServicePage = () => {
 
   const handleSliderChange = (values: number[]) => {
     setIsResetButtonEnabled(true);
-    setMinValue(values[0]);
-    setMaxValue(values[1]);
+    setMinTime(values[0]);
+    setMaxTime(values[1]);
   };
 
   const handleReset = () => {
@@ -66,10 +93,14 @@ const ServicePage = () => {
     }, {} as Record<string, boolean>);
     setCheckedState(resetState);
     setIsResetButtonEnabled(false);
-    setMinValue(10);
-    setMaxValue(120);
+    setMinTime(10);
+    setMaxTime(120);
     setSearchTerm("");
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="my-10">
@@ -110,7 +141,7 @@ const ServicePage = () => {
                 type="text"
                 id="default-search"
                 onBlur={handleInputChange}
-                className="block w-full p-4 ps-10 text-sm text-gray-900 rounded-lg border border-gray-300 outline-none transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary"
+                className="block w-full p-4 ps-10 text-gray-900 rounded-lg border border-gray-300 outline-none transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary"
                 placeholder="Search Products..."
                 required
               />
@@ -186,18 +217,18 @@ const ServicePage = () => {
               min={10}
               max={120}
               step={1} // adjust step value for finer control
-              value={[minValue, maxValue]}
+              value={[minTime, maxTime]}
               onChange={handleSliderChange}
             />
 
             <p className="text-lg xl:text-xl font-medium text-center lg:text-left">
-              Time Range: {minValue} minutes - {maxValue} minutes
+              Time Range: {minTime} minutes - {maxTime} minutes
             </p>
           </div>
 
           {/* time duration slider ends*/}
           {/* Tag type start */}
-          <body className="mt-5">
+          <div className="mt-5">
             <div className="container mx-auto">
               <div className="bg-white rounded-lg">
                 <h2 className="text-xl md:text-2xl font-semibold mb-4 text-center lg:text-left">
@@ -243,7 +274,7 @@ const ServicePage = () => {
                 </div>
               </div>
             </div>
-          </body>
+          </div>
           {/* Tag type ends */}
 
           <div className="mt-7 flex justify-center items-center lg:justify-start">
