@@ -3,6 +3,7 @@ import Loading from "../../components/Loading";
 import { useGetReviewsQuery } from "../../redux/features/reviews/reviews.api";
 import { IFeedback } from "../../types/review.type";
 import ReactStars from "react-stars";
+import { motion } from "framer-motion";
 
 const ReviewPage = () => {
   const { data, isLoading } = useGetReviewsQuery(undefined);
@@ -19,8 +20,14 @@ const ReviewPage = () => {
       />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 my-20">
-        {data?.reviews?.map((singleReview: IFeedback) => (
-          <figure className="max-w-screen-md mx-auto text-center border border-gray-300 p-10">
+        {data?.reviews?.map((singleReview: IFeedback, index: number) => (
+          <motion.figure
+            key={singleReview?._id}
+            className="max-w-screen-md mx-auto text-center border border-gray-300 p-10"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.2 }}
+          >
             <svg
               className="w-10 h-10 mx-auto mb-3 text-primary"
               aria-hidden="true"
@@ -55,7 +62,7 @@ const ReviewPage = () => {
                 />
               </div>
             </figcaption>
-          </figure>
+          </motion.figure>
         ))}
       </div>
     </div>

@@ -5,6 +5,7 @@ import ErrorPage from "../pages/errorpage/ErrorPage";
 import LoginPage from "../pages/loginPage/LoginPage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
 import ReviewPage from "../pages/reviewPage/ReviewPage";
+import ServicePage from "../pages/servicePage/ServicePage";
 
 const MainRoute = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const MainRoute = createBrowserRouter([
       {
         index: true,
         element: <Homepage />,
+      },
+      {
+        path: "services",
+        element: <ServicePage />,
       },
       {
         path: "reviews",
