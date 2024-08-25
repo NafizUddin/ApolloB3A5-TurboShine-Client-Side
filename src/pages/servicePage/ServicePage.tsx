@@ -3,8 +3,10 @@ import SectionTitle from "../../components/SectionTitle";
 import { TCarService } from "../../types/carService.type";
 import { motion } from "framer-motion";
 import { ChangeEvent, FormEvent, useState } from "react";
-import { BiCategoryAlt } from "react-icons/bi";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
+import { MdAvTimer } from "react-icons/md";
+import Slider from "react-slider";
+import { FaSort } from "react-icons/fa";
 
 const priceRanges = ["0-500", "501-1000", "1001-1500"];
 
@@ -13,6 +15,10 @@ const ServicePage = () => {
 
   const [searchTerm, setSearchTerm] = useState("");
   const [isResetButtonEnabled, setIsResetButtonEnabled] = useState(false);
+  const [minValue, setMinValue] = useState(10);
+  const [maxValue, setMaxValue] = useState(120);
+  const [selectedSort, setSelectedSort] = useState("");
+
   const [checkedState, setCheckedState] = useState(
     priceRanges.reduce((acc, range) => {
       acc[range] = false;
@@ -22,6 +28,10 @@ const ServicePage = () => {
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchTerm(event.target.value);
+  };
+
+  const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
+    setSelectedSort(event.target.value);
   };
 
   const handleSearchProduct = (event: FormEvent<HTMLFormElement>) => {
@@ -41,6 +51,24 @@ const ServicePage = () => {
       );
       return newState;
     });
+  };
+
+  const handleSliderChange = (values: number[]) => {
+    setIsResetButtonEnabled(true);
+    setMinValue(values[0]);
+    setMaxValue(values[1]);
+  };
+
+  const handleReset = () => {
+    const resetState = Object.keys(checkedState).reduce((acc, key) => {
+      acc[key] = false;
+      return acc;
+    }, {} as Record<string, boolean>);
+    setCheckedState(resetState);
+    setIsResetButtonEnabled(false);
+    setMinValue(10);
+    setMaxValue(120);
+    setSearchTerm("");
   };
 
   return (
@@ -145,6 +173,29 @@ const ServicePage = () => {
             </div>
           </div>
           {/* Filter by price ends*/}
+
+          {/* time duration slider starts*/}
+          <div className="mt-7 space-y-7">
+            <div className="flex gap-3 items-center justify-center lg:justify-start">
+              <MdAvTimer className="text-3xl" />
+              <h1 className="text-2xl mt-2 font-semibold">Time Duration</h1>
+            </div>
+
+            <Slider
+              className="slider w-4/5 md:w-3/5 mx-auto lg:w-full"
+              min={10}
+              max={120}
+              step={1} // adjust step value for finer control
+              value={[minValue, maxValue]}
+              onChange={handleSliderChange}
+            />
+
+            <p className="text-lg xl:text-xl font-medium text-center lg:text-left">
+              Time Range: {minValue} minutes - {maxValue} minutes
+            </p>
+          </div>
+
+          {/* time duration slider ends*/}
           {/* Tag type start */}
           <body className="mt-5">
             <div className="container mx-auto">
@@ -194,8 +245,40 @@ const ServicePage = () => {
             </div>
           </body>
           {/* Tag type ends */}
+
+          <div className="mt-7 flex justify-center items-center lg:justify-start">
+            <button
+              onClick={handleReset}
+              disabled={!isResetButtonEnabled}
+              className={`mt-5 px-4 py-2 rounded ${
+                isResetButtonEnabled
+                  ? "bg-primary btn-custom text-white cursor-pointer"
+                  : "bg-gray-300 text-gray-500 btn disabled"
+              }`}
+            >
+              Reset Filters
+            </button>
+          </div>
         </div>
         <div className="lg:col-span-2 xl:col-span-5">
+          <div className="flex justify-start items-center text-xl font-semibold -mt-28 mb-44 pl-7">
+            <FaSort />
+            <select
+              value={selectedSort}
+              onChange={handleSelectChange}
+              className="mt-2"
+            >
+              <option value="">Select Sorting Option</option>
+              <optgroup label="Sort By Price">
+                <option value="price-ascending">Low to High (Price)</option>
+                <option value="price-descending">High to Low (Price)</option>
+              </optgroup>
+              <optgroup label="Sort By Cost">
+                <option value="cost-ascending">Low to High (Cost)</option>
+                <option value="cost-descending">High to Low (Cost)</option>
+              </optgroup>
+            </select>
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
             {serviceData?.map((service: TCarService, index: number) => (
               <motion.div
