@@ -198,7 +198,7 @@ const RegisterPage = () => {
                   <div className="flex flex-col">
                     <label
                       htmlFor="name"
-                      className="block md:text-xl text-gray-700 -mt-2"
+                      className="block text-gray-700 -mt-2 font-semibold text-lg"
                     >
                       Upload Avatar
                     </label>
@@ -217,7 +217,7 @@ const RegisterPage = () => {
                         onChange={handleFileChange}
                         className="mt-2 w-[120px] text-sm file:rounded-md file:border-0 file:bg-primary file:py-2 file:px-4 file:text-sm file:font-semibold file:text-white hover:file:border hover:file:border-red-500 hover:file:bg-[white] hover:file:text-primary disabled:pointer-events-none disabled:opacity-60"
                       />
-                      <span className="mt-4 text-black font-semibold">
+                      <span className="mt-4 text-black font-medium">
                         {fileName ? fileName : "No image chosen"}
                       </span>
                     </div>

@@ -137,7 +137,7 @@ const Navbar = () => {
                         tabIndex={0}
                         className="btn btn-ghost btn-circle avatar"
                       >
-                        <div className="w-10 rounded-full object-cover">
+                        <div className="w-10 rounded-full object-cover object-top">
                           <img src={loadedUser[0].image} alt="Avatar" />
                         </div>
                       </label>

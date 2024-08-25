@@ -5,9 +5,18 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 import "swiper/css/scrollbar";
 import { Autoplay, Pagination, Navigation } from "swiper/modules";
-import testimonialInfo from "../../jsons/testimonial.json";
+import { useGetReviewsQuery } from "../../redux/features/reviews/reviews.api";
+import Loading from "../../components/Loading";
+import { IFeedback } from "../../types/review.type";
+import ReactStars from "react-stars";
 
 const Testimonial = () => {
+  const { data, isLoading } = useGetReviewsQuery(undefined);
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
     <div className="-mt-16 pt-8 mb-14 testimonial">
       <SectionTitle sub="OUR HAPPY CUSTOMERS" heading="What Customer Says" />
@@ -16,7 +25,7 @@ const Testimonial = () => {
         <Swiper
           spaceBetween={30}
           slidesPerView={2}
-          slidesPerGroup={2}
+          slidesPerGroup={data?.reviews?.length % 2 === 0 ? 2 : 1}
           autoplay={{
             delay: 7000,
             disableOnInteraction: false,
@@ -25,7 +34,7 @@ const Testimonial = () => {
           modules={[Autoplay, Pagination, Navigation]}
           className="mySwiper"
         >
-          {testimonialInfo.map((singleCustomer, index) => (
+          {data?.reviews?.map((singleCustomer: IFeedback, index: number) => (
             <SwiperSlide key={index}>
               <div className="mt-12 px-10 pb-24 bg-white">
                 <div className="flex items-center gap-10 pt-8">
@@ -62,14 +71,18 @@ const Testimonial = () => {
                     <h1 className="text-3xl font-semibold">
                       {singleCustomer.name}
                     </h1>
-                    <p className="text-xl text-gray-600">
-                      {singleCustomer.designation}
-                    </p>
+                    <ReactStars
+                      count={5}
+                      value={singleCustomer.rating}
+                      size={24}
+                      color2={"#e08534"}
+                      edit={false}
+                    />
                   </div>
                 </div>
                 <div className="mt-8">
                   <p className="text-xl text-gray-600">
-                    "{singleCustomer.comment}"
+                    "{singleCustomer.feedback}"
                   </p>
                 </div>
               </div>

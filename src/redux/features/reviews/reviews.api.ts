@@ -8,7 +8,13 @@ const reviewApi = baseApi.injectEndpoints({
         url: "/reviews",
         method: "GET",
       }),
-      transformResponse: (response: TResponseRedux<any>) => response.data,
+      transformResponse: (response: TResponseRedux<any>) => {
+        // Assuming response.data is an array of reviews
+        return {
+          reviews: response.data,
+          averageRating: response.averageRating,
+        };
+      },
       providesTags: ["reviews"],
     }),
     addReviews: builder.mutation({
