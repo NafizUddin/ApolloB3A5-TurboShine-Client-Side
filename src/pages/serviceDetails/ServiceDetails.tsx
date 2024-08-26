@@ -23,6 +23,8 @@ const ServiceDetails = () => {
     format(currentDate, "yyyy-MM-dd"),
   ]);
 
+  const [selectedSlot, setSelectedSlot] = useState<TSlotAppointment[]>([]);
+
   // Helper function to format dates to YYYY-MM-DD
   const formatDate = (date: Date) => format(startOfDay(date), "yyyy-MM-dd");
 
@@ -50,6 +52,24 @@ const ServiceDetails = () => {
 
   // Convert dateRange state to Date objects for the DayPicker
   const selectedDates = dateRange.length > 1 ? [new Date(dateRange[1])] : [];
+
+  const handleSlotSelection = (slot: TSlotAppointment) => {
+    setSelectedSlot((prevSelected) => {
+      const isAlreadySelected = prevSelected.some(
+        (selected) => selected._id === slot._id
+      );
+
+      if (isAlreadySelected) {
+        return prevSelected.filter((selected) => selected._id !== slot._id);
+      } else {
+        return [...prevSelected, slot];
+      }
+    });
+  };
+
+  const isSlotSelected = (slot: TSlotAppointment) => {
+    return selectedSlot.some((selected) => selected._id === slot._id);
+  };
 
   const queryObj = useMemo(
     () => ({
@@ -121,10 +141,13 @@ const ServiceDetails = () => {
                   (singleSlot: TSlotAppointment) => (
                     <li key={singleSlot._id} className="flex mx-1">
                       <a
-                        className={`${
+                        onClick={() => handleSlotSelection(singleSlot)}
+                        className={`p-2 px-3 mb-4 rounded font-medium cursor-pointer ${
                           singleSlot?.isBooked === "available"
-                            ? "p-2 px-3 border-primary mb-4 rounded font-medium hover:bg-primary border bg-white text-primary hover:text-white cursor-pointer"
-                            : "p-2 px-3 mb-4 rounded font-medium btn btn-disabled"
+                            ? isSlotSelected(singleSlot)
+                              ? "bg-green-500 text-white"
+                              : "border-primary bg-white text-primary hover:bg-primary hover:text-white border"
+                            : "btn btn-disabled"
                         }`}
                       >
                         {`${singleSlot?.startTime}-${singleSlot?.endTime}`}
