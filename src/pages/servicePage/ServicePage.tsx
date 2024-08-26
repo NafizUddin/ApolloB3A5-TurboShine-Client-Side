@@ -2,7 +2,7 @@ import { useGetServicesQuery } from "../../redux/features/services/carService.ap
 import SectionTitle from "../../components/SectionTitle";
 import { TCarService } from "../../types/carService.type";
 import { motion } from "framer-motion";
-import { ChangeEvent, FormEvent, useMemo, useState } from "react";
+import { ChangeEvent, FormEvent, useEffect, useMemo, useState } from "react";
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import { MdAvTimer } from "react-icons/md";
 import Slider from "react-slider";
@@ -51,18 +51,17 @@ const ServicePage = () => {
     };
   }, [searchTerm, minTime, maxTime, checkedState, selectedSort]);
 
-  const { data: serviceData, isLoading } = useGetServicesQuery(queryObj);
-
-  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
-  };
+  const { data, isLoading } = useGetServicesQuery(queryObj);
 
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedSort(event.target.value);
   };
 
-  const handleSearchProduct = (event: FormEvent<HTMLFormElement>) => {
+  const handleSearchService = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const formData = new FormData(event.currentTarget);
+    const searchValue = formData.get("search") as string;
+    setSearchTerm(searchValue);
     setIsResetButtonEnabled(true);
     event.currentTarget.reset();
   };
@@ -98,9 +97,15 @@ const ServicePage = () => {
     setSearchTerm("");
   };
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   if (isLoading) {
     return <Loading />;
   }
+
+  console.log(data?.serviceData);
 
   return (
     <div className="my-10">
@@ -109,10 +114,10 @@ const ServicePage = () => {
         heading="Top-Tier Car Solutions"
       />
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-7 gap-5 mt-44">
+      <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-7 gap-9 mt-44">
         <div className="lg:col-span-1 xl:col-span-2 -mt-28 mb-40">
           {/* Search Bar starts*/}
-          <form onSubmit={handleSearchProduct} className="max-w-md mx-auto">
+          <form onSubmit={handleSearchService} className="max-w-md mx-auto">
             <label
               htmlFor="default-search"
               className="mb-2 text-sm font-medium text-gray-900 sr-only"
@@ -139,8 +144,8 @@ const ServicePage = () => {
               </div>
               <input
                 type="text"
+                name="search"
                 id="default-search"
-                onBlur={handleInputChange}
                 className="block w-full p-4 ps-10 text-gray-900 rounded-lg border border-gray-300 outline-none transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary"
                 placeholder="Search Products..."
                 required
@@ -304,14 +309,18 @@ const ServicePage = () => {
                 <option value="price-ascending">Low to High (Price)</option>
                 <option value="price-descending">High to Low (Price)</option>
               </optgroup>
-              <optgroup label="Sort By Cost">
-                <option value="cost-ascending">Low to High (Cost)</option>
-                <option value="cost-descending">High to Low (Cost)</option>
+              <optgroup label="Sort By Duration">
+                <option value="duration-ascending">
+                  Low to High (Duration)
+                </option>
+                <option value="duration-descending">
+                  High to Low (Duration)
+                </option>
               </optgroup>
             </select>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            {serviceData?.map((service: TCarService, index: number) => (
+            {data?.serviceData?.map((service: TCarService, index: number) => (
               <motion.div
                 key={service._id}
                 className="rounded-lg card p-6 bg-white mb-40 group"

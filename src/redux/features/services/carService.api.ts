@@ -10,22 +10,24 @@ const carServiceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getServices: builder.query({
       query: ({ searchTerm, minTime, maxTime, priceRanges, selectedSort }) => {
-        console.log("searchTerm:", searchTerm);
-        console.log("minTime:", minTime);
-        console.log("maxTime:", maxTime);
-        console.log("priceRanges", priceRanges);
-        console.log("selectedSort:", selectedSort);
+        // console.log("searchTerm:", searchTerm);
+        // console.log("minTime:", minTime);
+        // console.log("maxTime:", maxTime);
+        // console.log("priceRanges", priceRanges);
+        // console.log("selectedSort:", selectedSort);
 
         const params = new URLSearchParams();
 
-        if (searchTerm) params.append("search", searchTerm);
+        if (searchTerm) params.append("searchTerm", searchTerm);
         if (minTime) params.append("minTime", minTime.toString());
         if (maxTime) params.append("maxTime", maxTime.toString());
 
-        priceRanges?.forEach((range: PriceRange) => {
-          params.append("minPrice", range.start.toString());
-          params.append("maxPrice", range.end.toString());
-        });
+        if (priceRanges?.length) {
+          const priceRangesArray = priceRanges.map(
+            (range: PriceRange) => `${range.start}-${range.end}`
+          );
+          params.append("priceRanges", priceRangesArray.join(","));
+        }
 
         if (selectedSort) {
           // Determine the sort order
@@ -41,7 +43,13 @@ const carServiceApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      transformResponse: (response: TResponseRedux<any>) => response.data,
+      transformResponse: (response: TResponseRedux<any>) => {
+        // Assuming response.data is an array of reviews
+        return {
+          serviceData: response.data.result,
+          meta: response.data.meta,
+        };
+      },
       providesTags: ["services"],
     }),
   }),
