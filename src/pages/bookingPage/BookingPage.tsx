@@ -8,6 +8,7 @@ import { FaCircleXmark } from "react-icons/fa6";
 import { TSlotAppointment } from "../../types/slot.type";
 import { removeBooking } from "../../redux/features/bookings/bookings.slice";
 import toast from "react-hot-toast";
+import { useAddBookingsMutation } from "../../redux/features/bookings/bookings.api";
 
 const BookingPage = () => {
   const {
@@ -19,7 +20,31 @@ const BookingPage = () => {
   const { slotInfo, totalCost } = useAppSelector((state) => state.bookings);
   const { loadedUser, isLoading } = useUserDetails();
 
-  const handlePlaceOrder = () => {};
+  const [addBookings] = useAddBookingsMutation();
+
+  const handlePlaceBooking = async () => {
+    if (slotInfo.length === 0) {
+      toast.error("Please add a service slot to your cart.");
+      return;
+    }
+
+    try {
+      for (const slot of slotInfo) {
+        const payload = {
+          serviceId: slot.service._id,
+          slotId: slot._id,
+        };
+
+        await addBookings(payload).unwrap();
+      }
+
+      toast.success("All bookings placed successfully!");
+      // Optionally clear the cart or navigate to a success page here
+    } catch (error) {
+      console.error("Booking Error:", error);
+      toast.error("Failed to place booking. Please try again.");
+    }
+  };
 
   const handleRemoveFromCart = (id: string) => {
     dispatch(removeBooking(id));
@@ -45,7 +70,7 @@ const BookingPage = () => {
 
       <main className="max-w-7xl mx-auto pt-16 pb-24 px-4 sm:px-6 lg:px-8">
         <form
-          onSubmit={handleSubmit(handlePlaceOrder)}
+          onSubmit={handleSubmit(handlePlaceBooking)}
           className="max-w-2xl mx-auto lg:max-w-none"
         >
           <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
