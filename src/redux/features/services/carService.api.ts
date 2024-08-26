@@ -52,7 +52,19 @@ const carServiceApi = baseApi.injectEndpoints({
       },
       providesTags: ["services"],
     }),
+    getSingleService: builder.query({
+      query: (id) => {
+        let url = `/services/${id}`;
+
+        return {
+          url,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: TResponseRedux<any>) => response.data,
+      providesTags: ["services"],
+    }),
   }),
 });
 
-export const { useGetServicesQuery } = carServiceApi;
+export const { useGetServicesQuery, useGetSingleServiceQuery } = carServiceApi;

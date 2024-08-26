@@ -213,7 +213,9 @@ const ServicePage = () => {
           <div className="mt-7 space-y-7">
             <div className="flex gap-3 items-center justify-center lg:justify-start">
               <MdAvTimer className="text-3xl" />
-              <h1 className="text-2xl mt-2 font-semibold">Time Duration</h1>
+              <h1 className="text-2xl mt-2 font-semibold">
+                Service Time Duration
+              </h1>
             </div>
 
             <Slider
