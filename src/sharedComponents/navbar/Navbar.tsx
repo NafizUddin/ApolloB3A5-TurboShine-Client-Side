@@ -7,10 +7,12 @@ import { MdOutlineLogout } from "react-icons/md";
 import toast from "react-hot-toast";
 import useUserDetails from "../../custom Hooks/useUserDetails";
 import Loading from "../../components/Loading";
+import { totalSlotsCount } from "../../redux/features/bookings/bookings.slice";
 
 const Navbar = () => {
   const user = useAppSelector(selectCurrentUser);
   const dispatch = useAppDispatch();
+  const totalSlots = useAppSelector(totalSlotsCount);
 
   const { loadedUser, isLoading } = useUserDetails();
 
@@ -67,18 +69,24 @@ const Navbar = () => {
           Reviews
         </NavLink>
       </li>
-      <li>
+      <li className="relative">
         <NavLink
           to="/bookings"
           className={({ isActive, isPending }) =>
             isActive
-              ? "bg-primary px-3 py-2 text-white rounded-md"
+              ? "bg-primary px-3 py-2 text-white rounded-md relative"
               : isPending
               ? "pending"
-              : ""
+              : "relative"
           }
         >
           Bookings
+          {/* Circle with number */}
+          {totalSlots > 0 && (
+            <span className="absolute top-0 right-0 mt-[-8px] mr-[-8px] flex items-center justify-center w-5 h-5 bg-primary text-white text-xs rounded-full">
+              {totalSlots}
+            </span>
+          )}
         </NavLink>
       </li>
     </>

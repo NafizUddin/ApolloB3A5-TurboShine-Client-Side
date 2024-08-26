@@ -1,5 +1,6 @@
 import { TSlotAppointment } from "@/types/slot.type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "@/redux/store";
 
 type TInitialState = {
   slotInfo: TSlotAppointment[];
@@ -39,3 +40,6 @@ const bookingSlice = createSlice({
 export const { addBooking, clearBooking } = bookingSlice.actions;
 
 export default bookingSlice.reducer;
+
+export const totalSlotsCount = (state: RootState) =>
+  state.bookings.slotInfo.length;
