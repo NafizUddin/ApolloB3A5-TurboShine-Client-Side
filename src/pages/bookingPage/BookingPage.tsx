@@ -6,13 +6,14 @@ import useUserDetails from "../../custom Hooks/useUserDetails";
 import Loading from "../../components/Loading";
 import { FaCircleXmark } from "react-icons/fa6";
 import { TSlotAppointment } from "../../types/slot.type";
+import { removeBooking } from "../../redux/features/bookings/bookings.slice";
+import toast from "react-hot-toast";
 
 const BookingPage = () => {
   const {
     handleSubmit,
     formState: { errors },
     register,
-    reset,
   } = useForm<FieldValues>();
   const dispatch = useAppDispatch();
   const { slotInfo, totalCost } = useAppSelector((state) => state.bookings);
@@ -20,13 +21,16 @@ const BookingPage = () => {
 
   const handlePlaceOrder = () => {};
 
-  const handleRemoveFromCart = (data: any) => {};
+  const handleRemoveFromCart = (id: string) => {
+    dispatch(removeBooking(id));
+    toast.success("Service Slot removed successfully!");
+  };
 
   const total = totalCost + 11;
 
-  //   useEffect(() => {
-  //     window.scrollTo(0, 0);
-  //   }, []);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (isLoading) {
     return <Loading />;

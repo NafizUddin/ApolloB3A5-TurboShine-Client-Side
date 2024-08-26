@@ -30,6 +30,21 @@ const bookingSlice = createSlice({
       // Calculate the total cost for the new slots only
       state.totalCost += action.payload.totalCost * newSlots.length;
     },
+    removeBooking: (state, action: PayloadAction<string>) => {
+      const slotIdToRemove = action.payload;
+
+      const slotToRemove = state.slotInfo.find(
+        (slot) => slot._id === slotIdToRemove
+      );
+
+      if (slotToRemove) {
+        state.slotInfo = state.slotInfo.filter(
+          (slot) => slot._id !== slotIdToRemove
+        );
+
+        state.totalCost -= slotToRemove.service.price;
+      }
+    },
     clearBooking: (state) => {
       state.slotInfo = [];
       state.totalCost = 0;
@@ -37,7 +52,7 @@ const bookingSlice = createSlice({
   },
 });
 
-export const { addBooking, clearBooking } = bookingSlice.actions;
+export const { addBooking, removeBooking, clearBooking } = bookingSlice.actions;
 
 export default bookingSlice.reducer;
 
