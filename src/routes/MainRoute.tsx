@@ -7,6 +7,7 @@ import RegisterPage from "../pages/registerPage/RegisterPage";
 import ReviewPage from "../pages/reviewPage/ReviewPage";
 import ServicePage from "../pages/servicePage/ServicePage";
 import ServiceDetails from "../pages/serviceDetails/ServiceDetails";
+import BookingPage from "../pages/bookingPage/BookingPage";
 
 const MainRoute = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ const MainRoute = createBrowserRouter([
       {
         path: "reviews",
         element: <ReviewPage />,
+      },
+      {
+        path: "bookings",
+        element: <BookingPage />,
       },
     ],
   },

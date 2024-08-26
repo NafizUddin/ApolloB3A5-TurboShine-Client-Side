@@ -13,6 +13,7 @@ import "react-day-picker/dist/style.css";
 import { FaTimesCircle } from "react-icons/fa";
 import { useAppDispatch } from "../../redux/hooks";
 import { addBooking } from "../../redux/features/bookings/bookings.slice";
+import toast from "react-hot-toast";
 
 const ServiceDetails = () => {
   const { id } = useParams();
@@ -101,6 +102,7 @@ const ServiceDetails = () => {
 
   const handleBookingSlots = () => {
     dispatch(addBooking({ slotInfo: selectedSlot, totalCost: data?.price }));
+    toast.success("The slot has been booked successfully.");
   };
 
   useEffect(() => {
