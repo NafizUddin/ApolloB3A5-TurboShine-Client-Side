@@ -4,13 +4,15 @@ import { useGetSingleServiceQuery } from "../../redux/features/services/carServi
 import { useParams } from "react-router-dom";
 import { LuClock } from "react-icons/lu";
 import { FaCheckToSlot } from "react-icons/fa6";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useGetSlotsQuery } from "../../redux/features/slots/slots.api";
 import { TSlotAppointment } from "@/types/slot.type";
 import { DayPicker } from "react-day-picker";
 import { format, startOfDay, isSameDay, isBefore } from "date-fns";
 import "react-day-picker/dist/style.css";
 import { FaTimesCircle } from "react-icons/fa";
+import { useAppDispatch } from "../../redux/hooks";
+import { addBooking } from "../../redux/features/bookings/bookings.slice";
 
 const ServiceDetails = () => {
   const { id } = useParams();
@@ -24,6 +26,8 @@ const ServiceDetails = () => {
   ]);
 
   const [selectedSlot, setSelectedSlot] = useState<TSlotAppointment[]>([]);
+
+  const dispatch = useAppDispatch();
 
   // Helper function to format dates to YYYY-MM-DD
   const formatDate = (date: Date) => format(startOfDay(date), "yyyy-MM-dd");
@@ -81,10 +85,6 @@ const ServiceDetails = () => {
 
   const { data: serviceSlots } = useGetSlotsQuery(queryObj);
 
-  if (isLoading) {
-    return <Loading />;
-  }
-
   // Convert currentDate to YYYY-MM-DD format
   const currentDateFormatted = formatDate(currentDate);
 
@@ -98,6 +98,18 @@ const ServiceDetails = () => {
       serviceSlot.date !== currentDateFormatted &&
       dateRange.includes(serviceSlot.date)
   );
+
+  const handleBookingSlots = () => {
+    dispatch(addBooking({ slotInfo: selectedSlot, totalCost: data?.price }));
+  };
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div>
@@ -161,6 +173,19 @@ const ServiceDetails = () => {
                 Sorry, no slots are available
               </div>
             )}
+
+            <div className="flex justify-center items-center mt-7">
+              {selectedSlot && selectedSlot.length > 0 && (
+                <div>
+                  <button
+                    onClick={handleBookingSlots}
+                    className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold"
+                  >
+                    Book Services
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
 
           <div className="mt-10 mb-20 flex flex-col justify-center items-center">
@@ -191,22 +216,44 @@ const ServiceDetails = () => {
               </div>
             </div>
 
-            <div className="flex items-center justify-center flex-wrap mt-4 w-4/5 mx-auto gap-1">
-              {otherDateServiceSlots?.map((singleSlot: TSlotAppointment) => (
-                <div key={singleSlot._id}>
-                  <li className="flex mx-1">
+            <div>
+              <div className="flex items-center justify-center flex-wrap mt-4 w-4/5 mx-auto gap-1">
+                {otherDateServiceSlots?.map((singleSlot: TSlotAppointment) => (
+                  <li key={singleSlot._id} className="flex mx-1">
                     <a
-                      className={`${
+                      onClick={() => handleSlotSelection(singleSlot)}
+                      className={`p-2 px-3 mb-4 rounded font-medium cursor-pointer ${
                         singleSlot?.isBooked === "available"
-                          ? "p-2 px-3 border-primary mb-4 rounded font-medium hover:bg-primary border bg-white text-primary hover:text-white cursor-pointer"
-                          : "p-2 px-3 mb-4 rounded font-medium btn btn-disabled"
+                          ? isSlotSelected(singleSlot)
+                            ? "bg-green-500 text-white"
+                            : "border-primary bg-white text-primary hover:bg-primary hover:text-white border"
+                          : "btn btn-disabled"
                       }`}
                     >
                       {`${singleSlot?.startTime}-${singleSlot?.endTime}`}
                     </a>
                   </li>
-                </div>
-              ))}
+                ))}
+              </div>
+
+              <div className="flex justify-center items-center mt-7">
+                {selectedSlot &&
+                  selectedSlot.length > 0 &&
+                  selectedSlot.some(
+                    (serviceSlot: TSlotAppointment) =>
+                      serviceSlot.date !== currentDateFormatted &&
+                      dateRange.includes(serviceSlot.date)
+                  ) && (
+                    <div>
+                      <button
+                        onClick={handleBookingSlots}
+                        className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold"
+                      >
+                        Book Services
+                      </button>
+                    </div>
+                  )}
+              </div>
             </div>
           </div>
         </div>
