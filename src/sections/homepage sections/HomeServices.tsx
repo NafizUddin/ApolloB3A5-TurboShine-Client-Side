@@ -5,14 +5,22 @@ import { FaLongArrowAltRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const HomeServices = () => {
-  const { data: serviceData } = useGetServicesQuery(undefined);
+  const queryObj = {
+    searchTerm: "",
+    minTime: 0,
+    maxTime: 120,
+    priceRanges: [],
+    selectedSort: "",
+  };
+
+  const { data } = useGetServicesQuery(queryObj);
 
   return (
     <div className="mb-28">
       <SectionTitle sub="SERVICES WE PROVIDE" heading="Our Service Area" />
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-40">
-        {serviceData?.slice(0, 6)?.map((service: TCarService) => (
+        {data?.serviceData?.slice(0, 6)?.map((service: TCarService) => (
           <div
             key={service._id}
             className="rounded-lg card p-6 bg-white mb-40 group"
@@ -27,14 +35,16 @@ const HomeServices = () => {
             <p className="text-gray-500 mb-4 lg:h-14 xl:h-auto group-hover:text-white pl-7 font-semibold">
               {service.short_description}
             </p>
-            <button className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold group-hover:bg-white group-hover:text-primary w-32 ml-7">
-              View Service
-            </button>
+            <Link to={`/serviceDetails/${service._id}`}>
+              <button className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold group-hover:bg-white group-hover:text-primary w-32 ml-7">
+                View Service
+              </button>
+            </Link>
           </div>
         ))}
       </div>
 
-      {serviceData && (
+      {data?.serviceData && (
         <div className="flex justify-center items-center gap-2 relative -top-24">
           <Link to="/services">
             <button className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold flex items-center gap-1">

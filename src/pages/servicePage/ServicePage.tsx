@@ -8,6 +8,7 @@ import { MdAvTimer } from "react-icons/md";
 import Slider from "react-slider";
 import { FaSort } from "react-icons/fa";
 import Loading from "../../components/Loading";
+import { Link } from "react-router-dom";
 
 const priceRanges = ["0-500", "501-1000", "1001-1500"];
 
@@ -104,8 +105,6 @@ const ServicePage = () => {
   if (isLoading) {
     return <Loading />;
   }
-
-  console.log(data?.serviceData);
 
   return (
     <div className="my-10">
@@ -350,9 +349,11 @@ const ServicePage = () => {
                   <span className="font-semibold">Service Cost:</span> $
                   {service.price}.00
                 </p>
-                <button className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold group-hover:bg-white group-hover:text-primary w-32 ml-7">
-                  View Service
-                </button>
+                <Link to={`/serviceDetails/${service._id}`}>
+                  <button className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold group-hover:bg-white group-hover:text-primary w-32 ml-7">
+                    View Service
+                  </button>
+                </Link>
               </motion.div>
             ))}
           </div>

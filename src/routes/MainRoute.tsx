@@ -6,6 +6,7 @@ import LoginPage from "../pages/loginPage/LoginPage";
 import RegisterPage from "../pages/registerPage/RegisterPage";
 import ReviewPage from "../pages/reviewPage/ReviewPage";
 import ServicePage from "../pages/servicePage/ServicePage";
+import ServiceDetails from "../pages/serviceDetails/ServiceDetails";
 
 const MainRoute = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const MainRoute = createBrowserRouter([
       {
         path: "services",
         element: <ServicePage />,
+      },
+      {
+        path: "serviceDetails/:id",
+        element: <ServiceDetails />,
       },
       {
         path: "reviews",
