@@ -5,16 +5,16 @@ const slotApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getSlots: builder.query({
       query: ({
-        currentDate,
+        dateRange,
         serviceId,
       }: {
-        currentDate: string;
+        dateRange: string[];
         serviceId: string;
       }) => ({
         url: "/slots/availability",
         method: "GET",
         params: {
-          date: currentDate,
+          date: dateRange.join(","), // Joining array to comma-separated string
           serviceId: serviceId,
         },
       }),
