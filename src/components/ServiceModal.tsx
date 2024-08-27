@@ -87,9 +87,9 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
     <div>
       <input type="checkbox" id="product-modal" className="modal-toggle" />
       <div className="modal">
-        <div className="modal-box bg-secondary max-w-4xl !important space-y-4">
-          <h3 className="font-bold text-lg text-white text-left">{`${
-            Object.keys(service).length <= 0 ? "Add" : "Edit"
+        <div className="modal-box max-w-4xl !important space-y-4">
+          <h3 className="font-bold text-3xl text-center">{`${
+            Object.keys(service).length <= 0 ? "Add New" : "Update Existing"
           } Service`}</h3>
           <form
             onSubmit={handleSubmit(onSubmit)}
@@ -97,19 +97,19 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
           >
             <div className="form-control w-full col-span-12 sm:col-span-6">
               <label className="label">
-                <span className="label-text text-[#E2E2E2] font-semibold">
-                  Name *
+                <span className="label-text font-semibold text-lg">
+                  Service Name
                 </span>
               </label>
               <input
                 placeholder={service?.name || "Enter Service Name"}
                 defaultValue={service?.name && service?.name}
                 type="text"
-                className="input input-bordered bg-[#2E2D2D] text-white border-0 rounded-none focus:outline-none"
+                className="input input-bordered focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary"
                 {...register("name", {
                   required: {
                     value: true,
-                    message: "Name is required",
+                    message: "Service Name is required",
                   },
                 })}
               />
@@ -123,20 +123,20 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
             </div>
             <div className="form-control w-full col-span-12 sm:col-span-6">
               <label className="label">
-                <span className="label-text text-[#E2E2E2] font-semibold">
-                  Service Cost *
+                <span className="label-text font-semibold text-lg">
+                  Service Cost
                 </span>
               </label>
               <input
                 type="number"
                 min={0}
-                className="input input-bordered bg-[#2E2D2D] text-white border-0 rounded-none"
+                className="input input-bordered focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary"
                 placeholder={service?.price || "Enter service cost"}
                 defaultValue={service?.price && service?.price}
                 {...register("price", {
                   required: {
                     value: true,
-                    message: "Price is required",
+                    message: "Service Cost is required",
                   },
                 })}
               />
@@ -148,10 +148,10 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
                 )}
               </label>
             </div>
-            <div className="form-control w-full col-span-12">
+            <div className="form-control w-full col-span-12 sm:col-span-6">
               <label className="label">
-                <span className="label-text text-white font-semibold">
-                  Description *
+                <span className="label-text font-semibold text-lg">
+                  Description
                 </span>
               </label>
               <textarea
@@ -159,11 +159,11 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
                   "Enter brief description of service in few sentences..."
                 }
                 defaultValue={service?.description && service?.description}
-                className="textarea textarea-bordered bg-[#2E2D2D] text-white border-0 rounded-none  h-24"
+                className="textarea textarea-bordered h-24 input focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary placeholder:text-base"
                 {...register("description", {
                   required: {
                     value: true,
-                    message: "Description is required",
+                    message: "Service Brief Description is required",
                   },
                 })}
               />
@@ -175,74 +175,83 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
                 )}
               </label>
             </div>
-
-            {/* <div className="form-control w-full col-span-12 sm:col-span-6">
+            <div className="form-control w-full col-span-12 sm:col-span-6">
               <label className="label">
-                <span className="label-text text-[#E2E2E2] font-semibold">
-                  Brand *
+                <span className="label-text font-semibold text-lg">
+                  Short Description
                 </span>
               </label>
-              <input
-                placeholder={product?.brand || `Product Brand`}
-                defaultValue={product?.brand && product?.brand}
-                type="text"
-                className="input input-bordered bg-[#2E2D2D] text-white border-0 rounded-none focus:outline-none"
-                {...register("brand", {
+              <textarea
+                placeholder={
+                  "Enter short description of service in few words (4 to 5 words)..."
+                }
+                defaultValue={
+                  service?.short_description && service?.short_description
+                }
+                className="textarea textarea-bordered h-24 input focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary placeholder:text-base"
+                {...register("short_description", {
                   required: {
                     value: true,
-                    message: "Brand is required",
+                    message: "Service Short Description is required",
                   },
                 })}
               />
               <label className="label">
-                {errors.brand?.type === "required" && (
+                {errors.short_description?.type === "required" && (
                   <span className="label-text-alt text-red-600 text-sm">
-                    {(errors.brand as FieldError).message}
+                    {(errors.description as FieldError).message}
                   </span>
                 )}
               </label>
             </div>
+
             <div className="form-control w-full col-span-12 sm:col-span-6">
               <label className="label">
-                <span className="label-text text-[#E2E2E2] font-semibold">
-                  Stock Quantity *
+                <span className="label-text font-semibold text-lg">
+                  Service Duration
                 </span>
               </label>
               <input
                 type="number"
                 min={0}
-                className="input input-bordered bg-[#2E2D2D] text-white border-0 rounded-none"
-                defaultValue={product?.stockQuantity && product?.stockQuantity}
-                {...register("stockQuantity", {
+                max={120}
+                className="input input-bordered focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary"
+                placeholder={
+                  service?.duration ||
+                  "Enter service duration (maximum 120 minutes)"
+                }
+                defaultValue={service?.duration && service?.duration}
+                {...register("duration", {
                   required: {
                     value: true,
-                    message: "Stock Quanitity is required",
+                    message: "Service Duration is required",
                   },
                 })}
               />
               <label className="label">
-                {errors.stockQuantity?.type === "required" && (
+                {errors.duration?.type === "required" && (
                   <span className="label-text-alt text-red-600 text-sm">
-                    {(errors.stockQuantity as FieldError).message}
+                    {(errors.duration as FieldError).message}
                   </span>
                 )}
               </label>
             </div>
+
             <div className="form-control w-full col-span-12 sm:col-span-6">
               <label className="label">
-                <span className="label-text text-[#E2E2E2] font-semibold">
-                  Image Link *
+                <span className="label-text font-semibold text-lg">
+                  Paste Service Image Link
                 </span>
               </label>
               <input
                 type="text"
-                className="input input-bordered bg-[#2E2D2D] text-white border-0 rounded-none focus:outline-none"
-                placeholder={product?.image || `Image Link`}
-                defaultValue={product?.image && product?.image}
+                className="input input-bordered focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary"
+                placeholder={service?.image || `Enter Service Image Link`}
+                defaultValue={service?.image && service?.image}
                 {...register("image", {
                   required: {
                     value: true,
-                    message: "Image Link is required",
+                    message: "Service Image Link is required",
                   },
                 })}
               />
@@ -253,22 +262,24 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
                   </span>
                 )}
               </label>
-            </div> */}
+            </div>
 
-            <input
+            <button
               type="submit"
-              value="Submit"
-              className="btn btn-md btn-accent w-full font-bold col-span-6"
-            />
-            <label
-              onClick={() => {
-                setModalType("");
-                setService({});
-              }}
-              htmlFor="product-modal"
-              className="btn btn-md w-full font-bold col-span-6"
+              className="w-full py-3 text-white bg-primary rounded-lg btn-custom font-bold col-span-6"
             >
-              Cancel
+              Submit Feedback
+            </button>
+            <label htmlFor="product-modal" className="col-span-6">
+              <button
+                onClick={() => {
+                  setModalType("");
+                  setService({});
+                }}
+                className="bg-white outline outline-2 text-primary py-3 btn-custom-two rounded-lg font-bold w-full"
+              >
+                Cancel
+              </button>
             </label>
           </form>
         </div>

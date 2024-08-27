@@ -109,21 +109,21 @@ const ServiceManagement = () => {
           <tbody>
             {allServices?.serviceData?.length > 0 &&
               allServices?.serviceData?.map(
-                (service: TCarService, index: number) => (
+                (singleService: TCarService, index: number) => (
                   <tr key={index} className="rounded-lg">
                     <th>{index + 1 + (currentPage - 1) * dataPerPage}</th>
                     <td>
                       <img
-                        src={service?.image}
+                        src={singleService?.image}
                         className="w-20 h-20 object-contain"
                       />
                     </td>
-                    <td className="font-semibold">{service?.name}</td>
+                    <td className="font-semibold">{singleService?.name}</td>
                     <td className="font-semibold">
-                      ${service?.price.toFixed(2)}
+                      ${singleService?.price.toFixed(2)}
                     </td>
                     <td className="font-semibold">
-                      {service?.duration} minutes
+                      {singleService?.duration} minutes
                     </td>
                     <td className="xl:text-lg font-semibold">
                       <div className="dropdown dropdown-left">
@@ -135,21 +135,24 @@ const ServiceManagement = () => {
                           className="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-32"
                         >
                           <li>
-                            <span
+                            <label
                               onClick={() => {
                                 setModalType("edit");
-                                setService(service);
+                                setService(singleService);
                               }}
+                              htmlFor="product-modal"
                               className=""
                             >
                               Edit
-                            </span>
+                            </label>
                           </li>
 
                           <li>
                             <span
                               onClick={() =>
-                                handleDeleteRequest(service?._id as string)
+                                handleDeleteRequest(
+                                  singleService?._id as string
+                                )
                               }
                               className=""
                             >
