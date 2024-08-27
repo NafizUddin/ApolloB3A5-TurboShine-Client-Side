@@ -22,7 +22,7 @@ const AdminHome = () => {
 
   const { data: allServices } = useGetServicesQuery(queryObj);
   const { data: allStudents } = useGetAllUsersQuery(undefined);
-  const { data: allSlots } = useGetSlotsQuery(_queryObj);
+  const { data: slotInfo } = useGetSlotsQuery(_queryObj);
 
   return (
     <div className="mt-10">
@@ -112,7 +112,7 @@ const AdminHome = () => {
 
                   <div className="mx-5">
                     <h4 className="text-2xl font-semibold text-gray-700">
-                      {allSlots?.length}
+                      {slotInfo?.meta?.total}
                     </h4>
                     <div className="text-gray-500 text-lg">
                       Total Service Slots

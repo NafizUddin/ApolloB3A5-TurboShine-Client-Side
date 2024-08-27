@@ -18,7 +18,12 @@ const slotApi = baseApi.injectEndpoints({
           serviceId: serviceId,
         },
       }),
-      transformResponse: (response: TResponseRedux<any>) => response.data,
+      transformResponse: (response: TResponseRedux<any>) => {
+        return {
+          slotData: response.data.result,
+          meta: response.data.meta,
+        };
+      },
       providesTags: ["slots"],
     }),
     addReviews: builder.mutation({

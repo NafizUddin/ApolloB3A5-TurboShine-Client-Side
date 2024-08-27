@@ -96,7 +96,7 @@ const ServiceManagement = () => {
           className="flex items-center gap-2 px-4 py-3 btn-custom rounded-full text-white bg-primary"
         >
           <FaPlus className="text-xl mr-1" />
-          <span className="">Add New Service</span>
+          <span className="mt-1">Add New Service</span>
         </label>
       </div>
 

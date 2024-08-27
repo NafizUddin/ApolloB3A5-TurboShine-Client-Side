@@ -90,11 +90,11 @@ const ServiceDetails = () => {
   const currentDateFormatted = formatDate(currentDate);
 
   // Filter serviceSlots into currentDateServiceSlots and otherDateServiceSlots
-  const currentDateServiceSlots = serviceSlots?.filter(
+  const currentDateServiceSlots = serviceSlots?.slotData?.filter(
     (serviceSlot: TSlotAppointment) => serviceSlot.date === currentDateFormatted
   );
 
-  const otherDateServiceSlots = serviceSlots?.filter(
+  const otherDateServiceSlots = serviceSlots?.slotData?.filter(
     (serviceSlot: TSlotAppointment) =>
       serviceSlot.date !== currentDateFormatted &&
       dateRange.includes(serviceSlot.date)
@@ -149,7 +149,7 @@ const ServiceDetails = () => {
             </div>
           </div>
           <div>
-            {serviceSlots && serviceSlots.length > 0 ? (
+            {serviceSlots && serviceSlots?.slotData?.length > 0 ? (
               <div className="flex items-center justify-center flex-wrap mt-4 w-4/5 mx-auto gap-1">
                 {currentDateServiceSlots?.map(
                   (singleSlot: TSlotAppointment) => (

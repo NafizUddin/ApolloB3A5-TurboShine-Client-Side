@@ -57,7 +57,6 @@ const carServiceApi = baseApi.injectEndpoints({
         };
       },
       transformResponse: (response: TResponseRedux<any>) => {
-        // Assuming response.data is an array of reviews
         return {
           serviceData: response.data.result,
           meta: response.data.meta,
