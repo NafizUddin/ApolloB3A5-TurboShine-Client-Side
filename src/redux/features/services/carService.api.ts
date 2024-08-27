@@ -9,7 +9,15 @@ type PriceRange = {
 const carServiceApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getServices: builder.query({
-      query: ({ searchTerm, minTime, maxTime, priceRanges, selectedSort }) => {
+      query: ({
+        searchTerm,
+        minTime,
+        maxTime,
+        priceRanges,
+        selectedSort,
+        page,
+        limit,
+      }) => {
         // console.log("searchTerm:", searchTerm);
         // console.log("minTime:", minTime);
         // console.log("maxTime:", maxTime);
@@ -36,6 +44,11 @@ const carServiceApi = baseApi.injectEndpoints({
             : selectedSort.split("-")[0];
 
           params.append("sort", sortField);
+        }
+
+        if (page && limit) {
+          params.append("page", page);
+          params.append("limit", limit);
         }
 
         return {

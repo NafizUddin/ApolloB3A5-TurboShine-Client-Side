@@ -32,6 +32,7 @@
     "react-stars": "^2.2.5",
     "react-type-animation": "^3.2.0",
     "redux-persist": "^6.0.0",
+    "sweetalert2": "^11.12.4",
     "swiper": "^11.1.10"
   },
   "devDependencies": {
