@@ -8,6 +8,7 @@ import ReviewPage from "../pages/reviewPage/ReviewPage";
 import ServicePage from "../pages/servicePage/ServicePage";
 import ServiceDetails from "../pages/serviceDetails/ServiceDetails";
 import BookingPage from "../pages/bookingPage/BookingPage";
+import DashboardLayout from "../layouts/dashboardLayout/DashboardLayout";
 
 const MainRoute = createBrowserRouter([
   {
@@ -44,6 +45,10 @@ const MainRoute = createBrowserRouter([
   {
     path: "/register",
     element: <RegisterPage />,
+  },
+  {
+    path: "/dashboard",
+    element: <DashboardLayout />,
   },
 ]);
 

@@ -3,7 +3,7 @@ import logo from "../../assets/logo.png";
 import { CgMenuGridO, CgProfile } from "react-icons/cg";
 import { logout, selectCurrentUser } from "../../redux/features/auth/authSlice";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
-import { MdOutlineLogout } from "react-icons/md";
+import { MdOutlineLogout, MdSpaceDashboard } from "react-icons/md";
 import toast from "react-hot-toast";
 import useUserDetails from "../../custom Hooks/useUserDetails";
 import Loading from "../../components/Loading";
@@ -154,15 +154,24 @@ const Navbar = () => {
                         className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content rounded-box w-60 bg-white"
                       >
                         <li>
-                          <a className="text-lg font-medium hover:bg-[#D60C0C] hover:text-white">
+                          <a className="text-lg font-medium hover:bg-primary hover:text-white">
                             <CgProfile className="text-lg mr-1" />{" "}
                             {loadedUser[0].name}
                           </a>
                         </li>
                         <li>
+                          <Link
+                            to="/dashboard"
+                            className="text-lg font-medium hover:bg-primary hover:text-white"
+                          >
+                            <MdSpaceDashboard className="text-lg mr-1" />{" "}
+                            Dashboard
+                          </Link>
+                        </li>
+                        <li>
                           <a
                             onClick={handleLogOut}
-                            className="text-lg font-medium hover:bg-[#D60C0C] hover:text-white"
+                            className="text-lg font-medium hover:bg-primary hover:text-white"
                           >
                             <MdOutlineLogout className="text-lg mr-1" /> Logout
                           </a>
