@@ -35,19 +35,28 @@ const BookingPage = () => {
     setIsBookingLoading(true);
 
     try {
+      let lastResponse;
+
       for (const slot of slotInfo) {
         const payload = {
           serviceId: slot.service._id,
           slotId: slot._id,
+          paymentStatus: "Pending",
+          totalBookingCost: total,
         };
 
-        await addBookings(payload).unwrap();
+        lastResponse = await addBookings(payload).unwrap();
+      }
+
+      console.log("Last booking response:", lastResponse);
+
+      if (lastResponse?.result) {
+        window.location.href = lastResponse.payment_url;
       }
 
       toast.success("All bookings placed successfully!");
       setIsBookingLoading(false);
       dispatch(clearBooking());
-      // Optionally clear the cart or navigate to a success page here
     } catch (error) {
       console.error("Booking Error:", error);
       toast.error("Failed to place booking. Please try again.");
@@ -181,7 +190,7 @@ const BookingPage = () => {
                         {isBookingLoading ? (
                           <ImSpinner6 className="animate-spin m-auto text-xl" />
                         ) : (
-                          "Confirm Booking"
+                          "Pay Now"
                         )}
                       </button>
                     </div>

@@ -19,13 +19,13 @@ const bookingApi = baseApi.injectEndpoints({
     // }),
     addBookings: builder.mutation({
       query: (bookingInfo) => {
-        console.log(bookingInfo);
         return {
           url: "/bookings",
           method: "POST",
           body: bookingInfo,
         };
       },
+      transformResponse: (response: TResponseRedux<any>) => response.data,
       invalidatesTags: ["bookings"],
     }),
   }),
