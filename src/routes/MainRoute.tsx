@@ -9,6 +9,7 @@ import ServicePage from "../pages/servicePage/ServicePage";
 import ServiceDetails from "../pages/serviceDetails/ServiceDetails";
 import BookingPage from "../pages/bookingPage/BookingPage";
 import DashboardLayout from "../layouts/dashboardLayout/DashboardLayout";
+import PrivateRoute from "./PrivateRoute";
 
 const MainRoute = createBrowserRouter([
   {
@@ -26,7 +27,11 @@ const MainRoute = createBrowserRouter([
       },
       {
         path: "serviceDetails/:id",
-        element: <ServiceDetails />,
+        element: (
+          <PrivateRoute>
+            <ServiceDetails />
+          </PrivateRoute>
+        ),
       },
       {
         path: "reviews",
@@ -34,7 +39,11 @@ const MainRoute = createBrowserRouter([
       },
       {
         path: "bookings",
-        element: <BookingPage />,
+        element: (
+          <PrivateRoute>
+            <BookingPage />{" "}
+          </PrivateRoute>
+        ),
       },
     ],
   },
@@ -48,7 +57,11 @@ const MainRoute = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayout />
+      </PrivateRoute>
+    ),
   },
 ]);
 

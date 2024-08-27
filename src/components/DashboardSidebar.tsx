@@ -2,15 +2,18 @@ import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import logo from "../assets/removed-bg-logo.png";
 import { MdOutlineLogout } from "react-icons/md";
-import { FaTasks } from "react-icons/fa";
-import { BsListTask } from "react-icons/bs";
 import { GrServices, GrTasks } from "react-icons/gr";
-import { MdOutlineTask } from "react-icons/md";
-import { CgHome, CgProfile } from "react-icons/cg";
+import { CgProfile } from "react-icons/cg";
 import useUserDetails from "../custom Hooks/useUserDetails";
 import { useAppDispatch } from "../redux/hooks";
 import { logout } from "../redux/features/auth/authSlice";
 import Loading from "./Loading";
+import { IoHome } from "react-icons/io5";
+import { MdOutlineBorderColor } from "react-icons/md";
+import { MdOutlineRateReview } from "react-icons/md";
+import { BsCardChecklist } from "react-icons/bs";
+import { MdMiscellaneousServices } from "react-icons/md";
+import { FaUsersCog } from "react-icons/fa";
 
 const DashboardSidebar = () => {
   const { loadedUser, isLoading } = useUserDetails();
@@ -20,6 +23,7 @@ const DashboardSidebar = () => {
   const handleLogOut = () => {
     dispatch(logout());
     toast.success("Logged out successfully", { duration: 3000 });
+    navigate("/");
   };
 
   if (isLoading) {
@@ -72,10 +76,12 @@ const DashboardSidebar = () => {
             className="drawer-overlay"
           ></label>
           <div className="menu p-4 w-52 md:w-80 min-h-full bg-base-200 text-base-content">
-            <div className="space-y-6 md:space-y-10">
-              <Link to="/">
-                <img src={logo} className="w-52 mx-auto" />
-              </Link>
+            <div className="space-y-6">
+              <div className="mb-5">
+                <Link to="/">
+                  <img src={logo} className="w-52 mx-auto" />
+                </Link>
+              </div>
 
               <div id="profile" className="space-y-3">
                 <img
@@ -89,10 +95,7 @@ const DashboardSidebar = () => {
                   </h2>
                 </div>
               </div>
-              <div
-                id="menu"
-                className="flex flex-col justify-between space-y-2"
-              >
+              <div id="menu" className="flex flex-col">
                 <div className="space-y-2">
                   {loadedUser[0].role === "admin" ? (
                     <>
@@ -101,35 +104,35 @@ const DashboardSidebar = () => {
                           to="/dashboard/adminHome"
                           className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
-                          <FaTasks className="text-xl mr-1" />
-                          <span className="">Admin Home</span>
+                          <IoHome className="text-xl mr-1" />
+                          <span className="mt-2">Admin Home</span>
                         </Link>
                       </li>
                       <li>
                         <Link
                           to="/dashboard/service-management"
-                          className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-[#0f6097] hover:text-white hover:scale-105"
+                          className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
-                          <BsListTask className="text-xl mr-1" />
-                          Service Management
+                          <MdMiscellaneousServices className="text-xl mr-1" />
+                          <span className="mt-1">Service Management</span>
                         </Link>
                       </li>
                       <li>
                         <Link
                           to="/dashboard/slot-management"
-                          className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-[#0f6097] hover:text-white hover:scale-105"
+                          className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
                           <GrTasks className="text-xl mr-1" />
-                          Slot Management
+                          <span className="mt-1">Service Management</span>
                         </Link>
                       </li>
                       <li>
                         <Link
                           to="/dashboard/user-management"
-                          className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-[#0f6097] hover:text-white hover:scale-105"
+                          className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
-                          <MdOutlineTask className="text-xl mr-1" />
-                          User Management
+                          <FaUsersCog className="text-xl mr-1" />
+                          <span className="mt-1">Users Management</span>
                         </Link>
                       </li>
                     </>
@@ -140,26 +143,26 @@ const DashboardSidebar = () => {
                           to="/dashboard/userHome"
                           className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
-                          <FaTasks className="text-xl mr-1" />
-                          <span className="">User Home</span>
+                          <IoHome className="text-xl mr-1" />
+                          <span className="mt-2">User Home</span>
                         </Link>
                       </li>
                       <li>
                         <Link
                           to="/dashboard/past-bookings"
-                          className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-[#0f6097] hover:text-white hover:scale-105"
+                          className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
-                          <BsListTask className="text-xl mr-1" />
-                          Past Bookings
+                          <MdOutlineBorderColor className="text-xl mr-1" />
+                          <span className="mt-1">Past Bookings</span>
                         </Link>
                       </li>
                       <li>
                         <Link
                           to="/dashboard/upcoming-bookings"
-                          className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-[#0f6097] hover:text-white hover:scale-105"
+                          className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
                           <GrTasks className="text-xl mr-1" />
-                          Upcoming Bookings
+                          <span className="mt-1">Upcoming Bookings</span>
                         </Link>
                       </li>
                     </>
@@ -168,28 +171,37 @@ const DashboardSidebar = () => {
                   <li>
                     <Link
                       to="/"
-                      className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-[#0f6097] hover:text-white hover:scale-105"
+                      className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                     >
-                      <CgHome className="text-xl mr-1" />
-                      Home
+                      <IoHome className="text-xl mr-1" />
+                      <span className="mt-2">Home</span>
                     </Link>
                   </li>
                   <li>
                     <Link
                       to="/services"
-                      className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-[#0f6097] hover:text-white hover:scale-105"
+                      className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                     >
                       <GrServices className="text-xl mr-1" />
-                      Services
+                      <span className="mt-1">Services</span>
                     </Link>
                   </li>
                   <li>
                     <Link
-                      to="/services"
-                      className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-[#0f6097] hover:text-white hover:scale-105"
+                      to="/reviews"
+                      className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                     >
-                      <GrServices className="text-xl mr-1" />
-                      Services
+                      <MdOutlineRateReview className="text-xl mr-1" />
+                      <span className="mt-1">Reviews</span>
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/bookings"
+                      className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
+                    >
+                      <BsCardChecklist className="text-xl mr-1" />
+                      <span className="mt-1">Bookings</span>
                     </Link>
                   </li>
                 </div>
@@ -198,18 +210,19 @@ const DashboardSidebar = () => {
                   <li>
                     <Link
                       to="/dashboard/profile"
-                      className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-[#0f6097] hover:text-white hover:scale-105"
+                      className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                     >
                       <CgProfile className="text-xl mr-1" />
-                      Profile
+                      <span className="mt-1">Profile</span>
                     </Link>
                   </li>
-                  <li>
+                  <li className="xl:-ml-2">
                     <a
                       onClick={handleLogOut}
-                      className="text-sm font-medium hover:bg-[#0f6097] hover:text-white hover:scale-105"
+                      className="text-sm font-medium hover:bg-primary hover:text-white hover:scale-105"
                     >
-                      <MdOutlineLogout className="text-lg mr-1" /> Logout
+                      <MdOutlineLogout className="text-lg mr-1" />{" "}
+                      <span className="mt-1">Logout</span>
                     </a>
                   </li>
                 </div>

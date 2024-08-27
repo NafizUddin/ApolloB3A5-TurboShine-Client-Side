@@ -159,15 +159,27 @@ const Navbar = () => {
                             {loadedUser[0].name}
                           </a>
                         </li>
-                        <li>
-                          <Link
-                            to="/dashboard"
-                            className="text-lg font-medium hover:bg-primary hover:text-white"
-                          >
-                            <MdSpaceDashboard className="text-lg mr-1" />{" "}
-                            Dashboard
-                          </Link>
-                        </li>
+                        {loadedUser[0].role === "admin" ? (
+                          <li>
+                            <Link
+                              to="/dashboard/adminHome"
+                              className="text-lg font-medium hover:bg-primary hover:text-white"
+                            >
+                              <MdSpaceDashboard className="text-lg mr-1" />{" "}
+                              Dashboard
+                            </Link>
+                          </li>
+                        ) : (
+                          <li>
+                            <Link
+                              to="/dashboard/userHome"
+                              className="text-lg font-medium hover:bg-primary hover:text-white"
+                            >
+                              <MdSpaceDashboard className="text-lg mr-1" />{" "}
+                              Dashboard
+                            </Link>
+                          </li>
+                        )}
                         <li>
                           <a
                             onClick={handleLogOut}
