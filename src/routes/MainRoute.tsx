@@ -10,6 +10,11 @@ import ServiceDetails from "../pages/serviceDetails/ServiceDetails";
 import BookingPage from "../pages/bookingPage/BookingPage";
 import DashboardLayout from "../layouts/dashboardLayout/DashboardLayout";
 import PrivateRoute from "./PrivateRoute";
+import AdminRoute from "./AdminRoute";
+import AdminHome from "../pages/AdminPages/adminHome/AdminHome";
+import ServiceManagement from "../pages/AdminPages/serviceManagement/ServiceManagement";
+import SlotManagement from "../pages/AdminPages/slotManagement/SlotManagement";
+import UserManagement from "../pages/AdminPages/userManagement/UserManagement";
 
 const MainRoute = createBrowserRouter([
   {
@@ -62,6 +67,40 @@ const MainRoute = createBrowserRouter([
         <DashboardLayout />
       </PrivateRoute>
     ),
+    children: [
+      {
+        path: "adminHome",
+        element: (
+          <AdminRoute>
+            <AdminHome />{" "}
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "service-management",
+        element: (
+          <AdminRoute>
+            <ServiceManagement />{" "}
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "slot-management",
+        element: (
+          <AdminRoute>
+            <SlotManagement />{" "}
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "user-management",
+        element: (
+          <AdminRoute>
+            <UserManagement />{" "}
+          </AdminRoute>
+        ),
+      },
+    ],
   },
 ]);
 

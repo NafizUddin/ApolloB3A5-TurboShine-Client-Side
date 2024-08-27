@@ -154,38 +154,39 @@ const Navbar = () => {
                         className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content rounded-box w-60 bg-white"
                       >
                         <li>
-                          <a className="text-lg font-medium hover:bg-primary hover:text-white">
+                          <a className="text-lg font-medium hover:bg-primary hover:text-white flex">
                             <CgProfile className="text-lg mr-1" />{" "}
-                            {loadedUser[0].name}
+                            <span className="mt-1">{loadedUser[0].name}</span>
                           </a>
                         </li>
                         {loadedUser[0].role === "admin" ? (
                           <li>
                             <Link
                               to="/dashboard/adminHome"
-                              className="text-lg font-medium hover:bg-primary hover:text-white"
+                              className="text-lg font-medium hover:bg-primary hover:text-white flex"
                             >
                               <MdSpaceDashboard className="text-lg mr-1" />{" "}
-                              Dashboard
+                              <span className="mt-1">Dashboard</span>
                             </Link>
                           </li>
                         ) : (
                           <li>
                             <Link
                               to="/dashboard/userHome"
-                              className="text-lg font-medium hover:bg-primary hover:text-white"
+                              className="text-lg font-medium hover:bg-primary hover:text-white flex"
                             >
                               <MdSpaceDashboard className="text-lg mr-1" />{" "}
-                              Dashboard
+                              <span className="mt-1">Dashboard</span>
                             </Link>
                           </li>
                         )}
                         <li>
                           <a
                             onClick={handleLogOut}
-                            className="text-lg font-medium hover:bg-primary hover:text-white"
+                            className="text-lg font-medium hover:bg-primary hover:text-white flex"
                           >
-                            <MdOutlineLogout className="text-lg mr-1" /> Logout
+                            <MdOutlineLogout className="text-lg mr-1" />{" "}
+                            <span className="mt-1">Logout</span>
                           </a>
                         </li>
                       </ul>

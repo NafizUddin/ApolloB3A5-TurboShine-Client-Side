@@ -123,7 +123,7 @@ const DashboardSidebar = () => {
                           className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
                           <GrTasks className="text-xl mr-1" />
-                          <span className="mt-1">Service Management</span>
+                          <span className="mt-1">Slot Management</span>
                         </Link>
                       </li>
                       <li>
