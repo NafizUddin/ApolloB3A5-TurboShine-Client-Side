@@ -97,7 +97,7 @@ const carServiceApi = baseApi.injectEndpoints({
       },
       invalidatesTags: ["services"],
     }),
-    deleteProduct: builder.mutation({
+    deleteService: builder.mutation({
       query: (id) => ({
         url: `/services/${id}`,
         method: "DELETE",
@@ -112,5 +112,5 @@ export const {
   useGetSingleServiceQuery,
   useAddServiceMutation,
   useUpdateServiceMutation,
-  useDeleteProductMutation,
+  useDeleteServiceMutation,
 } = carServiceApi;

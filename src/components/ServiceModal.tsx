@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Controller, FieldError, FieldValues, useForm } from "react-hook-form";
+import { FieldError, FieldValues, useForm } from "react-hook-form";
 import {
   useAddServiceMutation,
   useUpdateServiceMutation,
@@ -12,7 +12,6 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
   const [updateService] = useUpdateServiceMutation();
 
   const {
-    control,
     register,
     formState: { errors },
     handleSubmit,
@@ -22,8 +21,8 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
       name: service?.name,
       description: service?.description,
       price: Number(service?.price),
-      duration: service?.brand,
-      short_description: service?.category,
+      duration: Number(service?.duration),
+      short_description: service?.short_description,
       image: service?.image,
     },
   });
@@ -34,7 +33,7 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
       description: data?.description,
       price: Number(data?.price),
       image: data?.image,
-      duration: data?.duration,
+      duration: Number(data?.duration),
       short_description: data?.short_description,
     };
 
@@ -55,6 +54,11 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
       },
       error: "Failed to create service",
     });
+    // try {
+    //   const res = await addService(details).unwrap();
+    // } catch (error) {
+    //   console.log(error);
+    // }
     setModalType("");
     setService({});
     reset();
@@ -268,7 +272,7 @@ const ServiceModal = ({ service, setService, setModalType }: any) => {
               type="submit"
               className="w-full py-3 text-white bg-primary rounded-lg btn-custom font-bold col-span-6"
             >
-              Submit Feedback
+              Submit
             </button>
             <label htmlFor="product-modal" className="col-span-6">
               <button

@@ -1,12 +1,17 @@
 import { useState } from "react";
 import SectionTitle from "../../../components/SectionTitle";
-import { useGetServicesQuery } from "../../../redux/features/services/carService.api";
+import {
+  useDeleteServiceMutation,
+  useGetServicesQuery,
+} from "../../../redux/features/services/carService.api";
 import { FaPlus } from "react-icons/fa";
 import { TCarService } from "../../../types/carService.type";
 import { CiCircleMore } from "react-icons/ci";
 import Loading from "../../../components/Loading";
 import Swal from "sweetalert2";
 import ServiceModal from "../../../components/ServiceModal";
+import toast from "react-hot-toast";
+import { Link } from "react-router-dom";
 
 type TServiceState = TCarService | object | null;
 
@@ -20,33 +25,35 @@ const ServiceManagement = () => {
     limit: dataPerPage,
   };
 
+  const [deleteService] = useDeleteServiceMutation();
+
   const { data: allServices, isLoading } = useGetServicesQuery(queryObj);
 
   const totalPagesArray = [...Array(allServices?.meta.totalPage).keys()];
 
-  const handleDeleteRequest = async (id: string) => {
-    // try {
-    //   const result = await Swal.fire({
-    //     title: "Are you sure?",
-    //     text: "You won't be able to revert this!",
-    //     icon: "warning",
-    //     showCancelButton: true,
-    //     confirmButtonColor: "#2e8b57",
-    //     cancelButtonColor: "#d33",
-    //     confirmButtonText: "Yes, delete it!",
-    //   });
-    //   if (result.isConfirmed) {
-    //     const res = await deleteProduct(id).unwrap();
-    //     if (res.success) {
-    //       toast.success(res.message, {
-    //         duration: 4000,
-    //       });
-    //     }
-    //   }
-    // } catch (error) {
-    //   console.error("Error deleting the donation:", error);
-    //   toast.error("There was an error deleting the file.");
-    // }
+  const handleDeleteService = async (id: string) => {
+    try {
+      const result = await Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#2e8b57",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      });
+      if (result.isConfirmed) {
+        const res = await deleteService(id).unwrap();
+        if (res.success) {
+          toast.success(res.message, {
+            duration: 4000,
+          });
+        }
+      }
+    } catch (error) {
+      // console.error("Error deleting the donation:", error);
+      toast.error("There was an error deleting the file.");
+    }
   };
 
   const handleCurrentPage = async (page: number) => {
@@ -93,7 +100,14 @@ const ServiceManagement = () => {
         </label>
       </div>
 
-      <div className="overflow-x-auto m-5 ">
+      <div
+        style={{
+          scrollbarWidth: "none" /* Firefox */,
+          msOverflowStyle: "none" /* IE and Edge */,
+          overflowY: "auto" /* Enable scrolling */,
+        }}
+        className="overflow-x-auto m-5 "
+      >
         <table className="table table-sm">
           {/* head */}
           <thead className="text-lg">
@@ -134,6 +148,11 @@ const ServiceManagement = () => {
                           tabIndex={0}
                           className="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-32"
                         >
+                          <Link to={`/serviceDetails/${singleService._id}`}>
+                            <li>
+                              <span>View</span>
+                            </li>
+                          </Link>
                           <li>
                             <label
                               onClick={() => {
@@ -150,7 +169,7 @@ const ServiceManagement = () => {
                           <li>
                             <span
                               onClick={() =>
-                                handleDeleteRequest(
+                                handleDeleteService(
                                   singleService?._id as string
                                 )
                               }
