@@ -1,4 +1,4 @@
-import { ReactNode, useEffect } from "react";
+import { ReactNode, useEffect, useState } from "react";
 import SectionTitle from "../../components/SectionTitle";
 import { FieldValues, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
@@ -6,9 +6,13 @@ import useUserDetails from "../../custom Hooks/useUserDetails";
 import Loading from "../../components/Loading";
 import { FaCircleXmark } from "react-icons/fa6";
 import { TSlotAppointment } from "../../types/slot.type";
-import { removeBooking } from "../../redux/features/bookings/bookings.slice";
+import {
+  clearBooking,
+  removeBooking,
+} from "../../redux/features/bookings/bookings.slice";
 import toast from "react-hot-toast";
 import { useAddBookingsMutation } from "../../redux/features/bookings/bookings.api";
+import { ImSpinner6 } from "react-icons/im";
 
 const BookingPage = () => {
   const {
@@ -19,6 +23,7 @@ const BookingPage = () => {
   const dispatch = useAppDispatch();
   const { slotInfo, totalCost } = useAppSelector((state) => state.bookings);
   const { loadedUser, isLoading } = useUserDetails();
+  const [isBookingLoading, setIsBookingLoading] = useState(false);
 
   const [addBookings] = useAddBookingsMutation();
 
@@ -27,6 +32,7 @@ const BookingPage = () => {
       toast.error("Please add a service slot to your cart.");
       return;
     }
+    setIsBookingLoading(true);
 
     try {
       for (const slot of slotInfo) {
@@ -39,6 +45,8 @@ const BookingPage = () => {
       }
 
       toast.success("All bookings placed successfully!");
+      setIsBookingLoading(false);
+      dispatch(clearBooking());
       // Optionally clear the cart or navigate to a success page here
     } catch (error) {
       console.error("Booking Error:", error);
@@ -170,7 +178,11 @@ const BookingPage = () => {
                         type="submit"
                         className="w-full bg-primary btn-custom border-transparent rounded-md shadow-sm py-3 px-4 text-base font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-red-500"
                       >
-                        Confirm order
+                        {isBookingLoading ? (
+                          <ImSpinner6 className="animate-spin m-auto text-xl" />
+                        ) : (
+                          "Confirm Booking"
+                        )}
                       </button>
                     </div>
                   </div>
