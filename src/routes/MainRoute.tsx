@@ -15,6 +15,10 @@ import AdminHome from "../pages/AdminPages/adminHome/AdminHome";
 import ServiceManagement from "../pages/AdminPages/serviceManagement/ServiceManagement";
 import SlotManagement from "../pages/AdminPages/slotManagement/SlotManagement";
 import UserManagement from "../pages/AdminPages/userManagement/UserManagement";
+import UserHome from "../pages/UserPages/userHome/UserHome";
+import PastBooking from "../pages/UserPages/pastBooking/PastBooking";
+import UpcomingBooking from "../pages/UserPages/upcomingBooking/UpcomingBooking";
+import ProfileCard from "../components/ProfileCard";
 
 const MainRoute = createBrowserRouter([
   {
@@ -99,6 +103,22 @@ const MainRoute = createBrowserRouter([
             <UserManagement />{" "}
           </AdminRoute>
         ),
+      },
+      {
+        path: "userHome",
+        element: <UserHome />,
+      },
+      {
+        path: "past-bookings",
+        element: <PastBooking />,
+      },
+      {
+        path: "upcoming-bookings",
+        element: <UpcomingBooking />,
+      },
+      {
+        path: "profile",
+        element: <ProfileCard />,
       },
     ],
   },

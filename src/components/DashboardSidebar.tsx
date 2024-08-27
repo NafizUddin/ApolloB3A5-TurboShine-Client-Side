@@ -90,7 +90,7 @@ const DashboardSidebar = () => {
                   className="w-10 h-10 md:w-20 md:h-20 rounded-full mx-auto object-cover object-top"
                 />
                 <div>
-                  <h2 className="font-medium md:text-xl text-center text-primary">
+                  <h2 className="font-bold md:text-xl text-center text-primary">
                     {loadedUser[0].name}
                   </h2>
                 </div>
