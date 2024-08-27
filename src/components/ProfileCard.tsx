@@ -2,7 +2,6 @@ import { BsPhone } from "react-icons/bs";
 import useUserDetails from "../custom Hooks/useUserDetails";
 import { MdEmail } from "react-icons/md";
 import { MdOutlineLocationOn } from "react-icons/md";
-import { MdBloodtype } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const ProfileCard = () => {
