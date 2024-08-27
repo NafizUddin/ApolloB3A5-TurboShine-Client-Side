@@ -77,7 +77,40 @@ const carServiceApi = baseApi.injectEndpoints({
       transformResponse: (response: TResponseRedux<any>) => response.data,
       providesTags: ["services"],
     }),
+    addService: builder.mutation({
+      query: (serviceInfo) => {
+        return {
+          url: "/services",
+          method: "POST",
+          body: serviceInfo,
+        };
+      },
+      invalidatesTags: ["services"],
+    }),
+    updateService: builder.mutation({
+      query: (options) => {
+        return {
+          url: `/services/${options.id}`,
+          method: "PUT",
+          body: options.data,
+        };
+      },
+      invalidatesTags: ["services"],
+    }),
+    deleteProduct: builder.mutation({
+      query: (id) => ({
+        url: `/services/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["services"],
+    }),
   }),
 });
 
-export const { useGetServicesQuery, useGetSingleServiceQuery } = carServiceApi;
+export const {
+  useGetServicesQuery,
+  useGetSingleServiceQuery,
+  useAddServiceMutation,
+  useUpdateServiceMutation,
+  useDeleteProductMutation,
+} = carServiceApi;

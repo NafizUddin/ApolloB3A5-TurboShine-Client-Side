@@ -6,6 +6,7 @@ import { TCarService } from "../../../types/carService.type";
 import { CiCircleMore } from "react-icons/ci";
 import Loading from "../../../components/Loading";
 import Swal from "sweetalert2";
+import ServiceModal from "../../../components/ServiceModal";
 
 type TServiceState = TCarService | object | null;
 
@@ -13,7 +14,7 @@ const ServiceManagement = () => {
   const [modalType, setModalType] = useState<string>("");
   const [service, setService] = useState<TServiceState>({});
   const [currentPage, setCurrentPage] = useState(1);
-  const dataPerPage = 4;
+  const dataPerPage = 5;
   const queryObj = {
     page: currentPage,
     limit: dataPerPage,
@@ -190,6 +191,17 @@ const ServiceManagement = () => {
           </div>
         )}
       </div>
+
+      {(modalType === "add" ||
+        (modalType === "edit" &&
+          service &&
+          Object.keys(service)?.length > 0)) && (
+        <ServiceModal
+          service={service}
+          setService={setService}
+          setModalType={setModalType}
+        />
+      )}
     </div>
   );
 };
