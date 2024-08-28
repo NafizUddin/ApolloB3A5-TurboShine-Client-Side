@@ -10,6 +10,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { verifyToken } from "../../utils/verifyToken";
 import { setUser, TUser } from "../../redux/features/auth/authSlice";
+import { TErrorResponse } from "../../types/error.type";
 
 const LoginPage = () => {
   const { register, handleSubmit, reset, formState } = useForm();
@@ -34,6 +35,8 @@ const LoginPage = () => {
       reset();
       navigate(from);
     } catch (error) {
+      setLoading(false);
+      toast.error((error as TErrorResponse)?.data?.message);
       console.log(error);
     }
   };

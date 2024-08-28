@@ -11,6 +11,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { verifyToken } from "../../utils/verifyToken";
 import { setUser, TUser } from "../../redux/features/auth/authSlice";
 import axios from "axios";
+import { TErrorResponse } from "../../types/error.type";
 
 const image_hosting_key = import.meta.env.VITE_IMAGE_HOSTING_KEY;
 const image_hosting_api = `https://api.imgbb.com/1/upload?key=${image_hosting_key}`;
@@ -63,7 +64,8 @@ const RegisterPage = () => {
         navigate(from);
       }
     } catch (error) {
-      console.log(error);
+      setLoading(false);
+      toast.error((error as TErrorResponse)?.data?.message);
     }
   };
 
