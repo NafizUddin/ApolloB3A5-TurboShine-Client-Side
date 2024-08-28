@@ -1,19 +1,15 @@
 import { useGetIndividualBookingQuery } from "../../../redux/features/bookings/bookings.api";
 import SectionTitle from "../../../components/SectionTitle";
-import { parseISO, isBefore, isToday, isAfter, parse, format } from "date-fns";
+import { parseISO, isToday, isAfter, parse, format } from "date-fns";
 import Loading from "../../../components/Loading";
 import { TBooking } from "@/types/booking.type";
 import Timer from "../../../components/Timer";
+import { motion } from "framer-motion";
 
 const UpcomingBooking = () => {
   const { data, isLoading } = useGetIndividualBookingQuery(undefined);
 
   const today = new Date();
-
-  const pastBookings = data?.filter((item: any) => {
-    const slotDate = parseISO(item?.slot?.date);
-    return isBefore(slotDate, today);
-  });
 
   const upcomingBookings = data?.filter((item: any) => {
     const slotDate = parseISO(item?.slot?.date);
@@ -55,7 +51,14 @@ const UpcomingBooking = () => {
             expiryTimestamp.setHours(hours, minutes, 0, 0);
 
             return (
-              <div
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{
+                  duration: 0.5,
+                  ease: "easeOut",
+                  delay: index * 0.2,
+                }}
                 key={index}
                 className="bg-white p-6 rounded-lg shadow-md flex flex-col"
               >
@@ -71,7 +74,7 @@ const UpcomingBooking = () => {
                   {convertTo12HourFormat(booking?.slot?.endTime)}
                 </p>
                 <Timer expiryTimestamp={expiryTimestamp} />
-              </div>
+              </motion.div>
             );
           })}
         </div>

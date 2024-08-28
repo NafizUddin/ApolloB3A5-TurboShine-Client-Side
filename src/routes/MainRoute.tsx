@@ -125,10 +125,6 @@ const MainRoute = createBrowserRouter([
         path: "upcoming-bookings",
         element: <UpcomingBooking />,
       },
-      {
-        path: "profile",
-        element: <ProfileCard />,
-      },
     ],
   },
 ]);

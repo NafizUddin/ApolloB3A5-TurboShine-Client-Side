@@ -1,12 +1,9 @@
-import SectionTitle from "../../../components/SectionTitle";
+import ProfileCard from "../../../components/ProfileCard";
 
 const UserHome = () => {
   return (
-    <div className="mt-10">
-      <SectionTitle
-        sub="Quick Insights & Management Tools"
-        heading="Dashboard Overview"
-      />
+    <div>
+      <ProfileCard />
     </div>
   );
 };

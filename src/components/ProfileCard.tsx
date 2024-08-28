@@ -11,7 +11,7 @@ const ProfileCard = () => {
 
   return (
     <div>
-      <div className="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-20 lg:my-0">
+      <div className="max-w-4xl flex items-center h-auto flex-wrap mx-auto my-20 lg:my-0">
         {/* <!--Main Col--> */}
         <div
           id="profile"
@@ -28,7 +28,7 @@ const ProfileCard = () => {
               {loadedUser[0]?.name}
             </h1>
             <div className="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-red-500 opacity-25"></div>
-            <p className="pt-4 text-sm font-medium flex items-center justify-center lg:justify-start uppercase text-gray-600">
+            <p className="pt-4 text-sm font-medium flex items-center justify-start uppercase text-gray-600 ml-6 md:ml-44 lg:ml-0">
               <svg
                 className="h-4 fill-current text-primary pr-4"
                 xmlns="http://www.w3.org/2000/svg"
@@ -38,15 +38,15 @@ const ProfileCard = () => {
               </svg>{" "}
               <span className="mt-2">{loadedUser[0]?.role}</span>
             </p>
-            <p className="pt-2 text-gray-600 font-medium text-xs lg:text-sm flex items-center justify-center lg:justify-start">
+            <p className="pt-2 text-gray-600 font-medium text-sm flex items-center justify-start ml-6 md:ml-44 lg:ml-0">
               <MdEmail className="text-primary mr-4 text-lg" />
               Email: {loadedUser[0]?.email}
             </p>
-            <p className="pt-2 text-gray-600 font-medium text-xs lg:text-sm flex items-center justify-center lg:justify-start">
-              <MdOutlineLocationOn className="text-primary mr-4 text-lg" />
+            <p className="pt-2 text-gray-600 font-medium text-sm flex items-start md:items-center lg:items-start xl:items-center justify-start ml-6 md:ml-44 lg:ml-0 text-left">
+              <MdOutlineLocationOn className="text-primary mr-3 text-2xl md:text-xl" />
               Address: {loadedUser[0]?.address}
             </p>
-            <p className="pt-2 text-gray-600 font-medium text-xs lg:text-sm flex items-center justify-center lg:justify-start">
+            <p className="pt-2 text-gray-600 font-medium text-sm flex items-center justify-start ml-6 md:ml-44 lg:ml-0">
               <BsPhone className="text-primary mr-4 text-lg" />
               Phone: {loadedUser[0]?.phone}
             </p>

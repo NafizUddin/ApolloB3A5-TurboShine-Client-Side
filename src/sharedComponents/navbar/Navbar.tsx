@@ -155,14 +155,15 @@ const Navbar = () => {
                         tabIndex={0}
                         className="mt-3 z-10 p-2 shadow menu menu-sm dropdown-content rounded-box w-60 bg-white"
                       >
-                        <Link to="/dashboard/profile">
-                          <li>
-                            <a className="text-lg font-medium hover:bg-primary hover:text-white flex">
-                              <CgProfile className="text-lg mr-1" />{" "}
-                              <span className="mt-1">{loadedUser[0].name}</span>
-                            </a>
-                          </li>
-                        </Link>
+                        <li>
+                          <a
+                            href="#"
+                            className="text-lg font-medium hover:bg-primary hover:text-white flex"
+                          >
+                            <CgProfile className="text-lg mr-1" />{" "}
+                            <span className="mt-1">{loadedUser[0].name}</span>
+                          </a>
+                        </li>
                         {loadedUser[0].role === "admin" ? (
                           <li>
                             <Link

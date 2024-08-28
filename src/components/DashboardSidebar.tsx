@@ -111,8 +111,8 @@ const DashboardSidebar = () => {
                           to="/dashboard/adminHome"
                           className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
-                          <IoHome className="text-xl mr-1" />
-                          <span className="mt-2">Admin Home</span>
+                          <CgProfile className="text-xl mr-1" />
+                          <span className="mt-2">Profile</span>
                         </Link>
                       </li>
                       <li>
@@ -178,8 +178,8 @@ const DashboardSidebar = () => {
                           to="/dashboard/userHome"
                           className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
-                          <IoHome className="text-xl mr-1" />
-                          <span className="mt-2">All Bookings</span>
+                          <CgProfile className="text-xl mr-1" />
+                          <span className="mt-2">Profile</span>
                         </Link>
                       </li>
                       <li>
@@ -188,7 +188,7 @@ const DashboardSidebar = () => {
                           className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
                           <MdOutlineBorderColor className="text-xl mr-1" />
-                          <span className="mt-1">Past Bookings</span>
+                          <span className="mt-1">Previous Bookings</span>
                         </Link>
                       </li>
                       <li>
@@ -244,7 +244,7 @@ const DashboardSidebar = () => {
                 </div>
                 <div>
                   <div className="divider"></div>
-                  <li>
+                  {/* <li>
                     <Link
                       to="/dashboard/profile"
                       className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
@@ -252,7 +252,7 @@ const DashboardSidebar = () => {
                       <CgProfile className="text-xl mr-1" />
                       <span className="mt-1">Profile</span>
                     </Link>
-                  </li>
+                  </li> */}
                   <li className="xl:-ml-2">
                     <a
                       onClick={handleLogOut}
