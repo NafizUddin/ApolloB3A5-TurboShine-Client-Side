@@ -69,158 +69,85 @@ const CreateSlotModal = ({ setModalType }: any) => {
                   </option>
                 ))}
               </select>
-              {/* {errors.service && <p>This field is required</p>} */}
-              <label className="label">
-                {errors.service?.type === "required" && (
-                  <span className="label-text-alt text-red-600 text-sm">
-                    {(errors.service as FieldError).message}
-                  </span>
-                )}
-              </label>
+              {errors.service && (
+                <p className="mt-2 text-sm text-red-600 font-medium">
+                  Please Select a service
+                </p>
+              )}
             </div>
+
             <div className="form-control w-full col-span-12 sm:col-span-6">
               <label className="label">
                 <span className="label-text font-semibold text-lg">
                   Select Service Date
                 </span>
               </label>
-              <div>
-                <Controller
-                  control={control}
-                  name="date"
-                  rules={{ required: true }}
-                  render={({ field }) => (
-                    <DatePicker
-                      id="date"
-                      selected={field.value}
-                      onChange={(date) => field.onChange(date)}
-                      dateFormat="yyyy-MM-dd"
-                      minDate={today}
-                      placeholderText="Select Service Date"
-                      className="input input-bordered focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary w-[410px]"
-                    />
-                  )}
-                />
-                {/* {errors.date && <p>This field is required</p>} */}
-                <label className="label">
-                  {errors.date?.type === "required" && (
-                    <span className="label-text-alt text-red-600 text-sm">
-                      {(errors.date as FieldError).message}
-                    </span>
-                  )}
-                </label>
-              </div>
-            </div>
-            <div className="form-control w-full col-span-12 sm:col-span-6">
-              <label className="label">
-                <span className="label-text font-semibold text-lg">
-                  Description
-                </span>
-              </label>
-              <textarea
-                placeholder={
-                  "Enter brief description of service in few sentences..."
-                }
-                className="textarea textarea-bordered h-24 input focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary placeholder:text-base"
-                {...register("description", {
-                  required: {
-                    value: true,
-                    message: "Service Brief Description is required",
-                  },
-                })}
-              />
-              <label className="label">
-                {errors.description?.type === "required" && (
-                  <span className="label-text-alt text-red-600 text-sm">
-                    {(errors.description as FieldError).message}
-                  </span>
+              <Controller
+                control={control}
+                name="date"
+                rules={{ required: true }}
+                render={({ field }) => (
+                  <DatePicker
+                    id="date"
+                    selected={field.value}
+                    onChange={(date) => field.onChange(date)}
+                    dateFormat="yyyy-MM-dd"
+                    minDate={today}
+                    placeholderText="Select Service Date"
+                    className="input input-bordered focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary w-full"
+                  />
                 )}
-              </label>
-            </div>
-            <div className="form-control w-full col-span-12 sm:col-span-6">
-              <label className="label">
-                <span className="label-text font-semibold text-lg">
-                  Short Description
-                </span>
-              </label>
-              <textarea
-                placeholder={
-                  "Enter short description of service in few words (4 to 5 words)..."
-                }
-                className="textarea textarea-bordered h-24 input focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary placeholder:text-base"
-                {...register("short_description", {
-                  required: {
-                    value: true,
-                    message: "Service Short Description is required",
-                  },
-                })}
               />
-              <label className="label">
-                {errors.short_description?.type === "required" && (
-                  <span className="label-text-alt text-red-600 text-sm">
-                    {(errors.description as FieldError).message}
-                  </span>
-                )}
-              </label>
+              {errors.date && (
+                <p className="mt-2 text-sm text-red-600 font-medium">
+                  Please Select Service Date
+                </p>
+              )}
             </div>
 
             <div className="form-control w-full col-span-12 sm:col-span-6">
               <label className="label">
                 <span className="label-text font-semibold text-lg">
-                  Service Duration
+                  Select Start Time
                 </span>
               </label>
               <input
-                type="number"
-                min={0}
-                max={120}
+                type="time"
+                id="startTime"
+                {...register("startTime", { required: true })}
                 className="input input-bordered focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary"
-                placeholder={"Enter service duration (maximum 120 minutes)"}
-                {...register("duration", {
-                  required: {
-                    value: true,
-                    message: "Service Duration is required",
-                  },
-                })}
+                placeholder="Select Start Time"
               />
-              <label className="label">
-                {errors.duration?.type === "required" && (
-                  <span className="label-text-alt text-red-600 text-sm">
-                    {(errors.duration as FieldError).message}
-                  </span>
-                )}
-              </label>
+              {errors.startTime && (
+                <p className="mt-2 text-sm text-red-600 font-medium">
+                  Please Select Start Time
+                </p>
+              )}
             </div>
 
             <div className="form-control w-full col-span-12 sm:col-span-6">
               <label className="label">
                 <span className="label-text font-semibold text-lg">
-                  Paste Service Image Link
+                  Select End time
                 </span>
               </label>
               <input
-                type="text"
+                type="time"
+                id="endTime"
+                {...register("endTime", { required: true })}
                 className="input input-bordered focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary"
-                placeholder={`Enter Service Image Link`}
-                {...register("image", {
-                  required: {
-                    value: true,
-                    message: "Service Image Link is required",
-                  },
-                })}
+                placeholder="Select End Time"
               />
-              <label className="label">
-                {errors.image?.type === "required" && (
-                  <span className="label-text-alt text-red-600 text-sm">
-                    {(errors.image as FieldError).message}
-                  </span>
-                )}
-              </label>
+              {errors.endTime && (
+                <p className="mt-2 text-sm text-red-600 font-medium">
+                  Please Select End Time
+                </p>
+              )}
             </div>
 
             <button
               type="submit"
-              className="w-full py-3 text-white bg-primary rounded-lg btn-custom font-bold col-span-6"
+              className="w-full py-3 text-white bg-primary rounded-lg btn-custom font-bold col-span-6 mt-5"
             >
               Submit
             </button>
@@ -229,7 +156,7 @@ const CreateSlotModal = ({ setModalType }: any) => {
                 onClick={() => {
                   setModalType("");
                 }}
-                className="bg-white outline outline-2 text-primary py-3 btn-custom-two rounded-lg font-bold w-full"
+                className="bg-white outline outline-2 text-primary py-3 btn-custom-two rounded-lg font-bold w-full mt-5"
               >
                 Cancel
               </button>
