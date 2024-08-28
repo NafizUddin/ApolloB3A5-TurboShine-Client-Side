@@ -1,6 +1,7 @@
 import { FaPlus } from "react-icons/fa";
 import SectionTitle from "../../../components/SectionTitle";
 import { useState } from "react";
+import CreateSlotModal from "../../../components/CreateSlotModal";
 
 const SlotManagement = () => {
   const [modalType, setModalType] = useState<string>("");
@@ -27,6 +28,7 @@ const SlotManagement = () => {
           <span className="mt-1">Create New Slots</span>
         </label>
       </div>
+      {modalType === "add" && <CreateSlotModal setModalType={setModalType} />}
     </div>
   );
 };
