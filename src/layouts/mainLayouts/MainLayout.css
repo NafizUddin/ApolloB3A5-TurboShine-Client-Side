@@ -125,7 +125,7 @@ input::-webkit-inner-spin-button {
     /* Creates an orange circle around the bullet */
 }
 
-
+/* Price Slider CSS */
 
 .slider {
     height: 3px;
@@ -200,4 +200,69 @@ input::-webkit-inner-spin-button {
     font-size: 0.7rem;
     color: #666;
     margin-top: 2px;
+}
+
+/* Scroll to top button css */
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background-color: #dc232e;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    z-index: 1000;
+    transition: opacity 0.3s ease;
+    opacity: 0.8;
+}
+
+.scroll-to-top:hover {
+    opacity: 1;
+}
+
+.arrow-up {
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-bottom: 16px solid white;
+}
+
+.scroll-to-top::before {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    right: -2px;
+    bottom: -2px;
+    border-radius: 50%;
+    border: 4px solid transparent;
+    box-sizing: border-box;
+
+    background: conic-gradient(#00bfff $ {
+            ({
+                scrollProgress
+            })=> scrollProgress
+    }
+
+    %,
+    transparent $ {
+        ({
+            scrollProgress
+        })=> scrollProgress
+}
+
+%);
+z-index: -1;
+
+}
+
+.scroll-to-top.active::before {
+    border-color: #00bfff;
 }
