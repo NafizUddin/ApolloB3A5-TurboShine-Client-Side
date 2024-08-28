@@ -13,8 +13,6 @@ const SlotManagement = () => {
   const dataPerPage = 10;
 
   const { data, isLoading } = useGetSlotsQuery({
-    dateRange: [],
-    serviceId: "",
     page: currentPage,
     limit: dataPerPage,
   });
@@ -114,6 +112,32 @@ const SlotManagement = () => {
               )}
           </tbody>
         </table>
+      </div>
+
+      <div className="flex justify-center items-center flex-wrap">
+        {totalPagesArray?.length > 1 && (
+          <div className="join pb-10">
+            <button onClick={handlePrevPage} className="join-item btn">
+              Previous
+            </button>
+            {totalPagesArray?.map((page) => (
+              <button
+                key={page}
+                onClick={() => handleCurrentPage(page)}
+                className={
+                  currentPage === page + 1
+                    ? "join-item btn selected bg-primary text-white"
+                    : "join-item btn"
+                }
+              >
+                {page + 1}
+              </button>
+            ))}
+            <button onClick={handleNextPage} className="join-item btn">
+              Next
+            </button>
+          </div>
+        )}
       </div>
 
       {modalType === "add" && <CreateSlotModal setModalType={setModalType} />}

@@ -4,26 +4,26 @@ import { baseApi } from "../../../redux/api/baseApi";
 const slotApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
     getSlots: builder.query({
-      query: ({
-        dateRange,
-        serviceId,
-        page,
-        limit,
-      }: {
-        dateRange: string[];
-        serviceId: string;
-        page: number;
-        limit: number;
-      }) => {
+      query: ({ dateRange, serviceId, page, limit }) => {
+        console.log(page, limit);
+
+        const params = new URLSearchParams();
+
+        if (dateRange && dateRange.length > 0) {
+          const date = dateRange.join(",");
+          params.append("date", date);
+        }
+
+        if (serviceId) params.append("serviceId", serviceId);
+
+        if (page && limit) {
+          params.append("page", page);
+          params.append("limit", limit);
+        }
+
         return {
-          url: "/slots/availability",
+          url: `/slots/availability?${params.toString()}`,
           method: "GET",
-          params: {
-            date: dateRange.join(","), // Joining array to comma-separated string
-            serviceId: serviceId,
-            page,
-            limit,
-          },
         };
       },
       transformResponse: (response: TResponseRedux<any>) => {
