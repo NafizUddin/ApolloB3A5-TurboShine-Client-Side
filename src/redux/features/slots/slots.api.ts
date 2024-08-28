@@ -26,17 +26,17 @@ const slotApi = baseApi.injectEndpoints({
       },
       providesTags: ["slots"],
     }),
-    addReviews: builder.mutation({
-      query: (reviewInfo) => {
+    addNewSlots: builder.mutation({
+      query: (slotInfo) => {
         return {
-          url: "/reviews",
+          url: "/services/slots",
           method: "POST",
-          body: reviewInfo,
+          body: slotInfo,
         };
       },
-      invalidatesTags: ["reviews"],
+      invalidatesTags: ["slots"],
     }),
   }),
 });
 
-export const { useGetSlotsQuery, useAddReviewsMutation } = slotApi;
+export const { useGetSlotsQuery, useAddNewSlotsMutation } = slotApi;

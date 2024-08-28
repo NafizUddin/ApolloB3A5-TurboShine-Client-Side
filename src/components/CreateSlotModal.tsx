@@ -1,10 +1,11 @@
 import { TCarService } from "../types/carService.type";
 import { useGetServicesQuery } from "../redux/features/services/carService.api";
-import { FieldError, FieldValues, useForm, Controller } from "react-hook-form";
+import { FieldValues, useForm, Controller } from "react-hook-form";
 import DatePicker from "react-datepicker";
-import TimePicker from "react-time-picker";
 import "react-datepicker/dist/react-datepicker.css";
-import "react-time-picker/dist/TimePicker.css";
+import toast from "react-hot-toast";
+import { useAddNewSlotsMutation } from "../redux/features/slots/slots.api";
+import { format, startOfDay } from "date-fns";
 
 const CreateSlotModal = ({ setModalType }: any) => {
   const {
@@ -22,15 +23,8 @@ const CreateSlotModal = ({ setModalType }: any) => {
     },
   });
 
-  const onSubmit = async (data: any) => {
-    const formattedData = {
-      ...data,
-      date: data.date.toISOString().split("T")[0], // Convert date to YYYY-MM-DD format
-    };
-    console.log(formattedData);
-  };
-
   const { data: allServices } = useGetServicesQuery({});
+  const [addNewSlots] = useAddNewSlotsMutation();
 
   const serviceInfo = allServices?.serviceData?.map((service: TCarService) => {
     return {
@@ -40,6 +34,40 @@ const CreateSlotModal = ({ setModalType }: any) => {
   });
 
   const today = new Date();
+  // Helper function to format dates to YYYY-MM-DD
+  const formatDate = (date: Date) => format(startOfDay(date), "yyyy-MM-dd");
+
+  const onSubmit = async (data: any) => {
+    const formattedDate = formatDate(data.date);
+
+    const formattedData = {
+      ...data,
+      date: formattedDate, // Converting date to YYYY-MM-DD format
+    };
+
+    await toast.promise(addNewSlots(formattedData).unwrap(), {
+      loading: "Creating new slots...",
+      success: (res) => {
+        if (res.success) {
+          return res.message;
+        } else {
+          throw new Error(res.message);
+        }
+      },
+      error: "Failed to create new slots",
+    });
+
+    // console.log(formattedData);
+
+    // try {
+    //   const res = await addNewSlots(formattedData).unwrap();
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
+    setModalType("");
+    reset();
+  };
 
   return (
     <div>
@@ -49,7 +77,7 @@ const CreateSlotModal = ({ setModalType }: any) => {
           <h3 className="font-bold text-3xl text-center">Add New Slots</h3>
           <form
             onSubmit={handleSubmit(onSubmit)}
-            className="grid grid-cols-12 gap-x-5"
+            className="grid grid-cols-12 gap-x-5 gap-y-14"
           >
             <div className="form-control w-full col-span-12 sm:col-span-6">
               <label className="label">
@@ -76,7 +104,7 @@ const CreateSlotModal = ({ setModalType }: any) => {
               )}
             </div>
 
-            <div className="form-control w-full col-span-12 sm:col-span-6">
+            <div className="form-control w-full col-span-12 sm:col-span-6 z-50">
               <label className="label">
                 <span className="label-text font-semibold text-lg">
                   Select Service Date
@@ -95,6 +123,7 @@ const CreateSlotModal = ({ setModalType }: any) => {
                     minDate={today}
                     placeholderText="Select Service Date"
                     className="input input-bordered focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary w-full"
+                    onKeyDown={(e) => e.preventDefault()}
                   />
                 )}
               />

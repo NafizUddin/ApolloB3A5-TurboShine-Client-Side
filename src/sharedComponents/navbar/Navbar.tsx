@@ -69,26 +69,28 @@ const Navbar = () => {
           Reviews
         </NavLink>
       </li>
-      <li className="relative">
-        <NavLink
-          to="/bookings"
-          className={({ isActive, isPending }) =>
-            isActive
-              ? "bg-primary px-3 py-2 text-white rounded-md relative"
-              : isPending
-              ? "pending"
-              : "relative"
-          }
-        >
-          Bookings
-          {/* Circle with number */}
-          {totalSlots > 0 && (
-            <span className="absolute top-0 right-0 mt-[-8px] mr-[-8px] flex items-center justify-center w-5 h-5 bg-primary text-white text-xs rounded-full">
-              {totalSlots}
-            </span>
-          )}
-        </NavLink>
-      </li>
+      {loadedUser[0].role !== "admin" && (
+        <li className="relative">
+          <NavLink
+            to="/bookings"
+            className={({ isActive, isPending }) =>
+              isActive
+                ? "bg-primary px-3 py-2 text-white rounded-md relative"
+                : isPending
+                ? "pending"
+                : "relative"
+            }
+          >
+            Bookings
+            {/* Circle with number */}
+            {totalSlots > 0 && (
+              <span className="absolute top-0 right-0 mt-[-8px] mr-[-8px] flex items-center justify-center w-5 h-5 bg-primary text-white text-xs rounded-full">
+                {totalSlots}
+              </span>
+            )}
+          </NavLink>
+        </li>
+      )}
     </>
   );
 

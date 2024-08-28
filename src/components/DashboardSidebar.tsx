@@ -195,15 +195,17 @@ const DashboardSidebar = () => {
                       <span className="mt-1">Reviews</span>
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      to="/bookings"
-                      className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
-                    >
-                      <BsCardChecklist className="text-xl mr-1" />
-                      <span className="mt-1">Bookings</span>
-                    </Link>
-                  </li>
+                  {loadedUser[0].role !== "admin" && (
+                    <li>
+                      <Link
+                        to="/bookings"
+                        className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
+                      >
+                        <BsCardChecklist className="text-xl mr-1" />
+                        <span className="mt-1">Bookings</span>
+                      </Link>
+                    </li>
+                  )}
                 </div>
                 <div>
                   <div className="divider"></div>

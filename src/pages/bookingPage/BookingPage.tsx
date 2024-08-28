@@ -59,6 +59,7 @@ const BookingPage = () => {
       dispatch(clearBooking());
     } catch (error) {
       console.error("Booking Error:", error);
+      setIsBookingLoading(false);
       toast.error("Failed to place booking. Please try again.");
     }
   };
