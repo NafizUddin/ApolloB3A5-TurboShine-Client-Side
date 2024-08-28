@@ -69,6 +69,7 @@ const SlotManagement = () => {
       error: "Failed to update status",
     });
   };
+
   const handleMakeCancelled = async (id: string) => {
     const options = {
       id,

@@ -2,10 +2,13 @@ import { BsPhone } from "react-icons/bs";
 import useUserDetails from "../custom Hooks/useUserDetails";
 import { MdEmail } from "react-icons/md";
 import { MdOutlineLocationOn } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import UpdateProfileModal from "./UpdateProfileModal";
 
 const ProfileCard = () => {
   const { loadedUser } = useUserDetails();
+  const [modalType, setModalType] = useState<string>("");
+
   return (
     <div>
       <div className="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-20 lg:my-0">
@@ -49,11 +52,16 @@ const ProfileCard = () => {
             </p>
 
             <div className="pt-12 pb-8">
-              <Link to="/dashboard/updateProfile">
-                <button className="bg-primary btn-custom text-white font-bold py-2 px-4 rounded-full">
+              <button className="bg-primary btn-custom text-white font-bold py-2 px-4 rounded-full">
+                <label
+                  htmlFor="updateProfile-modal"
+                  onClick={() => {
+                    setModalType("add");
+                  }}
+                >
                   Edit Profile
-                </button>
-              </Link>
+                </label>
+              </button>
             </div>
 
             <div className="mt-6 pb-16 lg:pb-0 w-4/5 lg:w-full mx-auto flex flex-wrap items-center justify-between">
@@ -162,6 +170,12 @@ const ProfileCard = () => {
           {/* <!-- Image from: http://unsplash.com/photos/MP0IUfwrn0A --> */}
         </div>
       </div>
+      {modalType === "add" && (
+        <UpdateProfileModal
+          userData={loadedUser[0]}
+          setModalType={setModalType}
+        />
+      )}
     </div>
   );
 };
