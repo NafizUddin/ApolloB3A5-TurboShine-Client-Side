@@ -1,7 +1,12 @@
+import SectionTitle from "../../../components/SectionTitle";
+
 const UserHome = () => {
   return (
-    <div>
-      <h1>Hello, UserHome </h1>
+    <div className="mt-10">
+      <SectionTitle
+        sub="Quick Insights & Management Tools"
+        heading="Dashboard Overview"
+      />
     </div>
   );
 };

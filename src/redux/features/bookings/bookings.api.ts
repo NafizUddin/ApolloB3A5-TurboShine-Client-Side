@@ -32,7 +32,23 @@ const bookingApi = baseApi.injectEndpoints({
       transformResponse: (response: TResponseRedux<any>) => response.data,
       invalidatesTags: ["bookings"],
     }),
+    getIndividualBooking: builder.query({
+      query: () => {
+        // const params = queryData ? { ...queryData } : {};
+
+        return {
+          url: "/my-bookings",
+          method: "GET",
+        };
+      },
+      transformResponse: (response: TResponseRedux<any>) => response.data,
+      providesTags: ["bookings"],
+    }),
   }),
 });
 
-export const { useAddBookingsMutation, useGetAllBookingsQuery } = bookingApi;
+export const {
+  useAddBookingsMutation,
+  useGetAllBookingsQuery,
+  useGetIndividualBookingQuery,
+} = bookingApi;
