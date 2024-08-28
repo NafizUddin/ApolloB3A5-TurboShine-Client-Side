@@ -8,7 +8,7 @@ import { TBooking } from "../../../types/booking.type";
 const PastBooking = () => {
   const { data, isLoading } = useGetIndividualBookingQuery(undefined);
   const [currentPage, setCurrentPage] = useState(1);
-  const dataPerPage = 5;
+  const dataPerPage = 10;
 
   const today = new Date();
 
@@ -22,9 +22,33 @@ const PastBooking = () => {
     return isBefore(slotDate, today);
   });
 
-  if (isLoading) {
-    return <Loading />;
-  }
+  const totalPages =
+    pastBookings && pastBookings.length > 0
+      ? Math.ceil(pastBookings.length / dataPerPage)
+      : 1;
+
+  const totalPagesArray = [...Array(totalPages).keys()];
+
+  const handleCurrentPage = async (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = async () => {
+    if (currentPage < totalPagesArray.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
+  const paginatedBookings = pastBookings?.slice(
+    (currentPage - 1) * dataPerPage,
+    currentPage * dataPerPage
+  );
 
   const convertTo12HourFormat = (time24: string): string => {
     // Parse the 24-hour time string into a Date object
@@ -33,6 +57,10 @@ const PastBooking = () => {
     // Format the Date object into a 12-hour time string with AM/PM
     return format(date, "hh:mm a");
   };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   console.log(pastBookings);
 
@@ -68,26 +96,56 @@ const PastBooking = () => {
             </tr>
           </thead>
           <tbody>
-            {pastBookings?.length > 0 &&
-              pastBookings?.map((singleBooking: TBooking, index: number) => (
-                <tr key={index} className="rounded-lg">
-                  <th className="text-lg">
-                    {index + 1 + (currentPage - 1) * dataPerPage}
-                  </th>
-                  <td className="text-lg font-semibold">
-                    {singleBooking?.service?.name}
-                  </td>
-                  <td className="text-lg font-semibold">
-                    {singleBooking?.slot?.date}
-                  </td>
-                  <td className="font-semibold text-lg">
-                    {`${convertTo12HourFormat(singleBooking?.slot?.startTime)} -
+            {paginatedBookings?.length > 0 &&
+              paginatedBookings?.map(
+                (singleBooking: TBooking, index: number) => (
+                  <tr key={index} className="rounded-lg">
+                    <th className="text-lg">
+                      {index + 1 + (currentPage - 1) * dataPerPage}
+                    </th>
+                    <td className="text-lg font-semibold">
+                      {singleBooking?.service?.name}
+                    </td>
+                    <td className="text-lg font-semibold">
+                      {singleBooking?.slot?.date}
+                    </td>
+                    <td className="font-semibold text-lg">
+                      {`${convertTo12HourFormat(
+                        singleBooking?.slot?.startTime
+                      )} -
                         ${convertTo12HourFormat(singleBooking?.slot?.endTime)}`}
-                  </td>
-                </tr>
-              ))}
+                    </td>
+                  </tr>
+                )
+              )}
           </tbody>
         </table>
+      </div>
+
+      <div className="flex justify-center items-center flex-wrap mt-8">
+        {totalPagesArray?.length > 1 && (
+          <div className="join pb-10">
+            <button onClick={handlePrevPage} className="join-item btn">
+              Previous
+            </button>
+            {totalPagesArray?.map((page) => (
+              <button
+                key={page}
+                onClick={() => handleCurrentPage(page)}
+                className={
+                  currentPage === page + 1
+                    ? "join-item btn selected bg-primary text-white"
+                    : "join-item btn"
+                }
+              >
+                {page + 1}
+              </button>
+            ))}
+            <button onClick={handleNextPage} className="join-item btn">
+              Next
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
