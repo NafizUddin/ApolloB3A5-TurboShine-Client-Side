@@ -7,17 +7,25 @@ const slotApi = baseApi.injectEndpoints({
       query: ({
         dateRange,
         serviceId,
+        page,
+        limit,
       }: {
         dateRange: string[];
         serviceId: string;
-      }) => ({
-        url: "/slots/availability",
-        method: "GET",
-        params: {
-          date: dateRange.join(","), // Joining array to comma-separated string
-          serviceId: serviceId,
-        },
-      }),
+        page: number;
+        limit: number;
+      }) => {
+        return {
+          url: "/slots/availability",
+          method: "GET",
+          params: {
+            date: dateRange.join(","), // Joining array to comma-separated string
+            serviceId: serviceId,
+            page,
+            limit,
+          },
+        };
+      },
       transformResponse: (response: TResponseRedux<any>) => {
         return {
           slotData: response.data.result,
