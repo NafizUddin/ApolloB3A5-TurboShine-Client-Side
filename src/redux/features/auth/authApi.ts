@@ -16,6 +16,7 @@ const authApi = baseApi.injectEndpoints({
         method: "POST",
         body: userInfo,
       }),
+      invalidatesTags: ["users"],
     }),
     getAllUsers: builder.query({
       query: (queryData) => {
@@ -33,9 +34,24 @@ const authApi = baseApi.injectEndpoints({
           meta: response.data.meta,
         };
       },
+      providesTags: ["users"],
+    }),
+    updateUser: builder.mutation({
+      query: (options) => {
+        return {
+          url: `/auth/users/${options.id}`,
+          method: "PATCH",
+          body: options.data,
+        };
+      },
+      invalidatesTags: ["users"],
     }),
   }),
 });
 
-export const { useLoginMutation, useSignUpMutation, useGetAllUsersQuery } =
-  authApi;
+export const {
+  useLoginMutation,
+  useSignUpMutation,
+  useGetAllUsersQuery,
+  useUpdateUserMutation,
+} = authApi;

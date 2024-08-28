@@ -1,7 +1,12 @@
 import { useState } from "react";
 import SectionTitle from "../../../components/SectionTitle";
-import { useGetAllUsersQuery } from "../../../redux/features/auth/authApi";
+import {
+  useGetAllUsersQuery,
+  useUpdateUserMutation,
+} from "../../../redux/features/auth/authApi";
 import { TLoadedUser } from "../../../types/loadedUser.type";
+import toast from "react-hot-toast";
+import Loading from "../../../components/Loading";
 
 const AllUsersManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,7 +17,7 @@ const AllUsersManagement = () => {
     limit: dataPerPage,
   });
 
-  console.log(data);
+  const [updateUser] = useUpdateUserMutation();
 
   const totalPagesArray = [...Array(data?.meta.totalPage).keys()];
 
@@ -32,8 +37,50 @@ const AllUsersManagement = () => {
     }
   };
 
-  const handleMakeUser = async (id: string) => {};
-  const handleMakeAdmin = async (id: string) => {};
+  const handleMakeUser = async (id: string) => {
+    const options = {
+      id,
+      data: {
+        role: "user",
+      },
+    };
+
+    await toast.promise(updateUser(options).unwrap(), {
+      loading: "Updating user role...",
+      success: (res) => {
+        if (res.success) {
+          return "User status updated successfully";
+        } else {
+          throw new Error(res.message);
+        }
+      },
+      error: "Failed to update status",
+    });
+  };
+  const handleMakeAdmin = async (id: string) => {
+    const options = {
+      id,
+      data: {
+        role: "admin",
+      },
+    };
+
+    await toast.promise(updateUser(options).unwrap(), {
+      loading: "Updating user role...",
+      success: (res) => {
+        if (res.success) {
+          return "User status updated successfully";
+        } else {
+          throw new Error(res.message);
+        }
+      },
+      error: "Failed to update status",
+    });
+  };
+
+  if (isLoading) {
+    return <Loading />;
+  }
 
   return (
     <div className="mt-10">
