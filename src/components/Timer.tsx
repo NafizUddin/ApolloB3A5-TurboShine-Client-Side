@@ -16,17 +16,34 @@ const Timer = ({ expiryTimestamp }: TimerProps) => {
     if (!isRunning) start();
   }, [isRunning, start]);
 
+  const formatTime = (time: number) => {
+    return time.toString().padStart(2, "0");
+  };
+
   return (
-    <p className="text-gray-900 font-bold">
-      Starts In:{" "}
-      {isRunning ? (
-        <span>
-          {days}d {hours}h {minutes}m {seconds}s
-        </span>
-      ) : (
-        <span>Time's up!</span>
-      )}
-    </p>
+    <div>
+      <h4 className="font-semibold">Slot starts in:</h4>
+      <div className="timer-container">
+        <div className="timer-grid">
+          <div className="time-unit">
+            <span className="digit">{formatTime(days)}</span>
+            <span className="label">DAYS</span>
+          </div>
+          <div className="time-unit">
+            <span className="digit">{formatTime(hours)}</span>
+            <span className="label">HOURS</span>
+          </div>
+          <div className="time-unit">
+            <span className="digit">{formatTime(minutes)}</span>
+            <span className="label">MINUTES</span>
+          </div>
+          <div className="time-unit">
+            <span className="digit">{formatTime(seconds)}</span>
+            <span className="label">SECONDS</span>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 };
 

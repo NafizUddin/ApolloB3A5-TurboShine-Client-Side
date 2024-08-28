@@ -59,7 +59,7 @@ const UpcomingBooking = () => {
                 key={index}
                 className="bg-white p-6 rounded-lg shadow-md flex flex-col"
               >
-                <h3 className="text-xl font-semibold mb-2">
+                <h3 className="text-xl font-bold mb-2">
                   {booking?.service?.name}
                 </h3>
                 <p className="text-gray-700 mb-4 flex-grow">
