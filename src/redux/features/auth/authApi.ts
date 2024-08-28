@@ -27,30 +27,15 @@ const authApi = baseApi.injectEndpoints({
           params,
         };
       },
-      transformResponse: (response: TResponseRedux<any>) => response.data,
+      transformResponse: (response: TResponseRedux<any>) => {
+        return {
+          usersData: response.data.result,
+          meta: response.data.meta,
+        };
+      },
     }),
   }),
 });
 
 export const { useLoginMutation, useSignUpMutation, useGetAllUsersQuery } =
   authApi;
-
-// getAllUsers: builder.query({
-//   query: (queryData) => {
-//     const params = new URLSearchParams();
-
-//     if (queryData) {
-//       Object.entries(queryData).forEach(([key, value]) => {
-//         if (value !== undefined && value !== null) {
-//           params.append(key, value.toString());
-//         }
-//       });
-//     }
-
-//     return {
-//       url: "/auth/users",
-//       method: "GET",
-//       params,
-//     };
-//   },
-// }),

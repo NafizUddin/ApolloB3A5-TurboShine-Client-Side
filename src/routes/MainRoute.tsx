@@ -14,11 +14,12 @@ import AdminRoute from "./AdminRoute";
 import AdminHome from "../pages/AdminPages/adminHome/AdminHome";
 import ServiceManagement from "../pages/AdminPages/serviceManagement/ServiceManagement";
 import SlotManagement from "../pages/AdminPages/slotManagement/SlotManagement";
-import UserManagement from "../pages/AdminPages/userManagement/UserManagement";
+import AllUsersManagement from "../pages/AdminPages/AllUsersManagement/AllUsersManagement";
 import UserHome from "../pages/UserPages/userHome/UserHome";
 import PastBooking from "../pages/UserPages/pastBooking/PastBooking";
 import UpcomingBooking from "../pages/UserPages/upcomingBooking/UpcomingBooking";
 import ProfileCard from "../components/ProfileCard";
+import AllBookingsManagement from "../pages/AdminPages/allBookingsManagement/AllBookingsManagement";
 
 const MainRoute = createBrowserRouter([
   {
@@ -97,10 +98,18 @@ const MainRoute = createBrowserRouter([
         ),
       },
       {
-        path: "user-management",
+        path: "user-management/all-users",
         element: (
           <AdminRoute>
-            <UserManagement />{" "}
+            <AllUsersManagement />{" "}
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "user-management/all-bookings",
+        element: (
+          <AdminRoute>
+            <AllBookingsManagement />{" "}
           </AdminRoute>
         ),
       },

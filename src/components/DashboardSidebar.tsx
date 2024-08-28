@@ -151,7 +151,7 @@ const DashboardSidebar = () => {
                       {isOpen && (
                         <li>
                           <Link
-                            to="/dashboard/user-management"
+                            to="/dashboard/user-management/all-users"
                             className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                           >
                             <FaUsers className="text-xl mr-1" />
@@ -162,7 +162,7 @@ const DashboardSidebar = () => {
                       {isOpen && (
                         <li>
                           <Link
-                            to="/dashboard/user-management"
+                            to="/dashboard/user-management/all-bookings"
                             className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                           >
                             <MdOutlineBookmarkAdded className="text-xl mr-1" />

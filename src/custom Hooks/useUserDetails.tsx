@@ -12,7 +12,7 @@ const useUserDetails = () => {
     email: user?.email,
   });
 
-  loadedUser = data;
+  loadedUser = data?.usersData;
 
   if (!user) {
     loadedUser = [];

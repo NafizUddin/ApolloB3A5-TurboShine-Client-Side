@@ -82,7 +82,7 @@ const AdminHome = () => {
 
                   <div className="mx-5">
                     <h4 className="text-2xl font-semibold text-gray-700">
-                      {allStudents?.length}
+                      {allStudents?.meta?.total}
                     </h4>
                     <div className="text-gray-500 text-lg">Total Users</div>
                   </div>
@@ -97,7 +97,7 @@ const AdminHome = () => {
 
                   <div className="mx-5">
                     <h4 className="text-2xl font-semibold text-gray-700">
-                      {allServices?.serviceData.length}
+                      {allServices?.meta?.total}
                     </h4>
                     <div className="text-gray-500 text-lg">Total Services</div>
                   </div>
