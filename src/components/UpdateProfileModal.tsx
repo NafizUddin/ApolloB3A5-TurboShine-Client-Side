@@ -1,3 +1,4 @@
+import toast from "react-hot-toast";
 import { useUpdateUserMutation } from "../redux/features/auth/authApi";
 import { FieldError, FieldValues, useForm } from "react-hook-form";
 
@@ -20,13 +21,28 @@ const UpdateProfileModal = ({ setModalType, userData }: any) => {
   });
 
   const onSubmit = async (data: any) => {
-    const details = {
-      name: data?.name,
-      email: data?.email,
-      phone: data?.phone,
-      address: data?.address,
-      image: data?.image,
+    const options = {
+      id: userData._id,
+      data: {
+        name: data?.name,
+        email: data?.email,
+        phone: data?.phone,
+        address: data?.address,
+        image: data?.image,
+      },
     };
+
+    await toast.promise(updateUser(options).unwrap(), {
+      loading: "Updating profile...",
+      success: (res) => {
+        if (res.success) {
+          return res.message;
+        } else {
+          throw new Error(res.message);
+        }
+      },
+      error: "Failed to update status",
+    });
 
     setModalType("");
     reset();
@@ -135,8 +151,6 @@ const UpdateProfileModal = ({ setModalType, userData }: any) => {
               </label>
               <input
                 type="number"
-                min={0}
-                max={120}
                 className="input input-bordered focus:outline-none rounded-md border border-gray-300 outline-none invalid:border-primary transition placeholder-slate-400 focus:ring-1 focus:border-primary focus:ring-primary"
                 placeholder={"Enter Phone Number"}
                 defaultValue={userData?.phone && userData?.phone}

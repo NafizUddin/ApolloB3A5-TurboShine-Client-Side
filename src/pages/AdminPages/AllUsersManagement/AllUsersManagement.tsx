@@ -57,6 +57,7 @@ const AllUsersManagement = () => {
       error: "Failed to update status",
     });
   };
+
   const handleMakeAdmin = async (id: string) => {
     const options = {
       id,
