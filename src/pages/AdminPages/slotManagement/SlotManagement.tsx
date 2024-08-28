@@ -94,8 +94,6 @@ const SlotManagement = () => {
     return <Loading />;
   }
 
-  console.log(data?.slotData);
-
   return (
     <div className="mt-10">
       <SectionTitle
@@ -154,7 +152,7 @@ const SlotManagement = () => {
                       {singleSlot?.date}
                     </td>
                     <td className="font-semibold text-lg">
-                      ${convertTo12HourFormat(singleSlot?.startTime)}
+                      {convertTo12HourFormat(singleSlot?.startTime)}
                     </td>
                     <td className="font-semibold text-lg">
                       {convertTo12HourFormat(singleSlot?.endTime)}
