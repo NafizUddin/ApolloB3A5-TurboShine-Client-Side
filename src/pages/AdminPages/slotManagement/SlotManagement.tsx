@@ -2,15 +2,21 @@ import { FaPlus } from "react-icons/fa";
 import SectionTitle from "../../../components/SectionTitle";
 import { useState } from "react";
 import CreateSlotModal from "../../../components/CreateSlotModal";
-import { useGetSlotsQuery } from "../../../redux/features/slots/slots.api";
+import {
+  useGetSlotsQuery,
+  useUpdateSlotStatusMutation,
+} from "../../../redux/features/slots/slots.api";
 import { TSlotAppointment } from "../../../types/slot.type";
 import Loading from "../../../components/Loading";
 import { format, parse } from "date-fns";
+import toast from "react-hot-toast";
 
 const SlotManagement = () => {
   const [modalType, setModalType] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 10;
+
+  const [updateSlotStatus] = useUpdateSlotStatusMutation();
 
   const { data, isLoading } = useGetSlotsQuery({
     page: currentPage,
@@ -41,6 +47,47 @@ const SlotManagement = () => {
 
     // Format the Date object into a 12-hour time string with AM/PM
     return format(date, "hh:mm a");
+  };
+
+  const handleMakeAvailable = async (id: string) => {
+    const options = {
+      id,
+      data: {
+        isBooked: "available",
+      },
+    };
+
+    await toast.promise(updateSlotStatus(options).unwrap(), {
+      loading: "Updating status...",
+      success: (res) => {
+        if (res.success) {
+          return res.message;
+        } else {
+          throw new Error(res.message);
+        }
+      },
+      error: "Failed to update status",
+    });
+  };
+  const handleMakeCancelled = async (id: string) => {
+    const options = {
+      id,
+      data: {
+        isBooked: "cancelled",
+      },
+    };
+
+    await toast.promise(updateSlotStatus(options).unwrap(), {
+      loading: "Updating status...",
+      success: (res) => {
+        if (res.success) {
+          return res.message;
+        } else {
+          throw new Error(res.message);
+        }
+      },
+      error: "Failed to update status",
+    });
   };
 
   if (isLoading) {
@@ -80,7 +127,7 @@ const SlotManagement = () => {
         }}
         className="overflow-x-auto m-5"
       >
-        <table className="table table-sm">
+        <table className="table">
           {/* head */}
           <thead className="text-lg">
             <tr>
@@ -97,16 +144,47 @@ const SlotManagement = () => {
               data?.slotData?.map(
                 (singleSlot: TSlotAppointment, index: number) => (
                   <tr key={index} className="rounded-lg">
-                    <th>{index + 1 + (currentPage - 1) * dataPerPage}</th>
-                    <td>{singleSlot?.service?.name}</td>
-                    <td className="font-semibold">{singleSlot?.date}</td>
-                    <td className="font-semibold">
+                    <th className="text-lg">
+                      {index + 1 + (currentPage - 1) * dataPerPage}
+                    </th>
+                    <td className="text-lg font-semibold">
+                      {singleSlot?.service?.name}
+                    </td>
+                    <td className="text-lg font-semibold">
+                      {singleSlot?.date}
+                    </td>
+                    <td className="font-semibold text-lg">
                       ${convertTo12HourFormat(singleSlot?.startTime)}
                     </td>
-                    <td className="font-semibold">
+                    <td className="font-semibold text-lg">
                       {convertTo12HourFormat(singleSlot?.endTime)}
                     </td>
-                    <td className="xl:text-lg font-semibold"></td>
+                    <td className="font-semibold text-lg flex justify-center items-center">
+                      {singleSlot?.isBooked === "available" ? (
+                        <a
+                          onClick={() => handleMakeCancelled(singleSlot?._id)}
+                          href="#"
+                          className="bg-green-200 hover:bg-green-300 py-2 px-2 rounded-lg"
+                        >
+                          Available
+                        </a>
+                      ) : singleSlot?.isBooked === "booked" ? (
+                        <a
+                          href="#"
+                          className="bg-blue-200 hover:bg-blue-300 py-2 px-2 rounded-lg cursor-not-allowed"
+                        >
+                          Booked
+                        </a>
+                      ) : (
+                        <a
+                          onClick={() => handleMakeAvailable(singleSlot?._id)}
+                          href="#"
+                          className="bg-red-200 hover:bg-red-300 py-2 px-2 rounded-lg"
+                        >
+                          Cancelled
+                        </a>
+                      )}
+                    </td>
                   </tr>
                 )
               )}
@@ -114,7 +192,7 @@ const SlotManagement = () => {
         </table>
       </div>
 
-      <div className="flex justify-center items-center flex-wrap">
+      <div className="flex justify-center items-center flex-wrap mt-8">
         {totalPagesArray?.length > 1 && (
           <div className="join pb-10">
             <button onClick={handlePrevPage} className="join-item btn">
