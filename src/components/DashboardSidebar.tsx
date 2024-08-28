@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import logo from "../assets/removed-bg-logo.png";
-import { MdOutlineLogout } from "react-icons/md";
+import { MdOutlineBookmarkAdded, MdOutlineLogout } from "react-icons/md";
 import { GrServices, GrTasks } from "react-icons/gr";
 import { CgProfile } from "react-icons/cg";
 import useUserDetails from "../custom Hooks/useUserDetails";
@@ -13,12 +13,19 @@ import { MdOutlineBorderColor } from "react-icons/md";
 import { MdOutlineRateReview } from "react-icons/md";
 import { BsCardChecklist } from "react-icons/bs";
 import { MdMiscellaneousServices } from "react-icons/md";
-import { FaUsersCog } from "react-icons/fa";
+import { FaChevronDown, FaUsers, FaUsersCog } from "react-icons/fa";
+import { useState } from "react";
 
 const DashboardSidebar = () => {
   const { loadedUser, isLoading } = useUserDetails();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
   const handleLogOut = () => {
     dispatch(logout());
@@ -127,14 +134,42 @@ const DashboardSidebar = () => {
                         </Link>
                       </li>
                       <li>
-                        <Link
-                          to="/dashboard/user-management"
+                        <button
+                          // to="/dashboard/user-management"
+                          onClick={toggleDropdown}
                           className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
                           <FaUsersCog className="text-xl mr-1" />
-                          <span className="mt-1">Users Management</span>
-                        </Link>
+                          <span className="mt-1">User Management</span>
+                          <FaChevronDown
+                            className={`text-sm ml-24  transition-transform ${
+                              isOpen ? "rotate-180" : ""
+                            }`}
+                          />
+                        </button>
                       </li>
+                      {isOpen && (
+                        <li>
+                          <Link
+                            to="/dashboard/user-management"
+                            className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
+                          >
+                            <FaUsers className="text-xl mr-1" />
+                            <span className="mt-1">All Users</span>
+                          </Link>
+                        </li>
+                      )}
+                      {isOpen && (
+                        <li>
+                          <Link
+                            to="/dashboard/user-management"
+                            className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
+                          >
+                            <MdOutlineBookmarkAdded className="text-xl mr-1" />
+                            <span className="mt-1">All Bookings</span>
+                          </Link>
+                        </li>
+                      )}
                     </>
                   ) : (
                     <>
@@ -144,7 +179,7 @@ const DashboardSidebar = () => {
                           className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
                           <IoHome className="text-xl mr-1" />
-                          <span className="mt-2">User Home</span>
+                          <span className="mt-2">All Bookings</span>
                         </Link>
                       </li>
                       <li>
