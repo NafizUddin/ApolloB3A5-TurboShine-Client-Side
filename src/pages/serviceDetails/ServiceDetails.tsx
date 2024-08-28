@@ -14,9 +14,11 @@ import { FaTimesCircle } from "react-icons/fa";
 import { useAppDispatch } from "../../redux/hooks";
 import { addBooking } from "../../redux/features/bookings/bookings.slice";
 import toast from "react-hot-toast";
+import useUserDetails from "../../custom Hooks/useUserDetails";
 
 const ServiceDetails = () => {
   const { id } = useParams();
+  const { loadedUser } = useUserDetails();
 
   const { data, isLoading } = useGetSingleServiceQuery(id);
 
@@ -156,12 +158,17 @@ const ServiceDetails = () => {
                     <li key={singleSlot._id} className="flex mx-1">
                       <a
                         onClick={() => handleSlotSelection(singleSlot)}
-                        className={`p-2 px-3 mb-4 rounded font-medium cursor-pointer ${
+                        className={`p-2 px-3 mb-4 rounded font-medium ${
                           singleSlot?.isBooked === "available"
-                            ? isSlotSelected(singleSlot)
+                            ? isSlotSelected(singleSlot) &&
+                              loadedUser[0]?.role !== "admin"
                               ? "bg-green-500 text-white"
                               : "border-primary bg-white text-primary hover:bg-primary hover:text-white border"
                             : "btn btn-disabled"
+                        } ${
+                          loadedUser[0]?.role === "admin"
+                            ? "cursor-not-allowed"
+                            : "cursor-pointer"
                         }`}
                       >
                         {`${singleSlot?.startTime}-${singleSlot?.endTime}`}
@@ -177,16 +184,18 @@ const ServiceDetails = () => {
             )}
 
             <div className="flex justify-center items-center mt-7">
-              {selectedSlot && selectedSlot.length > 0 && (
-                <div>
-                  <button
-                    onClick={handleBookingSlots}
-                    className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold"
-                  >
-                    Book Services
-                  </button>
-                </div>
-              )}
+              {selectedSlot &&
+                selectedSlot.length > 0 &&
+                loadedUser[0]?.role !== "admin" && (
+                  <div>
+                    <button
+                      onClick={handleBookingSlots}
+                      className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold"
+                    >
+                      Book Services
+                    </button>
+                  </div>
+                )}
             </div>
           </div>
 
@@ -224,12 +233,17 @@ const ServiceDetails = () => {
                   <li key={singleSlot._id} className="flex mx-1">
                     <a
                       onClick={() => handleSlotSelection(singleSlot)}
-                      className={`p-2 px-3 mb-4 rounded font-medium cursor-pointer ${
+                      className={`p-2 px-3 mb-4 rounded font-medium ${
                         singleSlot?.isBooked === "available"
-                          ? isSlotSelected(singleSlot)
+                          ? isSlotSelected(singleSlot) &&
+                            loadedUser[0]?.role !== "admin"
                             ? "bg-green-500 text-white"
                             : "border-primary bg-white text-primary hover:bg-primary hover:text-white border"
                           : "btn btn-disabled"
+                      } ${
+                        loadedUser[0]?.role === "admin"
+                          ? "cursor-not-allowed"
+                          : "cursor-pointer"
                       }`}
                     >
                       {`${singleSlot?.startTime}-${singleSlot?.endTime}`}
@@ -241,6 +255,7 @@ const ServiceDetails = () => {
               <div className="flex justify-center items-center mt-7">
                 {selectedSlot &&
                   selectedSlot.length > 0 &&
+                  loadedUser[0]?.role !== "admin" &&
                   selectedSlot.some(
                     (serviceSlot: TSlotAppointment) =>
                       serviceSlot.date !== currentDateFormatted &&
