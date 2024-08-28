@@ -1,7 +1,7 @@
 import { RiMoneyDollarCircleLine } from "react-icons/ri";
 import Loading from "../../components/Loading";
 import { useGetSingleServiceQuery } from "../../redux/features/services/carService.api";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { LuClock } from "react-icons/lu";
 import { FaCheckToSlot } from "react-icons/fa6";
 import { useEffect, useMemo, useState } from "react";
@@ -188,12 +188,14 @@ const ServiceDetails = () => {
                 selectedSlot.length > 0 &&
                 loadedUser[0]?.role !== "admin" && (
                   <div>
-                    <button
-                      onClick={handleBookingSlots}
-                      className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold"
-                    >
-                      Book Services
-                    </button>
+                    <Link to={"/bookings"}>
+                      <button
+                        onClick={handleBookingSlots}
+                        className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold"
+                      >
+                        Book Services
+                      </button>
+                    </Link>
                   </div>
                 )}
             </div>
@@ -262,12 +264,14 @@ const ServiceDetails = () => {
                       dateRange.includes(serviceSlot.date)
                   ) && (
                     <div>
-                      <button
-                        onClick={handleBookingSlots}
-                        className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold"
-                      >
-                        Book Services
-                      </button>
+                      <Link to={"/bookings"}>
+                        <button
+                          onClick={handleBookingSlots}
+                          className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold"
+                        >
+                          Book Services
+                        </button>
+                      </Link>
                     </div>
                   )}
               </div>

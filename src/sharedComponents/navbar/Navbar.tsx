@@ -69,7 +69,7 @@ const Navbar = () => {
           Reviews
         </NavLink>
       </li>
-      {loadedUser[0].role !== "admin" && (
+      {loadedUser[0]?.role !== "admin" && (
         <li className="relative">
           <NavLink
             to="/bookings"

@@ -3,20 +3,24 @@ import { baseApi } from "../../../redux/api/baseApi";
 
 const bookingApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    // getReviews: builder.query({
-    //   query: () => ({
-    //     url: "/reviews",
-    //     method: "GET",
-    //   }),
-    //   transformResponse: (response: TResponseRedux<any>) => {
-    //     // Assuming response.data is an array of reviews
-    //     return {
-    //       reviews: response.data,
-    //       averageRating: response.averageRating,
-    //     };
-    //   },
-    //   providesTags: ["reviews"],
-    // }),
+    getAllBookings: builder.query({
+      query: (queryData) => {
+        const params = queryData ? { ...queryData } : {};
+
+        return {
+          url: "/bookings",
+          method: "GET",
+          params,
+        };
+      },
+      transformResponse: (response: TResponseRedux<any>) => {
+        return {
+          bookingData: response.data.result,
+          meta: response.data.meta,
+        };
+      },
+      providesTags: ["bookings"],
+    }),
     addBookings: builder.mutation({
       query: (bookingInfo) => {
         return {
@@ -31,4 +35,4 @@ const bookingApi = baseApi.injectEndpoints({
   }),
 });
 
-export const { useAddBookingsMutation } = bookingApi;
+export const { useAddBookingsMutation, useGetAllBookingsQuery } = bookingApi;

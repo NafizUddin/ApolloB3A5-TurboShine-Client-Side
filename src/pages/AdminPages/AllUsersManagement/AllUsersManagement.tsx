@@ -135,7 +135,7 @@ const AllUsersManagement = () => {
                       <a
                         onClick={() => handleMakeUser(singleUser?._id)}
                         href="#"
-                        className="bg-green-200 hover:bg-green-300 py-2 px-2 rounded-lg"
+                        className="bg-green-300 hover:bg-green-400 py-2 px-2 rounded-lg"
                       >
                         Admin
                       </a>
@@ -143,7 +143,7 @@ const AllUsersManagement = () => {
                       <a
                         onClick={() => handleMakeAdmin(singleUser?._id)}
                         href="#"
-                        className="bg-orange-200 hover:bg-orange-300 py-2 px-2 rounded-lg"
+                        className="bg-orange-300 hover:bg-orange-400 py-2 px-2 rounded-lg"
                       >
                         User
                       </a>
