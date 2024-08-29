@@ -4,13 +4,18 @@ import { MdEmail } from "react-icons/md";
 import { MdOutlineLocationOn } from "react-icons/md";
 import { useState } from "react";
 import UpdateProfileModal from "./UpdateProfileModal";
+import { motion } from "framer-motion";
 
 const ProfileCard = () => {
   const { loadedUser } = useUserDetails();
   const [modalType, setModalType] = useState<string>("");
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+    >
       <div className="max-w-4xl flex items-center h-auto flex-wrap mx-auto my-20 lg:my-0">
         {/* <!--Main Col--> */}
         <div
@@ -176,7 +181,7 @@ const ProfileCard = () => {
           setModalType={setModalType}
         />
       )}
-    </div>
+    </motion.div>
   );
 };
 

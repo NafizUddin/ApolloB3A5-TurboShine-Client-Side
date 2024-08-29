@@ -7,6 +7,7 @@ import {
 import { TLoadedUser } from "../../../types/loadedUser.type";
 import toast from "react-hot-toast";
 import Loading from "../../../components/Loading";
+import { motion } from "framer-motion";
 
 const AllUsersManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -90,11 +91,19 @@ const AllUsersManagement = () => {
         heading="All Users Management"
       />
 
-      <div className="flex items-center justify-between mb-12 mt-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+        className="flex items-center justify-between mb-12 mt-10"
+      >
         <h1 className="text-left font-bold text-2xl lg:text-3xl">All Users</h1>
-      </div>
+      </motion.div>
 
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
         style={{
           scrollbarWidth: "none" /* Firefox */,
           msOverflowStyle: "none" /* IE and Edge */,
@@ -153,7 +162,7 @@ const AllUsersManagement = () => {
               ))}
           </tbody>
         </table>
-      </div>
+      </motion.div>
 
       <div className="flex justify-center items-center flex-wrap mt-8">
         {totalPagesArray?.length > 1 && (

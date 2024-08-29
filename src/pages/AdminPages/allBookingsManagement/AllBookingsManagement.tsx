@@ -4,6 +4,7 @@ import { useGetAllBookingsQuery } from "../../../redux/features/bookings/booking
 import Loading from "../../../components/Loading";
 import { TBooking } from "../../../types/booking.type";
 import { format, parse } from "date-fns";
+import { motion } from "framer-motion";
 
 const AllBookingsManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -51,13 +52,21 @@ const AllBookingsManagement = () => {
         heading="All Bookings Management"
       />
 
-      <div className="flex items-center justify-between mb-12 mt-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+        className="flex items-center justify-between mb-12 mt-10"
+      >
         <h1 className="text-left font-bold text-2xl lg:text-3xl">
           All Bookings
         </h1>
-      </div>
+      </motion.div>
 
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
         style={{
           scrollbarWidth: "none" /* Firefox */,
           msOverflowStyle: "none" /* IE and Edge */,
@@ -113,7 +122,7 @@ const AllBookingsManagement = () => {
               )}
           </tbody>
         </table>
-      </div>
+      </motion.div>
 
       <div className="flex justify-center items-center flex-wrap mt-8">
         {totalPagesArray?.length > 1 && (

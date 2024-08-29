@@ -8,19 +8,36 @@ import {
 } from "../../../redux/features/slots/slots.api";
 import { TSlotAppointment } from "../../../types/slot.type";
 import Loading from "../../../components/Loading";
-import { format, parse } from "date-fns";
+import { format, isBefore, parse, parseISO } from "date-fns";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
+import { CiCircleMore } from "react-icons/ci";
+import { TbArrowsExchange } from "react-icons/tb";
+import { ImSpinner6 } from "react-icons/im";
 
 const SlotManagement = () => {
   const [modalType, setModalType] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 10;
+  const [loadingSpinner, setLoadingSpinner] = useState(false);
 
   const [updateSlotStatus] = useUpdateSlotStatusMutation();
 
   const { data, isLoading } = useGetSlotsQuery({
     page: currentPage,
     limit: dataPerPage,
+  });
+
+  const { data: allSlotsData } = useGetSlotsQuery({
+    page: 1,
+    limit: 1000,
+  });
+
+  const today = new Date();
+
+  const pastSlots = allSlotsData?.slotData?.filter((item: TSlotAppointment) => {
+    const slotDate = parseISO(item?.date);
+    return isBefore(slotDate, today);
   });
 
   const totalPagesArray = [...Array(data?.meta.totalPage).keys()];
@@ -91,6 +108,41 @@ const SlotManagement = () => {
     });
   };
 
+  const handlePastSlotStatus = async () => {
+    setLoadingSpinner(true);
+    if (pastSlots?.length === 0) {
+      toast.error("No Past Slots Available");
+      setLoadingSpinner(false);
+      return;
+    }
+
+    try {
+      let lastResponse;
+
+      for (const slot of pastSlots) {
+        const options = {
+          id: slot?._id,
+          data: {
+            isBooked: "cancelled",
+          },
+        };
+
+        lastResponse = await updateSlotStatus(options).unwrap();
+      }
+
+      console.log("Last booking response:", lastResponse);
+
+      if (lastResponse?.success) {
+        toast.success("Past slots status updated successfully");
+        setLoadingSpinner(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoadingSpinner(false);
+      // toast.error(error.message);
+    }
+  };
+
   if (isLoading) {
     return <Loading />;
   }
@@ -102,23 +154,61 @@ const SlotManagement = () => {
         heading="Slot Management"
       />
 
-      <div className="flex items-center justify-between mb-12 mt-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+        className="flex items-center justify-between mb-12 mt-10"
+      >
         <h1 className="text-left font-bold text-2xl lg:text-3xl">
           All Services Slots
         </h1>
-        <label
-          htmlFor="createSlot-modal"
-          onClick={() => {
-            setModalType("add");
-          }}
-          className="flex items-center gap-2 px-4 py-3 btn-custom rounded-full text-white bg-primary"
-        >
-          <FaPlus className="text-xl mr-1" />
-          <span className="mt-1">Create New Slots</span>
-        </label>
-      </div>
+        <div>
+          <div className="dropdown dropdown-left">
+            <label tabIndex={0} className="m-1 cursor-pointer">
+              <CiCircleMore className="text-4xl text-primary" />
+            </label>
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-[1] menu p-2 shadow-md bg-base-100 rounded-box w-56 space-y-2"
+            >
+              <li>
+                <label
+                  htmlFor="createSlot-modal"
+                  onClick={() => {
+                    setModalType("add");
+                  }}
+                  className="flex items-center gap-2 btn-custom-two text-primary"
+                >
+                  <FaPlus className="text-xl mr-1" />
+                  <span className="mt-1">Create New Slots</span>
+                </label>
+              </li>
 
-      <div
+              <li>
+                <button
+                  onClick={handlePastSlotStatus}
+                  className="flex items-center gap-2 btn-custom-two text-primary"
+                >
+                  {loadingSpinner ? (
+                    <ImSpinner6 className="animate-spin m-auto text-xl text-primary" />
+                  ) : (
+                    <>
+                      <TbArrowsExchange className="text-xl mr-1" />
+                      <span>Change Past Slot Status</span>
+                    </>
+                  )}
+                </button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </motion.div>
+
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
         style={{
           scrollbarWidth: "none" /* Firefox */,
           msOverflowStyle: "none" /* IE and Edge */,
@@ -189,7 +279,7 @@ const SlotManagement = () => {
               )}
           </tbody>
         </table>
-      </div>
+      </motion.div>
 
       <div className="flex justify-center items-center flex-wrap mt-8">
         {totalPagesArray?.length > 1 && (

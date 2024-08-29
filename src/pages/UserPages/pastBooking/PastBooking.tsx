@@ -4,6 +4,7 @@ import Loading from "../../../components/Loading";
 import SectionTitle from "../../../components/SectionTitle";
 import { useState } from "react";
 import { TBooking } from "../../../types/booking.type";
+import { motion } from "framer-motion";
 
 const PastBooking = () => {
   const { data, isLoading } = useGetIndividualBookingQuery(undefined);
@@ -71,13 +72,21 @@ const PastBooking = () => {
         heading={`Bookings before ${formatDate(today)}`}
       />
 
-      <div className="flex items-center justify-between mb-12 mt-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+        className="flex items-center justify-between mb-12 mt-10"
+      >
         <h1 className="text-left font-bold text-2xl lg:text-3xl">
           Previous Bookings
         </h1>
-      </div>
+      </motion.div>
 
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
         style={{
           scrollbarWidth: "none" /* Firefox */,
           msOverflowStyle: "none" /* IE and Edge */,
@@ -120,7 +129,7 @@ const PastBooking = () => {
               )}
           </tbody>
         </table>
-      </div>
+      </motion.div>
 
       <div className="flex justify-center items-center flex-wrap mt-8">
         {totalPagesArray?.length > 1 && (

@@ -12,6 +12,7 @@ import Swal from "sweetalert2";
 import ServiceModal from "../../../components/ServiceModal";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 
 type TServiceState = TCarService | object | null;
 
@@ -83,7 +84,12 @@ const ServiceManagement = () => {
         heading="Service Management"
       />
 
-      <div className="flex items-center justify-between mb-12 mt-10">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.6 }}
+        className="flex items-center justify-between mb-12 mt-10"
+      >
         <h1 className="text-left font-bold text-2xl lg:text-3xl">
           All Services
         </h1>
@@ -98,9 +104,12 @@ const ServiceManagement = () => {
           <FaPlus className="text-xl mr-1" />
           <span className="mt-1">Add New Service</span>
         </label>
-      </div>
+      </motion.div>
 
-      <div
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut", delay: 0.9 }}
         style={{
           scrollbarWidth: "none" /* Firefox */,
           msOverflowStyle: "none" /* IE and Edge */,
@@ -186,7 +195,7 @@ const ServiceManagement = () => {
               )}
           </tbody>
         </table>
-      </div>
+      </motion.div>
 
       <div className="flex justify-center items-center flex-wrap">
         {totalPagesArray?.length > 1 && (
