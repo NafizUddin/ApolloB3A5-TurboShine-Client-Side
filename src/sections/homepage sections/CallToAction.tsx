@@ -8,14 +8,14 @@ const CallToAction = () => {
     <div data-aos="zoom-in" data-aos-duration="800">
       {/* Extra Banner starts */}
       <div className="my-14">
-        <div className="relative h-[320px] md:h-[360px] lg:h-[300px] xl:h-[350px]">
+        <div className="relative h-[360px] md:h-[360px] lg:h-[300px] xl:h-[350px]">
           <img
             src="https://themeholy.com/wordpress/malen/wp-content/uploads/2023/09/cta_bg_1-2.jpg"
-            className="absolute inset-0 w-full h-full object-cover"
+            className="absolute inset-0 w-full h-full object-cover object-left"
             alt=""
           />
           <div className="relative bg-gray-900 bg-opacity-70 h-full">
-            <div className="flex flex-col lg:flex-row justify-around items-center gap-8 pt-16 lg:pt-24">
+            <div className="flex flex-col lg:flex-row justify-around items-center gap-8 pt-24 lg:pt-24">
               <div className="flex flex-col gap-5">
                 <div className="flex gap-3">
                   <span className="flex flex-col gap-1 mt-[6px] items-end">

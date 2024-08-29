@@ -54,6 +54,16 @@ const Testimonial = () => {
           pagination={true}
           modules={[Autoplay, Pagination, Navigation]}
           className="mySwiper"
+          breakpoints={{
+            350: {
+              slidesPerView: 1, // For small devices
+              slidesPerGroup: 1,
+            },
+            800: {
+              slidesPerView: 2, // For medium devices
+              slidesPerGroup: 2,
+            },
+          }}
         >
           {data?.reviews
             ?.slice(0, 4)

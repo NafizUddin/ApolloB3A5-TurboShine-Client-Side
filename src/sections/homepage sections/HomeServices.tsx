@@ -30,7 +30,7 @@ const HomeServices = () => {
         {data?.serviceData?.slice(0, 6)?.map((service: TCarService) => (
           <div
             key={service._id}
-            className="rounded-lg card p-6 bg-white mb-40 group"
+            className="rounded-lg card p-6 bg-white mb-40 group shadow-md"
           >
             <img
               src={service.image}

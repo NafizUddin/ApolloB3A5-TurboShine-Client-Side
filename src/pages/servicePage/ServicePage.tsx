@@ -174,7 +174,10 @@ const ServicePage = () => {
       <div className="grid grid-cols-1 lg:grid-cols-3 xl:grid-cols-7 gap-9 mt-44">
         <div className="lg:col-span-1 xl:col-span-2 -mt-28 mb-40">
           {/* Search Bar starts*/}
-          <form onSubmit={handleSearchService} className="max-w-md mx-auto">
+          <form
+            onSubmit={handleSearchService}
+            className="md:max-w-md mx-auto w-4/5"
+          >
             <label
               htmlFor="default-search"
               className="mb-2 text-sm font-medium text-gray-900 sr-only"
@@ -221,12 +224,10 @@ const ServicePage = () => {
           <div className="mt-7">
             <div className="flex gap-3 justify-center lg:justify-start items-center">
               <RiMoneyDollarCircleLine className="text-3xl mb-2" />
-              <h1 className="text-xl md:text-2xl font-semibold">
-                Filter by Price Ranges
-              </h1>
+              <h1 className="text-2xl font-semibold">Filter by Price Ranges</h1>
             </div>
 
-            <div className="flex flex-col gap-3 mt-5 ml-24 md:ml-72 lg:ml-0">
+            <div className="flex flex-col gap-3 mt-5 ml-[58px] md:ml-[230px] lg:ml-0">
               {priceRanges.map((range) => (
                 <div key={range}>
                   <label className="inline-flex items-center">
@@ -257,7 +258,7 @@ const ServicePage = () => {
                         </svg>
                       )}
                     </span>
-                    <span className="select-none ml-3 text-xl font-medium mt-1">
+                    <span className="select-none ml-4 md:ml-3 text-2xl font-medium mt-1">
                       ${range}.00
                     </span>
                   </label>
@@ -285,14 +286,14 @@ const ServicePage = () => {
               onChange={handleSliderChange}
             />
 
-            <p className="text-lg xl:text-xl font-medium text-center lg:text-left">
+            <p className="text-lg md:text-xl font-medium text-center lg:text-left">
               Time Range: {minTime} minutes - {maxTime} minutes
             </p>
           </div>
 
           {/* time duration slider ends*/}
           {/* Tag type start */}
-          <div className="mt-5">
+          <div className="mt-7">
             <div className="container mx-auto">
               <div className="bg-white rounded-lg">
                 <h2 className="text-xl md:text-2xl font-semibold mb-4 text-center lg:text-left">
@@ -347,7 +348,8 @@ const ServicePage = () => {
             </div>
           </div>
 
-          <div className="mt-7">
+          {/* Compare button */}
+          <div className="mt-7 flex justify-center items-center lg:justify-start">
             <button
               className={`px-4 py-2 rounded ${
                 service.length > 1
