@@ -1,5 +1,5 @@
 import { useGetIndividualBookingQuery } from "../redux/features/bookings/bookings.api";
-import { isAfter, isToday, parseISO } from "date-fns";
+import { isAfter, parseISO } from "date-fns";
 import useUserDetails from "./useUserDetails";
 
 const useImmediateBooking = () => {

@@ -1,6 +1,6 @@
 import { useGetIndividualBookingQuery } from "../../../redux/features/bookings/bookings.api";
 import SectionTitle from "../../../components/SectionTitle";
-import { parseISO, isToday, isAfter, parse, format } from "date-fns";
+import { parseISO, isAfter, parse, format } from "date-fns";
 import Loading from "../../../components/Loading";
 import { TBooking } from "@/types/booking.type";
 import Timer from "../../../components/Timer";

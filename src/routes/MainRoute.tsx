@@ -18,7 +18,6 @@ import AllUsersManagement from "../pages/AdminPages/AllUsersManagement/AllUsersM
 import UserHome from "../pages/UserPages/userHome/UserHome";
 import PastBooking from "../pages/UserPages/pastBooking/PastBooking";
 import UpcomingBooking from "../pages/UserPages/upcomingBooking/UpcomingBooking";
-import ProfileCard from "../components/ProfileCard";
 import AllBookingsManagement from "../pages/AdminPages/allBookingsManagement/AllBookingsManagement";
 
 const MainRoute = createBrowserRouter([
