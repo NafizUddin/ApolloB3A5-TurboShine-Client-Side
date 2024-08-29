@@ -8,11 +8,14 @@ const useImmediateBooking = () => {
   const { data, isLoading: isBookingLoading } =
     useGetIndividualBookingQuery(undefined);
 
-  const today = new Date();
+  const now = new Date();
 
   const upcomingBookings = data?.filter((item: any) => {
-    const slotDate = parseISO(item?.slot?.date);
-    return isToday(slotDate) || isAfter(slotDate, today);
+    const slotStartDateTime = parseISO(
+      `${item?.slot?.date}T${item?.slot?.startTime}:00`
+    ); // Adding seconds for a complete time
+
+    return isAfter(slotStartDateTime, now);
   });
 
   const immediateBooking = upcomingBookings?.[0];

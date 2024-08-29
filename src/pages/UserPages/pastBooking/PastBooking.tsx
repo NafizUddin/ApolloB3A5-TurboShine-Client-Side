@@ -11,7 +11,7 @@ const PastBooking = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 10;
 
-  const today = new Date();
+  const now = new Date();
 
   // Helper function to format dates to YYYY-MM-DD
   const formatDate = (date: Date): string => {
@@ -19,8 +19,11 @@ const PastBooking = () => {
   };
 
   const pastBookings = data?.filter((item: any) => {
-    const slotDate = parseISO(item?.slot?.date);
-    return isBefore(slotDate, today);
+    const slotDateTime = new Date(parseISO(item?.slot?.date));
+    const [hours, minutes] = item?.slot?.startTime.split(":");
+    slotDateTime.setHours(Number(hours), Number(minutes));
+
+    return isBefore(slotDateTime, now);
   });
 
   const totalPages =
@@ -63,13 +66,11 @@ const PastBooking = () => {
     return <Loading />;
   }
 
-  console.log(pastBookings);
-
   return (
     <div className="mt-10">
       <SectionTitle
         sub="Quick Insights & Management Tools"
-        heading={`Bookings before ${formatDate(today)}`}
+        heading={`Bookings before ${formatDate(now)}`}
       />
 
       <motion.div
