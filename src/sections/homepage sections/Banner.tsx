@@ -2,6 +2,9 @@ import { Link } from "react-router-dom";
 import banner from "../../assets/banner.mp4";
 import { TypeAnimation } from "react-type-animation";
 import { motion } from "framer-motion";
+import { useAppSelector } from "../../redux/hooks";
+import { selectCurrentUser } from "../../redux/features/auth/authSlice";
+import useImmediateBooking from "../../custom Hooks/useImmediateBooking";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -19,9 +22,18 @@ const childVariants = {
 };
 
 const Banner = () => {
+  const user = useAppSelector(selectCurrentUser);
+  const { immediateBooking } = useImmediateBooking();
+
   return (
     <div className="mb-28">
-      <div className="relative h-[630px] md:h-[560px] lg:h-[540px]">
+      <div
+        className={`relative ${
+          user && immediateBooking
+            ? "h-[630px] md:h-[560px] lg:h-[500px]"
+            : "h-[630px] md:h-[560px] lg:h-[540px]"
+        } `}
+      >
         <video
           src={banner}
           className="absolute inset-0 object-cover w-full h-full"
@@ -32,7 +44,9 @@ const Banner = () => {
         />
         <div className="relative bg-gray-900 bg-opacity-70 h-full">
           <motion.div
-            className="flex flex-col justify-center items-center pt-28 pb-16 lg:pt-28 lg:pb-10 md:pt-28 md:pb-0"
+            className={`flex flex-col justify-center items-center ${
+              user && immediateBooking ? " lg:pt-24" : "lg:pt-28"
+            } pt-28 pb-16 lg:pb-10 md:pt-28 md:pb-0`}
             variants={containerVariants}
             initial="hidden"
             animate="visible"

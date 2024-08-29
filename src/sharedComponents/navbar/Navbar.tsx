@@ -8,9 +8,9 @@ import toast from "react-hot-toast";
 import useUserDetails from "../../custom Hooks/useUserDetails";
 import Loading from "../../components/Loading";
 import { totalSlotsCount } from "../../redux/features/bookings/bookings.slice";
-import { useGetIndividualBookingQuery } from "../../redux/features/bookings/bookings.api";
-import { isAfter, isToday, parseISO } from "date-fns";
 import NavTimer from "../../components/NavTimer";
+import removedLogo from "../../assets/removed-bg-logo.png";
+import useImmediateBooking from "../../custom Hooks/useImmediateBooking";
 
 const Navbar = () => {
   const user = useAppSelector(selectCurrentUser);
@@ -19,37 +19,8 @@ const Navbar = () => {
 
   const { loadedUser, isLoading } = useUserDetails();
 
-  const { data, isLoading: isBookingLoading } =
-    useGetIndividualBookingQuery(undefined);
-
-  const today = new Date();
-
-  const upcomingBookings = data?.filter((item: any) => {
-    const slotDate = parseISO(item?.slot?.date);
-    return isToday(slotDate) || isAfter(slotDate, today);
-  });
-
-  const immediateBooking = upcomingBookings?.[0];
-  let expiryTimestamp;
-
-  if (immediateBooking) {
-    const slotDate = parseISO(immediateBooking?.slot?.date); // Ensure slot date is in ISO format
-
-    if (slotDate && immediateBooking?.slot?.startTime) {
-      const startTime = immediateBooking?.slot?.startTime; // expected to be in "HH:mm" format
-
-      if (startTime) {
-        // Parse time using date-fns
-        const [hours, minutes] = startTime.split(":").map(Number);
-
-        // Combine date and time into a single Date object
-        expiryTimestamp = new Date(slotDate);
-        expiryTimestamp.setHours(hours, minutes, 0, 0);
-      }
-    }
-  }
-
-  console.log(expiryTimestamp);
+  const { immediateBooking, expiryTimestamp, isBookingLoading } =
+    useImmediateBooking();
 
   const handleLogOut = () => {
     dispatch(logout());
@@ -63,8 +34,6 @@ const Navbar = () => {
   if (isBookingLoading) {
     return <Loading />;
   }
-
-  console.log(expiryTimestamp);
 
   const links = (
     <>
@@ -137,7 +106,11 @@ const Navbar = () => {
 
   return (
     <div>
-      <div className="drawer px-2 md:px-0">
+      <div
+        className={`drawer px-2 md:px-0 ${
+          user && immediateBooking ? "" : "py-2"
+        }`}
+      >
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col">
           {/* Navbar */}
@@ -168,33 +141,35 @@ const Navbar = () => {
                 <img
                   src={logo}
                   alt=""
-                  className="w-[230px] md:w-[270px] lg:w-[180px] xl:w-[220px]"
+                  className="w-[230px] md:w-[270px] lg:w-[180px] xl:w-[230px]"
                 />
               </Link>
             </div>
             <div className="flex items-center">
-              <div className="hidden lg:block lg:mr-7 xl:mr-20">
-                <NavTimer
-                  expiryTimestamp={expiryTimestamp}
-                  immediateBooking={immediateBooking}
-                />
-              </div>
+              {user && immediateBooking && (
+                <div className="hidden lg:block lg:mr-7 xl:mr-20">
+                  <NavTimer
+                    expiryTimestamp={expiryTimestamp}
+                    immediateBooking={immediateBooking}
+                  />
+                </div>
+              )}
               <div className="hidden flex-none px-3 lg:flex gap-6">
                 <ul className="flex gap-6 text-primary font-semibold">
                   {/* Navbar menu content here */}
                   {links}
                 </ul>
               </div>
-              <div className="divider divider-horizontal"></div>
+              {!user && <div className="divider divider-horizontal"></div>}
               <div>
                 {user ? (
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-3 ml-3">
                     <div className="dropdown dropdown-end">
                       <label
                         tabIndex={0}
                         className="btn btn-ghost btn-circle avatar"
                       >
-                        <div className="w-10 rounded-full object-cover object-top">
+                        <div className="w-16 rounded-full object-cover object-top">
                           <img src={loadedUser[0].image} alt="Avatar" />
                         </div>
                       </label>
@@ -211,7 +186,7 @@ const Navbar = () => {
                             <span className="mt-1">{loadedUser[0].name}</span>
                           </a>
                         </li>
-                        {loadedUser[0].role === "admin" ? (
+                        {user.role === "admin" ? (
                           <li>
                             <Link
                               to="/dashboard/adminHome"
@@ -271,14 +246,27 @@ const Navbar = () => {
             className="drawer-overlay"
           ></label>
           <div className="min-h-full w-80 p-4 bg-base-200">
-            <div className="flex gap-2 justify-center items-center mb-6">
+            <div className="flex justify-center items-center">
+              <img src={removedLogo} alt="" className="w-[180px] md:hidden" />
+            </div>
+            <div className="mt-5 flex gap-2 justify-center items-center mb-6">
               <CgMenuGridO className="text-[#033955] text-3xl" />
-              <h1 className="text-center text-2xl text-[#033955]">Menus</h1>
+              <h1 className="mt-3 text-center text-2xl text-[#033955]">
+                Menus
+              </h1>
             </div>
             <ul className="menu text-[#033955] font-medium text-lg">
               {/* Sidebar content here */}
               {links}
             </ul>
+            <div className="">
+              {user && immediateBooking && (
+                <NavTimer
+                  expiryTimestamp={expiryTimestamp}
+                  immediateBooking={immediateBooking}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>

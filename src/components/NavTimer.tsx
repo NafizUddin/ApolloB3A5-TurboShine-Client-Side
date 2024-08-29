@@ -18,7 +18,7 @@ const NavTimer = ({ expiryTimestamp, immediateBooking }: any) => {
 
   return (
     <div className="pt-4">
-      <h1 className="text-left font-bold">
+      <h1 className="text-center lg:text-left font-bold">
         {immediateBooking?.service?.name} in:
       </h1>
       <div className="timer-container">
