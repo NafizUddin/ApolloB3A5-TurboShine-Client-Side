@@ -13,6 +13,7 @@ import {
 import toast from "react-hot-toast";
 import { useAddBookingsMutation } from "../../redux/features/bookings/bookings.api";
 import { ImSpinner6 } from "react-icons/im";
+import { motion } from "framer-motion";
 
 const BookingPage = () => {
   const {
@@ -94,7 +95,12 @@ const BookingPage = () => {
           className="max-w-2xl mx-auto lg:max-w-none"
         >
           <div className="lg:grid lg:grid-cols-2 lg:gap-x-12 xl:gap-x-16">
-            <div className="mt-10 lg:mt-0">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 }}
+              className="mt-10 lg:mt-0"
+            >
               <h2 className="text-lg md:text-xl font-semibold text-gray-900">
                 Booking Summary
               </h2>
@@ -204,9 +210,13 @@ const BookingPage = () => {
                   </h1>
                 )}
               </div>
-            </div>
+            </motion.div>
 
-            <div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, ease: "easeOut", delay: 0.8 }}
+            >
               <div>
                 <h2 className="text-lg md:text-xl font-semibold text-gray-900">
                   Contact information
@@ -317,7 +327,7 @@ const BookingPage = () => {
                   </div>
                 </div>
               </div>
-            </div>
+            </motion.div>
           </div>
         </form>
       </main>

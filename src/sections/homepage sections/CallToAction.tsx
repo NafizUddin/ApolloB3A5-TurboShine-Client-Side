@@ -1,8 +1,11 @@
 import { Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init();
 
 const CallToAction = () => {
   return (
-    <div>
+    <div data-aos="zoom-in" data-aos-duration="800">
       {/* Extra Banner starts */}
       <div className="my-14">
         <div className="relative h-[320px] md:h-[360px] lg:h-[300px] xl:h-[350px]">

@@ -11,6 +11,9 @@ import { IFeedback } from "../../types/review.type";
 import ReactStars from "react-stars";
 import { Link } from "react-router-dom";
 import { FaLongArrowAltRight } from "react-icons/fa";
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init();
 
 const Testimonial = () => {
   const { data, isLoading } = useGetReviewsQuery(undefined);
@@ -39,7 +42,7 @@ const Testimonial = () => {
         </div>
       </div>
 
-      <div>
+      <div data-aos="zoom-in" data-aos-duration="800">
         <Swiper
           spaceBetween={30}
           slidesPerView={2}

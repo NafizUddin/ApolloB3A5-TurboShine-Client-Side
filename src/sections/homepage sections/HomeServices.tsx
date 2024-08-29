@@ -3,6 +3,9 @@ import SectionTitle from "../../components/SectionTitle";
 import { TCarService } from "../../types/carService.type";
 import { FaLongArrowAltRight } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init();
 
 const HomeServices = () => {
   const queryObj = {
@@ -19,7 +22,11 @@ const HomeServices = () => {
     <div className="mb-28">
       <SectionTitle sub="SERVICES WE PROVIDE" heading="Our Service Area" />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-40">
+      <div
+        data-aos="zoom-in"
+        data-aos-duration="800"
+        className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-40"
+      >
         {data?.serviceData?.slice(0, 6)?.map((service: TCarService) => (
           <div
             key={service._id}

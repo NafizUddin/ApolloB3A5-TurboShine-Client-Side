@@ -15,6 +15,7 @@ import { useAppDispatch } from "../../redux/hooks";
 import { addBooking } from "../../redux/features/bookings/bookings.slice";
 import toast from "react-hot-toast";
 import useUserDetails from "../../custom Hooks/useUserDetails";
+import { motion } from "framer-motion";
 
 const ServiceDetails = () => {
   const { id } = useParams();
@@ -120,16 +121,28 @@ const ServiceDetails = () => {
       {/* Service Details */}
       <div className="mt-8 mx-6 xl:mx-0">
         <div className="grid grid-cols-1 lg:grid-cols-6 gap-5 my-10">
-          <div className="lg:col-span-4 mt-5">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.6 }}
+            className="lg:col-span-4 mt-5"
+          >
             <img
               src={data?.image}
-              className="max-h-[370px] object-cover w-full"
+              className="lg:h-[420px] xl:max-h-[370px] object-cover w-full"
               alt={data?.name}
             />
-          </div>
-          <div className="lg:col-span-2 lg:ml-6 text-center lg:text-left">
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut", delay: 0.8 }}
+            className="lg:col-span-2 lg:ml-6 text-center lg:text-left"
+          >
             <h1 className="text-3xl font-bold mt-5 mb-2">{data?.name}</h1>
-            <p className="mt-2 text-lg text-gray-500">{data?.description}</p>
+            <p className="mt-2 text-lg text-gray-500 text-left">
+              {data?.description}
+            </p>
             <p className="text-xl font-medium mt-3 flex items-center gap-1">
               <RiMoneyDollarCircleLine className="mb-2" />
               <span>Service Cost: ${data?.price}.00</span>
@@ -140,7 +153,7 @@ const ServiceDetails = () => {
             </p>
 
             {/* Other Content */}
-          </div>
+          </motion.div>
         </div>
 
         <div>
@@ -207,7 +220,7 @@ const ServiceDetails = () => {
                 <FaCheckToSlot className="mb-2" />
                 <span>Upcoming Available Slots:</span>
               </div>
-              <div className="mt-7 xl:ml-16">
+              <div className="mt-7 md:ml-16">
                 <DayPicker
                   selected={selectedDates}
                   onDayClick={handleDayClick}

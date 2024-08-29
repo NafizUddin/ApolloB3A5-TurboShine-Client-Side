@@ -6,6 +6,9 @@ import useUserDetails from "../../custom Hooks/useUserDetails";
 import toast from "react-hot-toast";
 import { useAddReviewsMutation } from "../../redux/features/reviews/reviews.api";
 import { useNavigate } from "react-router-dom";
+import AOS from "aos";
+import "aos/dist/aos.css";
+AOS.init();
 
 interface FeedbackFormValues {
   feedback: string;
@@ -68,7 +71,11 @@ const Feedback = () => {
         heading="Customer Feedback"
       />
 
-      <div className="flex flex-col lg:flex-row justify-center mt-12">
+      <div
+        data-aos="zoom-in"
+        data-aos-duration="800"
+        className="flex flex-col lg:flex-row justify-center mt-12"
+      >
         <div className="flex-1">
           <div className="mb-8 lg:mb-0 relative lg:w-full h-[300px] lg:h-[650px] xl:h-[470px] mx-5 md:mx-0">
             <img
