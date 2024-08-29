@@ -9,6 +9,7 @@ import Slider from "react-slider";
 import { FaSort } from "react-icons/fa";
 import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
+import ServiceComparisonModal from "../../components/ServiceComparisonModal";
 
 const priceRanges = ["0-500", "501-1000", "1001-1500"];
 
@@ -316,17 +317,17 @@ const ServicePage = () => {
           <div className="mt-7">
             <button
               className={`px-4 py-2 rounded ${
-                service.length > 0
+                service.length > 1
                   ? "bg-primary btn-custom text-white cursor-pointer"
                   : "bg-gray-300 text-gray-500 btn btn-disabled"
               }`}
             >
               <label
                 onClick={() => {
-                  setModalType("edit");
+                  setModalType("add");
                   setService([]);
                 }}
-                htmlFor="product-modal"
+                htmlFor="comparison-modal"
               >
                 Compare
               </label>
@@ -411,6 +412,13 @@ const ServicePage = () => {
           </div>
         </div>
       </div>
+      {modalType === "add" && (
+        <ServiceComparisonModal
+          service={service}
+          setService={setService}
+          setModalType={setModalType}
+        />
+      )}
     </div>
   );
 };
