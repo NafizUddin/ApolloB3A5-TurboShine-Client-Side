@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 
 const ScrollToTopButton = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [scrollProgress, setScrollProgress] = useState(0);
+  const [, setScrollProgress] = useState(0);
 
   const toggleVisibility = () => {
     if (window.scrollY > 300) {

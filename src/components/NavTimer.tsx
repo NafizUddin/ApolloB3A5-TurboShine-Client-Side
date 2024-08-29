@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useTimer } from "react-timer-hook";
 
-const Timer = ({ expiryTimestamp }: any) => {
+const NavTimer = ({ expiryTimestamp, immediateBooking }: any) => {
   const { seconds, minutes, hours, days, isRunning, start } = useTimer({
     expiryTimestamp,
     onExpire: () => console.log("Timer expired"),
@@ -17,10 +17,12 @@ const Timer = ({ expiryTimestamp }: any) => {
   };
 
   return (
-    <div>
-      <h4 className="font-semibold">Slot starts in:</h4>
+    <div className="pt-4">
+      <h1 className="text-left font-bold">
+        {immediateBooking?.service?.name} in:
+      </h1>
       <div className="timer-container">
-        <div className="timer-grid">
+        <div className="timer-grid2">
           <div className="time-unit">
             <span className="digit">{formatTime(days)}</span>
             <span className="label">DAYS</span>
@@ -43,4 +45,4 @@ const Timer = ({ expiryTimestamp }: any) => {
   );
 };
 
-export default Timer;
+export default NavTimer;
