@@ -8,8 +8,11 @@ import { TLoadedUser } from "../../../types/loadedUser.type";
 import toast from "react-hot-toast";
 import Loading from "../../../components/Loading";
 import { motion } from "framer-motion";
+import { useAppSelector } from "../../../redux/hooks";
+import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
 
 const AllUsersManagement = () => {
+  const user = useAppSelector(selectCurrentUser);
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 5;
 
@@ -125,41 +128,51 @@ const AllUsersManagement = () => {
           </thead>
           <tbody>
             {data?.usersData?.length > 0 &&
-              data?.usersData?.map((singleUser: TLoadedUser, index: number) => (
-                <tr key={index} className="rounded-lg">
-                  <th className="text-lg">
-                    {index + 1 + (currentPage - 1) * dataPerPage}
-                  </th>
-                  <td>
-                    <img
-                      src={singleUser?.image}
-                      className="w-10 h-10 rounded-full object-cover"
-                    />
-                  </td>
-                  <td className="text-lg font-semibold">{singleUser?.name}</td>
-                  <td className="text-lg font-semibold">{singleUser?.email}</td>
-                  <td className="font-semibold text-lg">{singleUser?.phone}</td>
-                  <td className="font-semibold text-lg flex justify-center items-center">
-                    {singleUser?.role === "admin" ? (
-                      <a
-                        onClick={() => handleMakeUser(singleUser?._id)}
-                        href="#"
-                        className="bg-green-300 hover:bg-green-400 py-2 px-2 rounded-lg"
-                      >
-                        Admin
-                      </a>
-                    ) : (
-                      <a
-                        onClick={() => handleMakeAdmin(singleUser?._id)}
-                        href="#"
-                        className="bg-orange-300 hover:bg-orange-400 py-2 px-2 rounded-lg"
-                      >
-                        User
-                      </a>
-                    )}
-                  </td>
-                </tr>
-              ))}
+              data?.usersData?.map((singleUser: TLoadedUser, index: number) => {
+                return (
+                  <tr key={index} className="rounded-lg">
+                    <th className="text-lg">
+                      {index + 1 + (currentPage - 1) * dataPerPage}
+                    </th>
+                    <td>
+                      <img
+                        src={singleUser?.image}
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    </td>
+                    <td className="text-lg font-semibold">
+                      {singleUser?.name}
+                    </td>
+                    <td className="text-lg font-semibold">
+                      {singleUser?.email}
+                    </td>
+                    <td className="font-semibold text-lg">
+                      {singleUser?.phone}
+                    </td>
+                    <td className="font-semibold text-lg flex justify-center items-center">
+                      {singleUser?.email === user?.email ? (
+                        <a className="bg-green-300 hover:bg-green-400 py-2 px-2 rounded-lg cursor-pointer">
+                          Admin
+                        </a>
+                      ) : singleUser?.role === "admin" ? (
+                        <a
+                          onClick={() => handleMakeUser(singleUser?._id)}
+                          className="bg-green-300 hover:bg-green-400 py-2 px-2 rounded-lg cursor-pointer"
+                        >
+                          Admin
+                        </a>
+                      ) : (
+                        <a
+                          onClick={() => handleMakeAdmin(singleUser?._id)}
+                          className="bg-orange-300 hover:bg-orange-400 py-2 px-2 rounded-lg cursor-pointer"
+                        >
+                          User
+                        </a>
+                      )}
+                    </td>
+                  </tr>
+                );
+              })}
           </tbody>
         </table>
       </motion.div>

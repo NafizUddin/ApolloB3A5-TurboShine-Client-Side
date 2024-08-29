@@ -123,7 +123,7 @@ const SlotManagement = () => {
         const options = {
           id: slot?._id,
           data: {
-            isBooked: "cancelled",
+            isBooked: "expired",
           },
         };
 
@@ -252,25 +252,24 @@ const SlotManagement = () => {
                       {singleSlot?.isBooked === "available" ? (
                         <a
                           onClick={() => handleMakeCancelled(singleSlot?._id)}
-                          href="#"
                           className="bg-green-300 hover:bg-green-400 py-2 px-2 rounded-lg"
                         >
                           Available
                         </a>
                       ) : singleSlot?.isBooked === "booked" ? (
-                        <a
-                          href="#"
-                          className="bg-blue-300 hover:bg-blue-400 py-2 px-2 rounded-lg cursor-not-allowed"
-                        >
+                        <a className="bg-blue-300 hover:bg-blue-400 py-2 px-2 rounded-lg cursor-not-allowed">
                           Booked
                         </a>
-                      ) : (
+                      ) : singleSlot?.isBooked === "cancelled" ? (
                         <a
                           onClick={() => handleMakeAvailable(singleSlot?._id)}
-                          href="#"
                           className="bg-red-300 hover:bg-red-400 py-2 px-2 rounded-lg"
                         >
                           Cancelled
+                        </a>
+                      ) : (
+                        <a className="bg-fuchsia-300  hover:bg-fuchsia-400 py-2 px-2 rounded-lg">
+                          Expired
                         </a>
                       )}
                     </td>
