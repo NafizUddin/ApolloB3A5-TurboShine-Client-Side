@@ -409,7 +409,7 @@ const ServicePage = () => {
             {data?.serviceData?.map((service: TCarService, index: number) => (
               <motion.div
                 key={service._id}
-                className="rounded-lg card p-6 bg-white mb-40 group"
+                className="rounded-lg card p-6 bg-white mb-40 group flex flex-col"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{
@@ -422,10 +422,10 @@ const ServicePage = () => {
                   src={service.image}
                   className="rounded-lg mb-4 relative -top-36 object-cover w-[350px] h-[243px] mx-auto"
                 />
-                <h2 className="text-2xl font-bold -mt-32 lg:h-20 xl:h-auto text-gray-900 group-hover:text-white pl-7">
+                <h2 className="text-2xl font-bold -mt-32 flex-grow xl:h-auto text-gray-900 group-hover:text-white pl-7">
                   {service.name}
                 </h2>
-                <p className="text-gray-500 mb-1 lg:h-14 xl:h-auto group-hover:text-white pl-7 font-semibold">
+                <p className="text-gray-500 mb-1 flex-grow xl:h-auto group-hover:text-white pl-7 font-semibold">
                   {service.short_description}
                 </p>
                 <p className="text-gray-900 mb-1 group-hover:text-white pl-7 font-semibold">

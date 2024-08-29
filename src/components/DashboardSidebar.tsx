@@ -46,7 +46,7 @@ const DashboardSidebar = () => {
         x-data="{ sidenav: true }"
       >
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-start">
+        <div className="drawer-content flex flex-col items-start bg-white">
           {/* Page content here */}
           <label htmlFor="my-drawer-2" className="btn drawer-button lg:hidden">
             <svg
@@ -86,16 +86,19 @@ const DashboardSidebar = () => {
             <div className="space-y-6">
               <div className="mb-5">
                 <Link to="/">
-                  <img src={logo} className="w-52 mx-auto" />
+                  <img src={logo} className="w-36 md:w-40 lg:w-52 mx-auto" />
                 </Link>
               </div>
 
               <div id="profile" className="space-y-3">
-                <img
-                  src={loadedUser[0].image}
-                  alt="Avatar user"
-                  className="w-10 h-10 md:w-20 md:h-20 rounded-full mx-auto object-cover object-top"
-                />
+                <div className="">
+                  <img
+                    src={loadedUser[0].image}
+                    alt="Avatar user"
+                    className="w-10 h-10 md:w-20 md:h-20 rounded-full mx-auto object-cover object-top"
+                  />
+                </div>
+
                 <div>
                   <h2 className="font-bold md:text-xl text-center text-primary">
                     {loadedUser[0].name}
@@ -139,10 +142,10 @@ const DashboardSidebar = () => {
                           onClick={toggleDropdown}
                           className="text-sm font-medium flex gap-2 py-2 px-2 rounded-md transition duration-150 ease-in-out hover:bg-primary hover:text-white hover:scale-105"
                         >
-                          <FaUsersCog className="text-xl mr-1" />
+                          <FaUsersCog className="text-xl mr-1 mb-4 md:mb-0" />
                           <span className="mt-1">User Management</span>
                           <FaChevronDown
-                            className={`text-sm ml-24  transition-transform ${
+                            className={`text-sm mb-4 md:mb-0 md:ml-24  transition-transform ${
                               isOpen ? "rotate-180" : ""
                             }`}
                           />

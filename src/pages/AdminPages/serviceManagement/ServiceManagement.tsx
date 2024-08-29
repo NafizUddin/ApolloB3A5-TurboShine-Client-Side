@@ -99,7 +99,7 @@ const ServiceManagement = () => {
             setModalType("add");
             setService({});
           }}
-          className="flex items-center gap-2 px-4 py-3 btn-custom rounded-full text-white bg-primary"
+          className="flex items-center gap-2 px-2 md:px-4 py-1 md:py-3 btn-custom rounded-full text-white bg-primary"
         >
           <FaPlus className="text-xl mr-1" />
           <span className="mt-1">Add New Service</span>

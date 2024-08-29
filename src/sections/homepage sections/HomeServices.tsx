@@ -30,16 +30,16 @@ const HomeServices = () => {
         {data?.serviceData?.slice(0, 6)?.map((service: TCarService) => (
           <div
             key={service._id}
-            className="rounded-lg card p-6 bg-white mb-40 group shadow-md"
+            className="rounded-lg card p-6 bg-white mb-40 group shadow-md flex flex-col"
           >
             <img
               src={service.image}
               className="rounded-lg mb-4 relative -top-36 object-cover w-[350px] h-[243px] mx-auto"
             />
-            <h2 className="text-2xl font-bold -mt-32 text-gray-900 group-hover:text-white pl-7">
+            <h2 className="text-2xl font-bold -mt-32 flex-grow text-gray-900 group-hover:text-white pl-7">
               {service.name}
             </h2>
-            <p className="text-gray-500 mb-4 lg:h-14 xl:h-auto group-hover:text-white pl-7 font-semibold">
+            <p className="text-gray-500 mb-4 flex-grow group-hover:text-white pl-7 font-semibold">
               {service.short_description}
             </p>
             <Link to={`/serviceDetails/${service._id}`}>

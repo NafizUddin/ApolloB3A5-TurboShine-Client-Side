@@ -13,7 +13,7 @@ const ServiceComparisonModal = ({ service, setService, setModalType }: any) => {
                 setModalType("");
                 setService([]);
               }}
-              className="bg-primary btn-circle absolute right-10 top-7 text-white hover:bg-white hover:outline hover:text-primary"
+              className="bg-primary btn-circle absolute right-3 md:right-10 top-5 md:top-7 text-white hover:bg-white hover:outline hover:text-primary"
             >
               ✕
             </button>
@@ -21,7 +21,7 @@ const ServiceComparisonModal = ({ service, setService, setModalType }: any) => {
 
           <h3 className="font-bold text-3xl text-center">Compare Services</h3>
 
-          <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-col-1 lg:grid-cols-2 gap-8 justify-center items-center">
             {service?.map((singleService: TCarService) => (
               <div
                 key={singleService?._id}

@@ -45,15 +45,15 @@ const ProfileCard = () => {
             </p>
             <p className="pt-2 text-gray-600 font-medium text-sm flex items-center justify-start ml-6 md:ml-44 lg:ml-0">
               <MdEmail className="text-primary mr-4 text-lg" />
-              Email: {loadedUser[0]?.email}
+              <span className="mt-1">Email: {loadedUser[0]?.email}</span>
             </p>
             <p className="pt-2 text-gray-600 font-medium text-sm flex items-start md:items-center lg:items-start xl:items-center justify-start ml-6 md:ml-44 lg:ml-0 text-left">
               <MdOutlineLocationOn className="text-primary mr-3 text-2xl md:text-xl" />
-              Address: {loadedUser[0]?.address}
+              <span className="mt-1">Address: {loadedUser[0]?.address}</span>
             </p>
             <p className="pt-2 text-gray-600 font-medium text-sm flex items-center justify-start ml-6 md:ml-44 lg:ml-0">
               <BsPhone className="text-primary mr-4 text-lg" />
-              Phone: {loadedUser[0]?.phone}
+              <span className="mt-1">Phone: {loadedUser[0]?.phone}</span>
             </p>
 
             <div className="pt-12 pb-8">
