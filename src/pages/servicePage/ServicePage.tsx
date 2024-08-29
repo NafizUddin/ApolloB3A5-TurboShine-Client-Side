@@ -325,7 +325,6 @@ const ServicePage = () => {
               <label
                 onClick={() => {
                   setModalType("add");
-                  setService([]);
                 }}
                 htmlFor="comparison-modal"
               >

@@ -1,3 +1,5 @@
+import { TCarService } from "../types/carService.type";
+
 const ServiceComparisonModal = ({ service, setService, setModalType }: any) => {
   return (
     <div>
@@ -9,6 +11,7 @@ const ServiceComparisonModal = ({ service, setService, setModalType }: any) => {
             <button
               onClick={() => {
                 setModalType("");
+                setService([]);
               }}
               className="bg-primary btn-circle absolute right-10 top-7 text-white hover:bg-white hover:outline hover:text-primary"
             >
@@ -17,6 +20,37 @@ const ServiceComparisonModal = ({ service, setService, setModalType }: any) => {
           </label>
 
           <h3 className="font-bold text-3xl text-center">Compare Services</h3>
+
+          <div className="grid grid-col-1 lg:grid-cols-2 gap-8">
+            {service?.map((singleService: TCarService) => (
+              <div
+                key={singleService?._id}
+                className="max-w-sm rounded overflow-hidden shadow-lg bg-white hover:shadow-xl transition-shadow duration-300"
+              >
+                <img
+                  className="w-full h-48 object-cover"
+                  src={singleService?.image}
+                  alt={singleService?.name}
+                />
+                <div className="px-6 py-4">
+                  <div className="font-bold text-xl mb-2 text-gray-800">
+                    {singleService?.name}
+                  </div>
+                  <p className="text-gray-700 text-base">
+                    {singleService?.description}
+                  </p>
+                </div>
+                <div className="px-6 pt-4 pb-2 flex justify-between items-center">
+                  <span className="text-gray-900 font-bold text-lg">
+                    ${singleService?.price.toFixed(2)}
+                  </span>
+                  <span className="text-gray-900 font-bold text-lg">
+                    {singleService?.duration} minutes
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
