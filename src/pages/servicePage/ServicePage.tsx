@@ -20,12 +20,16 @@ interface QueryObj {
   selectedSort?: string;
 }
 
+type TServiceState = TCarService | null;
+
 const ServicePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [isResetButtonEnabled, setIsResetButtonEnabled] = useState(false);
   const [minTime, setMinTime] = useState(10);
   const [maxTime, setMaxTime] = useState(120);
   const [selectedSort, setSelectedSort] = useState("");
+  const [modalType, setModalType] = useState<string>("");
+  const [service, setService] = useState<TServiceState[]>([]);
 
   const [checkedState, setCheckedState] = useState(
     priceRanges.reduce((acc, range) => {
@@ -86,6 +90,24 @@ const ServicePage = () => {
     setMaxTime(values[1]);
   };
 
+  const toggleService = (singleService: TCarService) => {
+    setService((prevServices) => {
+      const isServiceSelected = prevServices?.some(
+        (selectedService) => selectedService?._id === singleService?._id
+      );
+
+      if (isServiceSelected) {
+        // Remove service if already selected
+        return prevServices?.filter(
+          (selectedService) => selectedService?._id !== singleService?._id
+        );
+      } else {
+        // Add service if not selected
+        return [...(prevServices || []), singleService];
+      }
+    });
+  };
+
   const handleReset = () => {
     const resetState = Object.keys(checkedState).reduce((acc, key) => {
       acc[key] = false;
@@ -105,6 +127,8 @@ const ServicePage = () => {
   if (isLoading) {
     return <Loading />;
   }
+
+  console.log(service);
 
   return (
     <div className="my-10">
@@ -238,50 +262,76 @@ const ServicePage = () => {
             <div className="container mx-auto">
               <div className="bg-white rounded-lg">
                 <h2 className="text-xl md:text-2xl font-semibold mb-4 text-center lg:text-left">
-                  Tag Cloud
+                  Compare Services
                 </h2>
+
                 <div className="flex justify-center lg:justify-start flex-wrap gap-2">
-                  <a
-                    href="#"
-                    className="bg-blue-200 hover:bg-blue-300 py-1 px-2 rounded-lg text-lg"
-                  >
-                    Car Care
-                  </a>
-                  <a
-                    href="#"
-                    className="bg-green-200 hover:bg-green-300 py-1 px-2 rounded-lg text-lg"
-                  >
-                    Tire Services
-                  </a>
-                  <a
-                    href="#"
-                    className="bg-yellow-200 hover:bg-yellow-300 py-1 px-2 rounded-lg text-lg"
-                  >
-                    Oil Change
-                  </a>
-                  <a
-                    href="#"
-                    className="bg-indigo-200 hover:bg-indigo-300 py-1 px-2 rounded-lg text-lg"
-                  >
-                    Brake Service
-                  </a>
-                  <a
-                    href="#"
-                    className="bg-purple-200 hover:bg-purple-300 py-1 px-2 rounded-lg text-lg"
-                  >
-                    Interior Cleaning
-                  </a>
-                  <a
-                    href="#"
-                    className="bg-pink-200 hover:bg-pink-300 py-1 px-2 rounded-lg text-lg"
-                  >
-                    Car Customization
-                  </a>
+                  {data?.serviceData?.map(
+                    (singleService: TCarService, index: number) => {
+                      const backgroundColors = [
+                        "bg-blue-200",
+                        "bg-green-200",
+                        "bg-yellow-200",
+                      ];
+                      const hoverColors = [
+                        "bg-blue-300",
+                        "bg-green-300",
+                        "bg-yellow-300",
+                      ];
+                      const backgroundColorIndex = index % 3;
+                      const hoverColorIndex = index % 3;
+
+                      const isServiceSelected = service?.some(
+                        (selectedService) =>
+                          selectedService?._id === singleService?._id
+                      );
+
+                      return (
+                        <div
+                          key={singleService._id}
+                          className={`relative flex items-center gap-2 ${backgroundColors[backgroundColorIndex]} hover:${hoverColors[hoverColorIndex]} py-1 px-2 rounded-lg cursor-pointer`}
+                          onClick={() => toggleService(singleService)}
+                        >
+                          {singleService.name}
+                          {isServiceSelected && (
+                            <span
+                              className="text-red-500"
+                              onClick={(e) => {
+                                e.stopPropagation(); // Prevent parent div click from triggering
+                                toggleService(singleService);
+                              }}
+                            >
+                              X
+                            </span>
+                          )}
+                        </div>
+                      );
+                    }
+                  )}
                 </div>
               </div>
             </div>
           </div>
-          {/* Tag type ends */}
+
+          <div className="mt-7">
+            <button
+              className={`px-4 py-2 rounded ${
+                service.length > 0
+                  ? "bg-primary btn-custom text-white cursor-pointer"
+                  : "bg-gray-300 text-gray-500 btn btn-disabled"
+              }`}
+            >
+              <label
+                onClick={() => {
+                  setModalType("edit");
+                  setService([]);
+                }}
+                htmlFor="product-modal"
+              >
+                Compare
+              </label>
+            </button>
+          </div>
 
           <div className="mt-7 flex justify-center items-center lg:justify-start">
             <button
@@ -290,7 +340,7 @@ const ServicePage = () => {
               className={`mt-5 px-4 py-2 rounded ${
                 isResetButtonEnabled
                   ? "bg-primary btn-custom text-white cursor-pointer"
-                  : "bg-gray-300 text-gray-500 btn disabled"
+                  : "btn btn-disabled"
               }`}
             >
               Reset Filters

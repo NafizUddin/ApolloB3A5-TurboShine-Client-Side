@@ -7,7 +7,7 @@ import { format, parse } from "date-fns";
 
 const AllBookingsManagement = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const dataPerPage = 5;
+  const dataPerPage = 10;
 
   const { data, isLoading } = useGetAllBookingsQuery({
     page: currentPage,
