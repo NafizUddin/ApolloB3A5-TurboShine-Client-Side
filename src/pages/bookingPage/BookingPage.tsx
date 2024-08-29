@@ -36,6 +36,7 @@ const BookingPage = () => {
 
     try {
       let lastResponse;
+      const transactionId = `TXN-${Date.now()}`;
 
       for (const slot of slotInfo) {
         const payload = {
@@ -43,6 +44,7 @@ const BookingPage = () => {
           slotId: slot._id,
           paymentStatus: "Pending",
           totalBookingCost: total,
+          transactionId,
         };
 
         lastResponse = await addBookings(payload).unwrap();
