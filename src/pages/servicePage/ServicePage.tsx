@@ -31,6 +31,8 @@ const ServicePage = () => {
   const [selectedSort, setSelectedSort] = useState("");
   const [modalType, setModalType] = useState<string>("");
   const [service, setService] = useState<TServiceState[]>([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const dataPerPage = 6;
 
   const [checkedState, setCheckedState] = useState(
     priceRanges.reduce((acc, range) => {
@@ -54,10 +56,24 @@ const ServicePage = () => {
       maxTime,
       priceRanges: selectedPriceRanges.length ? selectedPriceRanges : undefined,
       selectedSort,
+      page: currentPage,
+      limit: dataPerPage,
     };
-  }, [searchTerm, minTime, maxTime, checkedState, selectedSort]);
+  }, [
+    searchTerm,
+    minTime,
+    maxTime,
+    checkedState,
+    selectedSort,
+    currentPage,
+    dataPerPage,
+  ]);
 
   const { data, isLoading } = useGetServicesQuery(queryObj);
+
+  const { data: allServicesForTags } = useGetServicesQuery({});
+
+  const totalPagesArray = [...Array(data?.meta?.totalPage).keys()];
 
   const handleSelectChange = (event: ChangeEvent<HTMLSelectElement>) => {
     setSelectedSort(event.target.value);
@@ -109,6 +125,22 @@ const ServicePage = () => {
     });
   };
 
+  const handleCurrentPage = async (page: number) => {
+    setCurrentPage(page);
+  };
+
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+
+  const handleNextPage = async () => {
+    if (currentPage < totalPagesArray.length) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
+
   const handleReset = () => {
     const resetState = Object.keys(checkedState).reduce((acc, key) => {
       acc[key] = false;
@@ -119,6 +151,7 @@ const ServicePage = () => {
     setMinTime(10);
     setMaxTime(120);
     setSearchTerm("");
+    setService([]);
   };
 
   useEffect(() => {
@@ -267,7 +300,7 @@ const ServicePage = () => {
                 </h2>
 
                 <div className="flex justify-center lg:justify-start flex-wrap gap-2">
-                  {data?.serviceData?.map(
+                  {allServicesForTags?.serviceData?.map(
                     (singleService: TCarService, index: number) => {
                       const backgroundColors = [
                         "bg-blue-200",
@@ -408,6 +441,32 @@ const ServicePage = () => {
                 </Link>
               </motion.div>
             ))}
+          </div>
+
+          <div className="flex justify-center items-center flex-wrap">
+            {totalPagesArray?.length > 1 && (
+              <div className="join pb-10">
+                <button onClick={handlePrevPage} className="join-item btn">
+                  Previous
+                </button>
+                {totalPagesArray?.map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => handleCurrentPage(page)}
+                    className={
+                      currentPage === page + 1
+                        ? "join-item btn selected bg-primary text-white"
+                        : "join-item btn"
+                    }
+                  >
+                    {page + 1}
+                  </button>
+                ))}
+                <button onClick={handleNextPage} className="join-item btn">
+                  Next
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </div>
