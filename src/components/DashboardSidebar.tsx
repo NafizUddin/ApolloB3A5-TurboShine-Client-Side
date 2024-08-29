@@ -46,15 +46,16 @@ const DashboardSidebar = () => {
         x-data="{ sidenav: true }"
       >
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-start bg-white">
-          {/* Page content here */}
+        <div
+          className="drawer-content flex flex-col items-start bg-white"
+          style={{ backgroundColor: "white !important" }}
+        >
           <label htmlFor="my-drawer-2" className="btn drawer-button lg:hidden">
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="h-5 w-5 text-primary"
+              className="inline-block h-6 w-6 stroke-current text-primary"
               fill="none"
               viewBox="0 0 24 24"
-              stroke="currentColor"
             >
               <path
                 strokeLinecap="round"
@@ -65,6 +66,7 @@ const DashboardSidebar = () => {
             </svg>
           </label>
         </div>
+
         <div
           id="sidebar"
           className="drawer-side h-full max-h-screen overflow-y-scroll"
