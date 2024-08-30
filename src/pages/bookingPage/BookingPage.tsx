@@ -14,8 +14,10 @@ import toast from "react-hot-toast";
 import { useAddBookingsMutation } from "../../redux/features/bookings/bookings.api";
 import { ImSpinner6 } from "react-icons/im";
 import { motion } from "framer-motion";
+import useWarnIfBookingNotEmpty from "../../custom Hooks/useWarnIfBookingNotEmpty";
 
 const BookingPage = () => {
+  useWarnIfBookingNotEmpty();
   const {
     handleSubmit,
     formState: { errors },

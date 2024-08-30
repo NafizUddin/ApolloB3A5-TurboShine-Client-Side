@@ -4,8 +4,11 @@ import CallToAction from "../../sections/homepage sections/CallToAction";
 import Feedback from "../../sections/homepage sections/Feedback";
 import Testimonial from "../../sections/homepage sections/Testimonial";
 import { useEffect } from "react";
+import useWarnIfBookingNotEmpty from "../../custom Hooks/useWarnIfBookingNotEmpty";
 
 const Homepage = () => {
+  useWarnIfBookingNotEmpty();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);

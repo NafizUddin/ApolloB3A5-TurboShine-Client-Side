@@ -10,8 +10,10 @@ import Loading from "../../../components/Loading";
 import { motion } from "framer-motion";
 import { useAppSelector } from "../../../redux/hooks";
 import { selectCurrentUser } from "../../../redux/features/auth/authSlice";
+import useWarnIfBookingNotEmpty from "../../../custom Hooks/useWarnIfBookingNotEmpty";
 
 const AllUsersManagement = () => {
+  useWarnIfBookingNotEmpty();
   const user = useAppSelector(selectCurrentUser);
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 5;

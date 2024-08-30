@@ -14,8 +14,10 @@ import { motion } from "framer-motion";
 import { CiCircleMore } from "react-icons/ci";
 import { TbArrowsExchange } from "react-icons/tb";
 import { ImSpinner6 } from "react-icons/im";
+import useWarnIfBookingNotEmpty from "../../../custom Hooks/useWarnIfBookingNotEmpty";
 
 const SlotManagement = () => {
+  useWarnIfBookingNotEmpty();
   const [modalType, setModalType] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 10;

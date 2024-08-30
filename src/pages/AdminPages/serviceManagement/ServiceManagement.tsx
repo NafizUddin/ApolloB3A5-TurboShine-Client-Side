@@ -13,10 +13,12 @@ import ServiceModal from "../../../components/ServiceModal";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import useWarnIfBookingNotEmpty from "../../../custom Hooks/useWarnIfBookingNotEmpty";
 
 type TServiceState = TCarService | object | null;
 
 const ServiceManagement = () => {
+  useWarnIfBookingNotEmpty();
   const [modalType, setModalType] = useState<string>("");
   const [service, setService] = useState<TServiceState>({});
   const [currentPage, setCurrentPage] = useState(1);

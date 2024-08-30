@@ -5,8 +5,10 @@ import { IFeedback } from "../../types/review.type";
 import ReactStars from "react-stars";
 import { motion } from "framer-motion";
 import { useEffect } from "react";
+import useWarnIfBookingNotEmpty from "../../custom Hooks/useWarnIfBookingNotEmpty";
 
 const ReviewPage = () => {
+  useWarnIfBookingNotEmpty();
   const { data, isLoading } = useGetReviewsQuery(undefined);
 
   useEffect(() => {

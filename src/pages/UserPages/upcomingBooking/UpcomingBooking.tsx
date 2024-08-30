@@ -5,8 +5,10 @@ import Loading from "../../../components/Loading";
 import { TBooking } from "@/types/booking.type";
 import Timer from "../../../components/Timer";
 import { motion } from "framer-motion";
+import useWarnIfBookingNotEmpty from "../../../custom Hooks/useWarnIfBookingNotEmpty";
 
 const UpcomingBooking = () => {
+  useWarnIfBookingNotEmpty();
   const { data, isLoading } = useGetIndividualBookingQuery(undefined);
 
   const now = new Date();

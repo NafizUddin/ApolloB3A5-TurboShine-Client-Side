@@ -10,6 +10,7 @@ import { FaSort } from "react-icons/fa";
 import Loading from "../../components/Loading";
 import { Link } from "react-router-dom";
 import ServiceComparisonModal from "../../components/ServiceComparisonModal";
+import useWarnIfBookingNotEmpty from "../../custom Hooks/useWarnIfBookingNotEmpty";
 
 const priceRanges = ["0-500", "501-1000", "1001-1500"];
 
@@ -24,6 +25,7 @@ interface QueryObj {
 type TServiceState = TCarService | null;
 
 const ServicePage = () => {
+  useWarnIfBookingNotEmpty();
   const [searchTerm, setSearchTerm] = useState("");
   const [isResetButtonEnabled, setIsResetButtonEnabled] = useState(false);
   const [minTime, setMinTime] = useState(10);
@@ -161,8 +163,6 @@ const ServicePage = () => {
   if (isLoading) {
     return <Loading />;
   }
-
-  console.log(service);
 
   return (
     <div className="my-10">

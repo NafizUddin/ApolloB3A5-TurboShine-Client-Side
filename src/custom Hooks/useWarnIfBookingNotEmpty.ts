@@ -1,7 +1,7 @@
 import { useAppSelector } from "../redux/hooks";
 import { useEffect } from "react";
 
-const useWarnIfCartNotEmpty = () => {
+const useWarnIfBookingNotEmpty = () => {
   const { slotInfo } = useAppSelector((state) => state.bookings);
 
   useEffect(() => {
@@ -22,4 +22,4 @@ const useWarnIfCartNotEmpty = () => {
   }, [slotInfo]);
 };
 
-export default useWarnIfCartNotEmpty;
+export default useWarnIfBookingNotEmpty;

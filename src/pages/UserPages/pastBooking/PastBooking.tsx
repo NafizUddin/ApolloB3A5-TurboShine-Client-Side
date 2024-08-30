@@ -5,8 +5,10 @@ import SectionTitle from "../../../components/SectionTitle";
 import { useState } from "react";
 import { TBooking } from "../../../types/booking.type";
 import { motion } from "framer-motion";
+import useWarnIfBookingNotEmpty from "../../../custom Hooks/useWarnIfBookingNotEmpty";
 
 const PastBooking = () => {
+  useWarnIfBookingNotEmpty();
   const { data, isLoading } = useGetIndividualBookingQuery(undefined);
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 10;

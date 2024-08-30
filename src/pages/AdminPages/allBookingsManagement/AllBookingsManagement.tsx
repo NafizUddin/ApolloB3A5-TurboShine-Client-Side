@@ -5,8 +5,10 @@ import Loading from "../../../components/Loading";
 import { TBooking } from "../../../types/booking.type";
 import { format, parse } from "date-fns";
 import { motion } from "framer-motion";
+import useWarnIfBookingNotEmpty from "../../../custom Hooks/useWarnIfBookingNotEmpty";
 
 const AllBookingsManagement = () => {
+  useWarnIfBookingNotEmpty();
   const [currentPage, setCurrentPage] = useState(1);
   const dataPerPage = 10;
 

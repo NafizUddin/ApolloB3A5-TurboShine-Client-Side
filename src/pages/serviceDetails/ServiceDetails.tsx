@@ -16,8 +16,10 @@ import { addBooking } from "../../redux/features/bookings/bookings.slice";
 import toast from "react-hot-toast";
 import useUserDetails from "../../custom Hooks/useUserDetails";
 import { motion } from "framer-motion";
+import useWarnIfBookingNotEmpty from "../../custom Hooks/useWarnIfBookingNotEmpty";
 
 const ServiceDetails = () => {
+  useWarnIfBookingNotEmpty();
   const { id } = useParams();
   const { loadedUser } = useUserDetails();
 
