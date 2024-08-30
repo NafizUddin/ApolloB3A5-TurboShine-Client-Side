@@ -6,9 +6,8 @@ import useUserDetails from "../../custom Hooks/useUserDetails";
 import toast from "react-hot-toast";
 import { useAddReviewsMutation } from "../../redux/features/reviews/reviews.api";
 import { useNavigate } from "react-router-dom";
-import AOS from "aos";
-import "aos/dist/aos.css";
-AOS.init();
+import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
 
 interface FeedbackFormValues {
   feedback: string;
@@ -33,6 +32,11 @@ const Feedback = () => {
   const { loadedUser } = useUserDetails();
 
   const [addReviews] = useAddReviewsMutation();
+
+  const ref = useRef(null);
+
+  // Use the useInView hook with the ref
+  const isInView = useInView(ref);
 
   const onSubmit = async (data: FeedbackFormValues) => {
     if (!loadedUser || loadedUser.length === 0) {
@@ -71,12 +75,19 @@ const Feedback = () => {
         heading="Customer Feedback"
       />
 
-      <div
-        data-aos="zoom-in"
-        data-aos-duration="800"
+      <motion.div
+        ref={ref}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isInView ? 1 : 0 }}
+        transition={{ duration: 0.8, delay: 0.3, ease: "easeInOut" }}
         className="flex flex-col lg:flex-row justify-center mt-12"
       >
-        <div className="flex-1">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : 20 }}
+          transition={{ duration: 0.6, delay: 0.15, ease: "easeInOut" }}
+          className="flex-1"
+        >
           <div className="mb-8 lg:mb-0 relative lg:w-full h-[450px] md:h-[300px] lg:h-[650px] xl:h-[470px] mx-5 md:mx-0">
             <img
               src="https://images.unsplash.com/photo-1610647752706-3bb12232b3ab?q=80&w=1450&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -106,8 +117,13 @@ const Feedback = () => {
               </h1>
             </div>
           </div>
-        </div>
-        <div className="flex-1">
+        </motion.div>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: isInView ? 1 : 0, y: isInView ? 0 : -20 }}
+          transition={{ duration: 0.8, delay: 0.3, ease: "easeInOut" }}
+          className="flex-1"
+        >
           <div className="px-10 pt-5">
             <h1 className="text-3xl font-bold">Feedback</h1>
             <p className="mt-1 text-gray-500">
@@ -168,8 +184,8 @@ const Feedback = () => {
               </button>
             </form>
           </div>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
     </div>
   );
 };
