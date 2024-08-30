@@ -254,7 +254,7 @@ const SlotManagement = () => {
                       {singleSlot?.isBooked === "available" ? (
                         <a
                           onClick={() => handleMakeCancelled(singleSlot?._id)}
-                          className="bg-green-300 hover:bg-green-400 py-2 px-2 rounded-lg"
+                          className="bg-green-300 hover:bg-green-400 py-2 px-2 rounded-lg cursor-pointer"
                         >
                           Available
                         </a>
@@ -265,7 +265,7 @@ const SlotManagement = () => {
                       ) : singleSlot?.isBooked === "cancelled" ? (
                         <a
                           onClick={() => handleMakeAvailable(singleSlot?._id)}
-                          className="bg-red-300 hover:bg-red-400 py-2 px-2 rounded-lg"
+                          className="bg-red-300 hover:bg-red-400 py-2 px-2 rounded-lg cursor-pointer"
                         >
                           Cancelled
                         </a>

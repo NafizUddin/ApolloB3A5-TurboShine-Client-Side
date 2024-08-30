@@ -245,51 +245,61 @@ const ServiceDetails = () => {
             </div>
 
             <div>
-              <div className="flex items-center justify-center flex-wrap mt-4 w-4/5 mx-auto gap-1">
-                {otherDateServiceSlots?.map((singleSlot: TSlotAppointment) => (
-                  <li key={singleSlot._id} className="flex mx-1">
-                    <a
-                      onClick={() => handleSlotSelection(singleSlot)}
-                      className={`p-2 px-3 mb-4 rounded font-medium ${
-                        singleSlot?.isBooked === "available"
-                          ? isSlotSelected(singleSlot) &&
-                            loadedUser[0]?.role !== "admin"
-                            ? "bg-green-500 text-white"
-                            : "border-primary bg-white text-primary hover:bg-primary hover:text-white border"
-                          : "btn btn-disabled"
-                      } ${
-                        loadedUser[0]?.role === "admin"
-                          ? "cursor-not-allowed"
-                          : "cursor-pointer"
-                      }`}
-                    >
-                      {`${singleSlot?.startTime}-${singleSlot?.endTime}`}
-                    </a>
-                  </li>
-                ))}
-              </div>
+              {otherDateServiceSlots && otherDateServiceSlots.length > 0 ? (
+                <div>
+                  <div className="flex items-center justify-center flex-wrap mt-4 w-4/5 mx-auto gap-1">
+                    {otherDateServiceSlots?.map(
+                      (singleSlot: TSlotAppointment) => (
+                        <li key={singleSlot._id} className="flex mx-1">
+                          <a
+                            onClick={() => handleSlotSelection(singleSlot)}
+                            className={`p-2 px-3 mb-4 rounded font-medium ${
+                              singleSlot?.isBooked === "available"
+                                ? isSlotSelected(singleSlot) &&
+                                  loadedUser[0]?.role !== "admin"
+                                  ? "bg-green-500 text-white"
+                                  : "border-primary bg-white text-primary hover:bg-primary hover:text-white border"
+                                : "btn btn-disabled"
+                            } ${
+                              loadedUser[0]?.role === "admin"
+                                ? "cursor-not-allowed"
+                                : "cursor-pointer"
+                            }`}
+                          >
+                            {`${singleSlot?.startTime}-${singleSlot?.endTime}`}
+                          </a>
+                        </li>
+                      )
+                    )}
+                  </div>
 
-              <div className="flex justify-center items-center mt-7">
-                {selectedSlot &&
-                  selectedSlot.length > 0 &&
-                  loadedUser[0]?.role !== "admin" &&
-                  selectedSlot.some(
-                    (serviceSlot: TSlotAppointment) =>
-                      serviceSlot.date !== currentDateFormatted &&
-                      dateRange.includes(serviceSlot.date)
-                  ) && (
-                    <div>
-                      <Link to={"/bookings"}>
-                        <button
-                          onClick={handleBookingSlots}
-                          className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold"
-                        >
-                          Book Services
-                        </button>
-                      </Link>
-                    </div>
-                  )}
-              </div>
+                  <div className="flex justify-center items-center mt-7">
+                    {selectedSlot &&
+                      selectedSlot.length > 0 &&
+                      loadedUser[0]?.role !== "admin" &&
+                      selectedSlot.some(
+                        (serviceSlot: TSlotAppointment) =>
+                          serviceSlot.date !== currentDateFormatted &&
+                          dateRange.includes(serviceSlot.date)
+                      ) && (
+                        <div>
+                          <Link to={"/bookings"}>
+                            <button
+                              onClick={handleBookingSlots}
+                              className="px-4 py-3 text-white bg-primary rounded-lg btn-custom font-bold"
+                            >
+                              Book Services
+                            </button>
+                          </Link>
+                        </div>
+                      )}
+                  </div>
+                </div>
+              ) : (
+                <div className="text-2xl md:text-3xl text-center font-semibold mt-10">
+                  Sorry, no slots are available
+                </div>
+              )}
             </div>
           </div>
         </div>

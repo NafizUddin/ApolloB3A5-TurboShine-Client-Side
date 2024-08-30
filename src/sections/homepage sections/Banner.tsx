@@ -86,7 +86,7 @@ const Banner = () => {
               with confidence.
             </motion.p>
             <motion.div className="mt-6" variants={childVariants}>
-              <Link to="/products">
+              <Link to="/services">
                 <button className="px-4 py-3 text-white bg-primary rounded-lg font-semibold btn-custom text-lg">
                   Book Now
                 </button>

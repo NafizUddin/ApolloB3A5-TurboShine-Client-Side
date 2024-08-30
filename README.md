@@ -1,4 +1,4 @@
-# :ledger: Project: TurboShine FrontEnd Design  <img alt="Static Badge" src="https://img.shields.io/badge/Last_commit-30/_08/_2024-green">
+# :ledger: Project: TurboShine FrontEnd Design <img alt="Static Badge" src="https://img.shields.io/badge/Last_commit-30/_08/_2024-green">
 
 **Project Name:** TurboShine FrontEnd
 
@@ -18,7 +18,8 @@ Click here to see the live website: [https://turboshine-apollob3a5.netlify.app/]
 Click here to see the Server Side Repository: [https://github.com/NafizUddin/Apollo-Batch03-Assignment03-Car-Wash-Booking](https://github.com/NafizUddin/Apollo-Batch03-Assignment03-Car-Wash-Booking)
 
 ## :computer: Project Overview Video
-Click here to see the project overview video: [https://drive.google.com/file/d/1eiFHkZ867OKBgcJLAfi-6eWyJbe32MrG/view?usp=sharing](https://drive.google.com/file/d/1eiFHkZ867OKBgcJLAfi-6eWyJbe32MrG/view?usp=sharing)
+
+Click here to see the project overview video: [https://drive.google.com/file/d/189F89grYaCgS4vlBKCVXLYMMYmTVl3C3/view?usp=sharing](https://drive.google.com/file/d/189F89grYaCgS4vlBKCVXLYMMYmTVl3C3/view?usp=sharing)
 
 ## :keyboard: Technologies
 
@@ -43,7 +44,7 @@ Click here to see the project overview video: [https://drive.google.com/file/d/1
 
 There are some features in this project. Here I have provided some of them:
 
-- Authentication - There is a `sign in` and `sign up` button in the navbar. By clicking the buttons, it will lead the users to sign in and sign up form. By putting the input values, users can login, sign up and enjoy all features of the website. Once they get signed up or signed in, their name and photo will be shown in the navbar. 
+- Authentication - There is a `sign in` and `sign up` button in the navbar. By clicking the buttons, it will lead the users to sign in and sign up form. By putting the input values, users can login, sign up and enjoy all features of the website. Once they get signed up or signed in, their name and photo will be shown in the navbar.
 
 - Upcoming immediate service countdown - If any user has booked a service, it will be shown in the navbar with a `countdown` timer considering the `date` and `start time` of the service.
 
@@ -59,7 +60,7 @@ There are some features in this project. Here I have provided some of them:
 
 - Service Slot Availability - In each service details page, users will find the `service slots` of a `current date`. Under that section, users will find a `calender` to search for available slots for a particular date. By selecting one or multiple available slots, they will navigate to `Booking` section.
 
-- Payment with Aamarpay.com - In the `Booking` section, users can pay for their booked services with `Aamarpay.com`.   
+- Payment with Aamarpay.com - In the `Booking` section, users can pay for their booked services with `Aamarpay.com`.
 
 - Dashboard as per Role - There is a `Dashboard` route in this website to manage all the features of this website.
 
