@@ -30,7 +30,7 @@ const Testimonial = () => {
       <motion.div
         ref={swiperRef}
         initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : {}}
+        animate={isInView || data ? { opacity: 1, y: 0 } : {}}
         transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
       >
         <div className="flex justify-center items-center gap-3 mt-2">
